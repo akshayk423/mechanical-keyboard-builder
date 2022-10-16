@@ -1,0 +1,15 @@
+.color-nav{
+    background-color: #7A62CB  ;
+  }
+
+.navbar-brand{
+    color:aliceblue;
+}
+
+.navbar-brand .nav-item:hover{
+    color: pink;
+}
+
+.nav-link{
+    color:aliceblue;
+}
