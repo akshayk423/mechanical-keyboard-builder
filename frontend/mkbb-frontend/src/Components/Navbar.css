@@ -4,6 +4,7 @@
 
 .navbar-brand{
     color:aliceblue;
+    --bs-navbar-brand-hover-color: yellow;
 }
 
 .navbar-brand .nav-item:hover{
@@ -12,4 +13,12 @@
 
 .nav-link{
     color:aliceblue;
+}
+
+.navbar-nav .nav-link.active, .navbar-nav .show>.nav-link {
+    color:aliceblue;
+}
+
+.navbar-nav{
+    --bs-nav-link-hover-color: yellow;
 }
