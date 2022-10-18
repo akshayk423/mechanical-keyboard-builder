@@ -16,7 +16,7 @@ function Lists() {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr id="row1">
 						<td>
 							<a href="/products/cpu/">List1</a>
 						</td>
@@ -46,47 +46,47 @@ function Lists() {
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button button-delete">
+							<a class="button button-delete">
 								Delete
 							</a>
 						</td>
 					</tr>
-					<tr>
+					<tr id="row2">
 						<td>
-							<a href="/products/cpu/">List2</a>
+							<a href="/lists/list2">List2</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="/products/keyboard/" class="button">
 								Choose Keyboard
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="/products/case/" class="button">
 								Choose Case
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/">
+							<a href="/products/pcb/">
 								Example PCB
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="/products/switch/" class="button">
 								Choose Switch
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="/products/keycaps/" class="button">
 								Choose Keycaps
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button button-delete">
+							<a class="button button-delete">
 								Delete
 							</a>
 						</td>
 					</tr>
-					<tr>
+					<tr id="row3">
 						<td>
 							<a href="/products/cpu/">List3</a>
 						</td>
@@ -116,7 +116,7 @@ function Lists() {
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button button-delete">
+							<a class="button button-delete">
 								Delete
 							</a>
 						</td>
