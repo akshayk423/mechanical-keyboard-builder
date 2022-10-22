@@ -34,7 +34,7 @@
         String user; // assumes database name is the same as username
         //change these
           user = "root";
-        String password = "157a1965";
+        String password = "password";
         try {
             java.sql.Connection con; 
             Class.forName("com.mysql.jdbc.Driver");
