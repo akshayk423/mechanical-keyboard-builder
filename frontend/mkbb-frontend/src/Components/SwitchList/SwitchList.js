@@ -9,11 +9,11 @@ function PartList() {
                     <tr>
                         <td>PartID</td>
                         <td>Name</td>
-                        <td>SwitchType</td>
                         <td>Brand</td>
-                        <td>Username</td>
                         <td>Price</td>
                         <td>Url</td>
+                        <td>SwitchType</td>
+                        <td>Username</td>
                     </tr>
                 </thead>
                 <tr>
