@@ -16,6 +16,54 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `keyboardParts`
+--
+
+DROP TABLE IF EXISTS `keyboardParts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `keyboardParts` (
+  `partID` int NOT NULL,
+  `URL` varchar(45) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `brand` varchar(45) NOT NULL,
+  `price` decimal(2,0) NOT NULL,
+  PRIMARY KEY (`partID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `keyboardParts`
+--
+
+LOCK TABLES `keyboardParts` WRITE;
+/*!40000 ALTER TABLE `keyboardParts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `keyboardParts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sellingList`
+--
+
+DROP TABLE IF EXISTS `sellingList`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sellingList` (
+  `sellingListID` int NOT NULL,
+  PRIMARY KEY (`sellingListID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sellingList`
+--
+
+LOCK TABLES `sellingList` WRITE;
+/*!40000 ALTER TABLE `sellingList` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sellingList` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `switches`
 --
 
@@ -79,4 +127,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-30 15:11:47
+-- Dump completed on 2022-10-30 15:18:42
