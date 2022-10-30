@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.27, for macos11 (x86_64)
 --
 -- Host: 127.0.0.1    Database: mkdb
 -- ------------------------------------------------------
@@ -55,7 +55,6 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `userName` varchar(128) NOT NULL,
   `password` varchar(128) DEFAULT NULL,
-  `email` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`userName`),
   UNIQUE KEY `userName_UNIQUE` (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -67,7 +66,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('000','123','321'),('email','usern','pass'),('user1','pass123','user@email'),('usernamee','pas123','email');
+INSERT INTO `users` VALUES ('janedoe','123456'),('jasonsmith','Password1'),('johndoe','password'),('username1','123456789'),('username10','qwertyuiop'),('username11','password123'),('username12','000000'),('username2','12345678'),('username3','1234567'),('username4','12345'),('username5','qwerty123'),('username6','qwerty'),('username7','azerty'),('username8','Sparky1985'),('username9','abc123');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -80,4 +79,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-22 15:48:13
+-- Dump completed on 2022-10-30 15:11:47
