@@ -189,7 +189,7 @@ CREATE TABLE `moderators` (
 
 LOCK TABLES `moderators` WRITE;
 /*!40000 ALTER TABLE `moderators` DISABLE KEYS */;
-INSERT INTO `moderators` VALUES ('mod1','mp1'),('mod10','mp10'),('mod2','mp2'),('mod3','mp3'),('mod4','mp4'),('mod5','mp5'),('mod6','mp6'),('mod7','mp7'),('mod8','mp8'),('mod9','mp9');
+INSERT INTO `moderators` VALUES ('md0001','asdfe123'),('md0100','wefine'),('md1241','anion2'),('md1245','eienn6'),('md1782','aserb1'),('md2442','mp9'),('md4514','ann2'),('md5190','asb15r1s'),('md8357','anber12'),('md9120','we4gh2');
 /*!40000 ALTER TABLE `moderators` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -390,4 +390,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-03  3:20:42
+-- Dump completed on 2022-11-03  3:39:52
