@@ -36,7 +36,7 @@ CREATE TABLE `accessories` (
 
 LOCK TABLES `accessories` WRITE;
 /*!40000 ALTER TABLE `accessories` DISABLE KEYS */;
-INSERT INTO `accessories` VALUES ('AC0001','o-rings'),('AC0002','switch films'),('AC0003','lube oil'),('AC0004','usb cable'),('AC0005','foam'),('AC0006','lube'),('AC0007','usb cable'),('AC0008','switch puller'),('AC0009','keycap puller'),('AC0010','lube'),('PartID','type');
+INSERT INTO `accessories` VALUES ('AC0001','o-rings'),('AC0002','switch films'),('AC0003','lube oil'),('AC0004','usb cable'),('AC0005','foam'),('AC0006','lube'),('AC0007','usb cable'),('AC0008','switch puller'),('AC0009','keycap puller'),('AC0010','lube');
 /*!40000 ALTER TABLE `accessories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,4 +368,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-03 15:13:25
+-- Dump completed on 2022-11-03 15:22:49
