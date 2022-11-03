@@ -48,10 +48,11 @@ DROP TABLE IF EXISTS `bookmarks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bookmarks` (
-  `bookmarklistID` char(6) NOT NULL,
+  `bookmarkID` char(6) NOT NULL,
   `username` varchar(128) NOT NULL,
-  PRIMARY KEY (`bookmarklistID`),
-  UNIQUE KEY `bookmarklistID_UNIQUE` (`bookmarklistID`)
+  `PartID` char(6) NOT NULL,
+  PRIMARY KEY (`bookmarkID`),
+  UNIQUE KEY `bookmarklistID_UNIQUE` (`bookmarkID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -61,31 +62,8 @@ CREATE TABLE `bookmarks` (
 
 LOCK TABLES `bookmarks` WRITE;
 /*!40000 ALTER TABLE `bookmarks` DISABLE KEYS */;
-INSERT INTO `bookmarks` VALUES ('BL0001','akhal'),('BL0002','bluu'),('BL0003','cherrylover'),('BL0004','dontcallme'),('BL0005','kbfan'),('BL0006','kbfan'),('BL0007','kbfan'),('BL0008','menace'),('BL0009','spand'),('BL0010','sqleury');
+INSERT INTO `bookmarks` VALUES ('BL0001','akhal','SW0007'),('BL0002','bluu','CS0003'),('BL0003','cherrylover','KC0003'),('BL0004','dontcallme','AC0010'),('BL0005','kbfan','AC0010'),('BL0006','kbfan','SB0010'),('BL0007','kbfan','PB0005'),('BL0008','menace','PB0006'),('BL0009','spand','SB0002'),('BL0010','sqleury','SB0008');
 /*!40000 ALTER TABLE `bookmarks` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `hasbookmarkpart`
---
-
-DROP TABLE IF EXISTS `hasbookmarkpart`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `hasbookmarkpart` (
-  `PartID` char(6) NOT NULL,
-  `bookmarklistID` char(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hasbookmarkpart`
---
-
-LOCK TABLES `hasbookmarkpart` WRITE;
-/*!40000 ALTER TABLE `hasbookmarkpart` DISABLE KEYS */;
-INSERT INTO `hasbookmarkpart` VALUES ('SW0007','BL0001'),('CS0003','BL0002'),('KC0003','BL0003'),('AC0010','BL0004'),('AC0010','BL0005'),('SB0010','BL0006'),('PB0005','BL0007'),('PB0006','BL0008'),('SB0002','BL0009'),('SB0008','BL0010');
-/*!40000 ALTER TABLE `hasbookmarkpart` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -390,4 +368,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-03  3:39:52
+-- Dump completed on 2022-11-03 15:13:25
