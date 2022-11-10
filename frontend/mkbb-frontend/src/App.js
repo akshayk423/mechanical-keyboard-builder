@@ -11,6 +11,7 @@ import PCBList from './Components/PCBList/PCBList';
 import Switches from './Components/Switches/Switches';
 import Stabilizers from './Components/Stabilizers/Stabilizers';
 import Keycaps from './Components/Keycaps/Keycaps';
+import Case from './Components/Case/Case';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/prebuilt" element={<Prebuilt />}/>
-        {/* <Route path="/case" element={<Case />}/> */}
+        <Route path="/case" element={<Case />}/>
         <Route path="/PCBList" element={<PCBList />}/>
         <Route path="/switches" element={<Switches />}/>
         <Route path="/stabilizers" element={<Stabilizers />}/>

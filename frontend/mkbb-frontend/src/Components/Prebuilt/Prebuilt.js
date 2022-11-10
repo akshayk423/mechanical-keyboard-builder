@@ -1,8 +1,10 @@
 import "./styles.css";
+import NavbarComp from "../NavbarComponent";
 
 function Prebuilt() {
     return(
         <div>
+            <NavbarComp></NavbarComp>
             <h1>Prebuilt Keyboards</h1>
             <table border="1">
                 <thead>
@@ -12,8 +14,8 @@ function Prebuilt() {
                         <td>Brand</td>
                         <td>Price</td>
                         <td>Url</td>
-                        <td>Stabilizer Type</td>
-                        <td>Info</td>
+                        <td>Switch Name</td>
+                        <td>Hotswappable</td>
                         <td>Username</td>
                     </tr>
                 </thead>
@@ -23,8 +25,8 @@ function Prebuilt() {
                     <td>Brand</td>
                     <td>Price</td>
                     <td>Url</td>
-                    <td>Stabilizer Type</td>
-                    <td>Info</td>
+                    <td>Switch Name</td>
+                    <td>Hotswappable</td>
                     <td>Username</td>
                 </tr>
                 <tr>
@@ -33,8 +35,8 @@ function Prebuilt() {
                     <td>Brand</td>
                     <td>Price</td>
                     <td>Url</td>
-                    <td>Stabilizer Type</td>
-                    <td>Info</td>
+                    <td>Switch Name</td>
+                    <td>Hotswappable</td>
                     <td>Username</td>
                 </tr>
                 <tr>
@@ -43,8 +45,8 @@ function Prebuilt() {
                     <td>Brand</td>
                     <td>Price</td>
                     <td>Url</td>
-                    <td>Stabilizer Type</td>
-                    <td>Info</td>
+                    <td>Switch Name</td>
+                    <td>Hotswappable</td>
                     <td>Username</td>
                 </tr>
             </table>

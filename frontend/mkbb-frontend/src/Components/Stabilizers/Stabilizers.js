@@ -1,8 +1,10 @@
 import "./styles.css";
+import NavbarComp from "../NavbarComponent";
 
 function Stabilizers() {
     return(
         <div>
+            <NavbarComp></NavbarComp>
             <h1>Stabilizers</h1>
             <table border="1">
                 <thead>

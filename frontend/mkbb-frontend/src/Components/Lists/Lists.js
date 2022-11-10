@@ -12,6 +12,7 @@ function Lists() {
 						<th>PCB</th>
 						<th>Switches</th>
 						<th>Keycaps</th>
+						<th>Stabilizers</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -61,27 +62,27 @@ function Lists() {
 							<p>List2</p>
 						</td>
 						<td>
-							<a href="/products/keyboard/" class="button">
+							<a href="/prebuilt" class="button">
 								Choose Keyboard
 							</a>
 						</td>
 						<td>
-							<a href="/products/case/" class="button">
+							<a href="/case" class="button">
 								Choose Case
 							</a>
 						</td>
 						<td>
-							<a href="/products/pcb/">
+							<a href="/PCBList">
 								Example PCB
 							</a>
 						</td>
 						<td>
-							<a href="/products/switch/" class="button">
+							<a href="/switches" class="button">
 								Choose Switch
 							</a>
 						</td>
 						<td>
-							<a href="/products/keycaps/" class="button">
+							<a href="keycaps" class="button">
 								Choose Keycaps
 							</a>
 						</td>
@@ -101,27 +102,27 @@ function Lists() {
 							<p>List3</p>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="/prebuilt" class="button">
 								Choose Keyboard
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="/case" class="button">
 								Choose Case
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="/PCBList" class="button">
 								Choose PCB
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="/switches" class="button">
 								Choose Switch
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="keycaps" class="button">
 								Choose Keycaps
 							</a>
 						</td>

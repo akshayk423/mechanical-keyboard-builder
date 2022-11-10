@@ -1,8 +1,10 @@
 import "./styles.css";
+import NavbarComp from "../NavbarComponent";
 
 function Keycaps() {
     return(
         <div>
+            <NavbarComp></NavbarComp>
             <h1>Keycaps</h1>
             <table border="1">
                 <thead>
