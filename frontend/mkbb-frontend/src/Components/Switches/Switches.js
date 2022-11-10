@@ -1,6 +1,6 @@
 import "./styles.css";
 
-function PartList() {
+function Switches() {
     return(
         <div>
             <h1>Switch Parts</h1>
@@ -47,4 +47,4 @@ function PartList() {
         </div>
     )
 }
-export default PartList;
+export default Switches;

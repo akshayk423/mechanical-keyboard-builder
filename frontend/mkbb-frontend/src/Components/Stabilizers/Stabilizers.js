@@ -1,9 +1,9 @@
 import "./styles.css";
 
-function PartList() {
+function Stabilizers() {
     return(
         <div>
-            <h1>PCB</h1>
+            <h1>Stabilizers</h1>
             <table border="1">
                 <thead>
                     <tr>
@@ -13,6 +13,7 @@ function PartList() {
                         <td>Price</td>
                         <td>Url</td>
                         <td>SwitchType</td>
+                        <td>Hotswappable</td>
                         <td>Username</td>
                     </tr>
                 </thead>
@@ -23,6 +24,7 @@ function PartList() {
                     <td>Price</td>
                     <td>Url</td>
                     <td>SwitchType</td>
+                    <td>Hotswappable</td>
                     <td>Username</td>
                 </tr>
                 <tr>
@@ -32,6 +34,7 @@ function PartList() {
                     <td>Price</td>
                     <td>Url</td>
                     <td>SwitchType</td>
+                    <td>Hotswappable</td>
                     <td>Username</td>
                 </tr>
                 <tr>
@@ -41,10 +44,11 @@ function PartList() {
                     <td>Price</td>
                     <td>Url</td>
                     <td>SwitchType</td>
+                    <td>Hotswappable</td>
                     <td>Username</td>
                 </tr>
             </table>
         </div>
     )
 }
-export default PartList;
+export default Stabilizers;

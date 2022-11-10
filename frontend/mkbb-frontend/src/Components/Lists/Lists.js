@@ -18,31 +18,36 @@ function Lists() {
 				<tbody>
 					<tr id="row1">
 						<td>
-							<a href="/products/cpu/">List1</a>
+							<p>List1</p>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="/prebuilt" class="button">
 								Choose Keyboard
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="/case" class="button">
 								Choose Case
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="/PCBList" class="button">
 								Choose PCB
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/">
+							<a href="/switches">
 								Cherry MX Red
 							</a>
 						</td>
 						<td>
-							<a href="/products/cpu/" class="button">
+							<a href="keycaps" class="button">
 								Choose Keycaps
+							</a>
+						</td>
+						<td>
+							<a href="stabilizers" class="button">
+								Choose Stabilizers
 							</a>
 						</td>
 						<td>
@@ -53,7 +58,7 @@ function Lists() {
 					</tr>
 					<tr id="row2">
 						<td>
-							<a href="/lists/list2">List2</a>
+							<p>List2</p>
 						</td>
 						<td>
 							<a href="/products/keyboard/" class="button">
@@ -81,6 +86,11 @@ function Lists() {
 							</a>
 						</td>
 						<td>
+							<a href="stabilizers" class="button">
+								Choose Stabilizers
+							</a>
+						</td>
+						<td>
 							<a class="button button-delete">
 								Delete
 							</a>
@@ -88,7 +98,7 @@ function Lists() {
 					</tr>
 					<tr id="row3">
 						<td>
-							<a href="/products/cpu/">List3</a>
+							<p>List3</p>
 						</td>
 						<td>
 							<a href="/products/cpu/" class="button">
@@ -113,6 +123,11 @@ function Lists() {
 						<td>
 							<a href="/products/cpu/" class="button">
 								Choose Keycaps
+							</a>
+						</td>
+						<td>
+							<a href="stabilizers" class="button">
+								Choose Stabilizers
 							</a>
 						</td>
 						<td>
