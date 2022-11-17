@@ -26,11 +26,6 @@ function Register(){
                     <Form.Control type="password" placeholder="Enter Password"/>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlID="confirmPass">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control type="password" placeholder="Enter Password"/>
-                </Form.Group>
-
                 <Container>
                     <a href="/login" type="button" className="btn btn-primary">Login</a>{" "}
                     <button className="btn btn-warning">Submit</button>
