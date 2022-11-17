@@ -12,6 +12,7 @@ import Switches from './Components/Switches/Switches';
 import Stabilizers from './Components/Stabilizers/Stabilizers';
 import Keycaps from './Components/Keycaps/Keycaps';
 import Case from './Components/Case/Case';
+import ReportedListings from './Components/ReportedListings/ReportedListings';
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
         <Route path="/switches" element={<Switches />}/>
         <Route path="/stabilizers" element={<Stabilizers />}/>
         <Route path="/keycaps" element={<Keycaps />}/>
+        <Route path="/browse-prebuilts" element={<div />} />
+        <Route path="/advertise" element={<div />}/>
+        <Route path="/reported-listings" element={<ReportedListings />} />
       </Routes>
   );
 }

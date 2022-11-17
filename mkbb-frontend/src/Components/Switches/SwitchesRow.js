@@ -1,4 +1,9 @@
 export default function SwitchesRow() {
+    const onSubmit = () => {
+        console.log("Listing reported.")
+        return;
+    }
+    
     return(
         <tr>
             <td>00001</td>
@@ -8,6 +13,7 @@ export default function SwitchesRow() {
             <td><a href="www.google.com">Buy</a></td>
             <td>$14.00</td>
             <td>exampleSeller</td>
+            <td><button onClick={onSubmit}>Report</button></td>
         </tr>
     )
 }

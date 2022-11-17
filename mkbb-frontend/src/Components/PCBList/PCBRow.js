@@ -1,4 +1,9 @@
 export default function PCBRow() {
+    const onSubmit = () => {
+        console.log("Listing reported.")
+        return;
+    }
+    
     return(
         <tr>
             <td>0001</td>
@@ -11,6 +16,7 @@ export default function PCBRow() {
             <td>Connection Type</td>
             <td>Size</td>
             <td>Username</td>
+            <td><button onClick={onSubmit}>Report</button></td>
         </tr>
     )
 }

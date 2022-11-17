@@ -18,6 +18,7 @@ function Prebuilt() {
                         <td>Switch Name</td>
                         <td>Hotswappable</td>
                         <td>Username</td>
+                        <td>Report Listing</td>
                     </tr>
                 </thead>
                 <tbody>

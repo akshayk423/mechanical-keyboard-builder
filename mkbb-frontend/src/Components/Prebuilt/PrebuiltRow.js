@@ -1,4 +1,9 @@
 export default function PrebuiltRow() {
+    const onSubmit = () => {
+        console.log("Listing reported.")
+        return;
+    }
+    
     return(
         <tr>
             <td>PartID</td>
@@ -9,6 +14,7 @@ export default function PrebuiltRow() {
             <td>Switch Name</td>
             <td>Hotswappable</td>
             <td>Username</td>
+            <td><button onClick={onSubmit}>Report</button></td>
         </tr>
     )
 }

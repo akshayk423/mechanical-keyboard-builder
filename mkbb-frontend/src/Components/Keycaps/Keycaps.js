@@ -18,6 +18,7 @@ function Keycaps() {
                         <td>Profile</td>
                         <td>Material</td>
                         <td>Username</td>
+                        <td>Report Listing</td>
                     </tr>
                 </thead>
                 <tbody>

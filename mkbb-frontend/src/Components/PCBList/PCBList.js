@@ -20,6 +20,7 @@ function PCBList() {
                         <td>Connection Type</td>
                         <td>Size</td>
                         <td>Username</td>
+                        <td>Report Listing</td>
                     </tr>
                 </thead>
                 <tbody>

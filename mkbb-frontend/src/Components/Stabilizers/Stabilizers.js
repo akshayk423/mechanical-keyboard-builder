@@ -18,6 +18,7 @@ function Stabilizers() {
                         <td>StabType</td>
                         <td>Info</td>
                         <td>Username</td>
+                        <td>Report Listing</td>
                     </tr>
                 </thead>
                 <tbody>

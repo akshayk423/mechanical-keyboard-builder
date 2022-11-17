@@ -1,4 +1,9 @@
 export default function KeycapsRow() {
+    const onSubmit = () => {
+        console.log("Listing reported.")
+        return;
+    }
+    
     return(
         <tr>
             <td>00001</td>
@@ -9,6 +14,7 @@ export default function KeycapsRow() {
             <td>Profile</td>
             <td>Material</td>
             <td>exampleSeller</td>
+            <td><button onClick={onSubmit}>Report</button></td>
         </tr>
     )
 }
