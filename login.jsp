@@ -49,8 +49,8 @@
                     }
                 }
 
-                String signOut = request.getParameter("signOut");
-                if(signOut != null && signOut.equals("Sign Out")){
+                sign = request.getParameter("signOut");
+                if(sign != null && sign.equals("Sign Out")){
                     out.println("hi"); 
                     session.invalidate();
                 }
