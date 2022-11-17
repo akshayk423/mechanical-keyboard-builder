@@ -15,17 +15,9 @@
         <td>PartID:</td>
         <td><input type="text" name="iPartID"></td></br>
         <td>Name:</td>
-        <td><input type="text" name="iName"></td></br>
-        <td>SwitchType:</td>
         <td><input type="text" name="iSwitchType"></td></br>
-        <td>Brand:</td>
-        <td><input type="text" name="iBrand"></td></br>
-        <td>UserName:</td>
-        <td><input type="text" name="iUserName"></td></br>
-        <td>Price:</td>
-        <td><input type="text" name="iPrice"></td></br>
-        <td>URL:</td>
-        <td><input type="text" name="iUrl"></td></br>
+        <td>SwitchType:</td>
+        <td><input type="text" name="iStem"></td></br>
 
       </tr>
       <br></br>

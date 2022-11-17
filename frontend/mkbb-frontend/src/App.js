@@ -12,6 +12,11 @@ import Switches from './Components/Switches/Switches';
 import Stabilizers from './Components/Stabilizers/Stabilizers';
 import Keycaps from './Components/Keycaps/Keycaps';
 import Case from './Components/Case/Case';
+<<<<<<< Updated upstream:frontend/mkbb-frontend/src/App.js
+=======
+import ReportedListings from './Components/ReportedListings/ReportedListings';
+import AddListing from './Components/AddListing/AddListing';
+>>>>>>> Stashed changes:mkbb-frontend/src/App.js
 
 function App() {
   return (
@@ -26,6 +31,12 @@ function App() {
         <Route path="/switches" element={<Switches />}/>
         <Route path="/stabilizers" element={<Stabilizers />}/>
         <Route path="/keycaps" element={<Keycaps />}/>
+<<<<<<< Updated upstream:frontend/mkbb-frontend/src/App.js
+=======
+        <Route path="/browse-prebuilts" element={<div />} />
+        <Route path="/advertise" element={<AddListing />}/>
+        <Route path="/reported-listings" element={<ReportedListings />} />
+>>>>>>> Stashed changes:mkbb-frontend/src/App.js
       </Routes>
   );
 }
