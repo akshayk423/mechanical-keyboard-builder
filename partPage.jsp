@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Switch Parts: Keyboard Part Picker</title>
-    </head>
+  </head>
   <body>
 
     <form action="editPart.jsp">
@@ -12,16 +12,15 @@
     <h1>Switch Parts</h1>
 
     <table border="1">
-      <tr>
-        <td>PartID</td>
-        <td>Name</td>
-        <td>SwitchType</td>
-        <td>Brand</td>
-        <td>Username</td>
-        <td>Price</td>
-        <td>Url</td>
-    </tr>
-    </table>
+      <thead>
+        <tr>
+          <td>PartID</td>
+          <td>Switch Type</td>
+          <td>Brand</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      <tbody>
     <% 
 
     /*
@@ -63,7 +62,6 @@
               String id = request.getParameter("rPartID");
               //find the ID
               rs.beforeFirst();
-              out.println("<br></br>");
               boolean flag = true;
               while(rs.next()){
                 if(id.equals(rs.getString(1))){
@@ -85,7 +83,7 @@
             out.println("<br></br>");
             int i = 1;
             while (rs.next()) {
-                out.println("row" + i + ": " + rs.getString(1) + ", " + rs.getString(2) + ", " + rs.getString(3) + "<br/><br/>");
+                out.println("<tr><td>" + rs.getString(1) + "</td><td>" + rs.getString(2) + "</td><td>" + rs.getString(3) + "</td><td><button>Bookmark</button></tr>");
                 i++;
               }
             rs.close();
@@ -95,5 +93,7 @@
             out.println("SQLException caught: " + e.getMessage()); 
         }
     %>
+    </tbody>
+    </table>
   </body>
 </html>
