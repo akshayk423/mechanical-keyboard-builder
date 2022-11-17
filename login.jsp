@@ -20,7 +20,7 @@
   </body>
   <% 
             String user = "root";
-            String password = "password";
+            String password = "157a1965";
             try {
                 java.sql.Connection con; 
                 Class.forName("com.mysql.jdbc.Driver");
@@ -38,6 +38,7 @@
                     boolean flag = true;
                     while(rs.next()){
                         if(inputUser.equals(rs.getString(1)) && inputPass.equals(rs.getString(2))){
+                            session.setAttribute("username", inputUser);
                             response.sendRedirect("success.jsp");
                             flag = false;
                             break;
@@ -46,6 +47,12 @@
                     if(flag){
                         out.println("Incorrect Username and Password");
                     }
+                }
+
+                String signOut = request.getParameter("signOut");
+                if(signOut != null && signOut.equals("Sign Out")){
+                    out.println("hi"); 
+                    session.invalidate();
                 }
 
                 sign = request.getParameter("signUp");
