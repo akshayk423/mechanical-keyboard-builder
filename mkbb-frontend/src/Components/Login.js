@@ -19,11 +19,11 @@ function Login(){
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log(user);
             const res = await axios.put("http://localhost:8800/signIn", user);
-            console.log(res.data[0]);
+            console.log(res.data);
         } catch (err) {
             console.log(err);
-            setError(true)
         }
     };
 
