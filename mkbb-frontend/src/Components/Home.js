@@ -13,8 +13,8 @@ function Home() {
         <NavbarComp></NavbarComp>
         <Container style={{'padding-top': '5%'}}>
           <Container >
-            <div class="col-md-12 text-center">
-            <a href="/partslist" style={{'font-size' : '30px'}} type="button" class="btn btn-outline-secondary"> 
+            <div className="col-md-12 text-center">
+            <a href="/partslist" style={{'font-size' : '30px'}} type="button" className="btn btn-outline-secondary"> 
             <img
             src = {switch_img} width = '100' height = '100' margin-left = '0%'/>
             Create Parts List</a>
@@ -22,8 +22,8 @@ function Home() {
           </Container>
 
           <Container style={{'padding-top': '5%'}}>
-            <div class="col-md-12 text-center">
-            <button style={{'font-size' : '30px'}} type="button" class="btn btn-outline-secondary"> 
+            <div className="col-md-12 text-center">
+            <button style={{'font-size' : '30px'}} type="button" className="btn btn-outline-secondary"> 
             <img
             src = {keyboard} width = '100' height = '100'
             fill = '#AFE4C2'/>
@@ -32,9 +32,9 @@ function Home() {
           </Container>
 
           <Container style={{'padding-top': '5%'}}>
-            <div class="col-md-12 text-center">
+            <div className="col-md-12 text-center">
 
-            <button  style={{'font-size' : '30px'}} type="button" class="btn btn-outline-secondary">
+            <button  style={{'font-size' : '30px'}} type="button" className="btn btn-outline-secondary">
             <img
             src = {create_listing} width = '100' height = '100'/>
                 Advertise Listing</button>

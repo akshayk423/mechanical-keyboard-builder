@@ -22,17 +22,17 @@ function Lists() {
 							<p>List1</p>
 						</td>
 						<td>
-							<a href="/prebuilt" class="button">
+							<a href="/prebuilt" className="button">
 								Choose Keyboard
 							</a>
 						</td>
 						<td>
-							<a href="/case" class="button">
+							<a href="/case" className="button">
 								Choose Case
 							</a>
 						</td>
 						<td>
-							<a href="/PCBList" class="button">
+							<a href="/PCBList" className="button">
 								Choose PCB
 							</a>
 						</td>
@@ -42,17 +42,17 @@ function Lists() {
 							</a>
 						</td>
 						<td>
-							<a href="keycaps" class="button">
+							<a href="keycaps" className="button">
 								Choose Keycaps
 							</a>
 						</td>
 						<td>
-							<a href="stabilizers" class="button">
+							<a href="stabilizers" className="button">
 								Choose Stabilizers
 							</a>
 						</td>
 						<td>
-							<a class="button button-delete">
+							<a className="button button-delete">
 								Delete
 							</a>
 						</td>
@@ -62,12 +62,12 @@ function Lists() {
 							<p>List2</p>
 						</td>
 						<td>
-							<a href="/prebuilt" class="button">
+							<a href="/prebuilt" className="button">
 								Choose Keyboard
 							</a>
 						</td>
 						<td>
-							<a href="/case" class="button">
+							<a href="/case" className="button">
 								Choose Case
 							</a>
 						</td>
@@ -77,22 +77,22 @@ function Lists() {
 							</a>
 						</td>
 						<td>
-							<a href="/switches" class="button">
+							<a href="/switches" className="button">
 								Choose Switch
 							</a>
 						</td>
 						<td>
-							<a href="keycaps" class="button">
+							<a href="keycaps" className="button">
 								Choose Keycaps
 							</a>
 						</td>
 						<td>
-							<a href="stabilizers" class="button">
+							<a href="stabilizers" className="button">
 								Choose Stabilizers
 							</a>
 						</td>
 						<td>
-							<a class="button button-delete">
+							<a className="button button-delete">
 								Delete
 							</a>
 						</td>
@@ -102,37 +102,37 @@ function Lists() {
 							<p>List3</p>
 						</td>
 						<td>
-							<a href="/prebuilt" class="button">
+							<a href="/prebuilt" className="button">
 								Choose Keyboard
 							</a>
 						</td>
 						<td>
-							<a href="/case" class="button">
+							<a href="/case" className="button">
 								Choose Case
 							</a>
 						</td>
 						<td>
-							<a href="/PCBList" class="button">
+							<a href="/PCBList" className="button">
 								Choose PCB
 							</a>
 						</td>
 						<td>
-							<a href="/switches" class="button">
+							<a href="/switches" className="button">
 								Choose Switch
 							</a>
 						</td>
 						<td>
-							<a href="keycaps" class="button">
+							<a href="keycaps" className="button">
 								Choose Keycaps
 							</a>
 						</td>
 						<td>
-							<a href="stabilizers" class="button">
+							<a href="stabilizers" className="button">
 								Choose Stabilizers
 							</a>
 						</td>
 						<td>
-							<a class="button button-delete">
+							<a className="button button-delete">
 								Delete
 							</a>
 						</td>

@@ -8,7 +8,7 @@ function Register(){
         <div>
         <NavbarComp></NavbarComp>
         <Container style={{'padding-top': '5%'}}>
-        <div class="color-overlage d-flex justify-content-center align-items-center">
+        <div className="color-overlage d-flex justify-content-center align-items-center">
         <Card>
             <Form className="rounded p-4 p-sm-3">
                 <Form.Group className="mb-3" controlId="formUserName">
@@ -32,8 +32,8 @@ function Register(){
                 </Form.Group>
 
                 <Container>
-                    <a href="/login" type="button" class="btn btn-primary">Login</a>{" "}
-                    <button class="btn btn-warning">Submit</button>
+                    <a href="/login" type="button" className="btn btn-primary">Login</a>{" "}
+                    <button className="btn btn-warning">Submit</button>
                 </Container>
             </Form>
         </Card>

@@ -5,9 +5,9 @@ export default function SwitchesRow() {
             <td>Cherry MX Red</td>
             <td>Linear</td>
             <td>Cherry</td>
-            <td>exampleSeller</td>
-            <td>$14.00</td>
             <td><a href="www.google.com">Buy</a></td>
+            <td>$14.00</td>
+            <td>exampleSeller</td>
         </tr>
     )
 }

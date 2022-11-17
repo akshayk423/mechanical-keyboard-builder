@@ -20,9 +20,11 @@ function Stabilizers() {
                         <td>Username</td>
                     </tr>
                 </thead>
-                <StabilizersRow />
-                <StabilizersRow />
-                <StabilizersRow />
+                <tbody>
+                    <StabilizersRow />
+                    <StabilizersRow />
+                    <StabilizersRow />
+                </tbody>
             </table>
         </div>
     )

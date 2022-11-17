@@ -20,9 +20,11 @@ function Keycaps() {
                         <td>Username</td>
                     </tr>
                 </thead>
-                <KeycapsRow />
-                <KeycapsRow />
-                <KeycapsRow />
+                <tbody>
+                    <KeycapsRow />
+                    <KeycapsRow />
+                    <KeycapsRow />
+                </tbody>
             </table>
         </div>
     )

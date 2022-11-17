@@ -22,9 +22,11 @@ function PCBList() {
                         <td>Username</td>
                     </tr>
                 </thead>
-                <PCBRow />
-                <PCBRow />
-                <PCBRow />
+                <tbody>
+                    <PCBRow />
+                    <PCBRow />
+                    <PCBRow />
+                </tbody>
             </table>
         </div>
     )

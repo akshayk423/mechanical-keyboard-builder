@@ -19,9 +19,11 @@ function Switches() {
                         <td>Username</td>
                     </tr>
                 </thead>
-                <SwitchesRow />
-                <SwitchesRow />
-                <SwitchesRow />
+                <tbody>
+                    <SwitchesRow />
+                    <SwitchesRow />
+                    <SwitchesRow />
+                </tbody>
             </table>
         </div>
     )

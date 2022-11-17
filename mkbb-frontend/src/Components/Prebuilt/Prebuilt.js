@@ -20,9 +20,11 @@ function Prebuilt() {
                         <td>Username</td>
                     </tr>
                 </thead>
-                <PrebuiltRow />
-                <PrebuiltRow />
-                <PrebuiltRow />
+                <tbody>
+                    <PrebuiltRow />
+                    <PrebuiltRow />
+                    <PrebuiltRow />
+                </tbody>
             </table>
         </div>
     )

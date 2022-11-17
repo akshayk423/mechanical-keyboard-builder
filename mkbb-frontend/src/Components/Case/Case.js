@@ -17,11 +17,14 @@ function Case() {
                         <td>Url</td>
                         <td>Size</td>
                         <td>Username</td>
+                        <td>Report Listing</td>
                     </tr>
                 </thead>
-                <CasePartRow />
-                <CasePartRow />
-                <CasePartRow />
+                <tbody>
+                    <CasePartRow />
+                    <CasePartRow />
+                    <CasePartRow />
+                </tbody>
             </table>
         </div>
     )
