@@ -1,5 +1,6 @@
 import "./styles.css";
 import NavbarComp from "../NavbarComponent";
+import SwitchesRow from "./SwitchesRow";
 
 function Switches() {
     return(
@@ -18,33 +19,9 @@ function Switches() {
                         <td>Username</td>
                     </tr>
                 </thead>
-                <tr>
-                    <td>00001</td>
-                    <td>Cherry MX Red</td>
-                    <td>Linear</td>
-                    <td>Cherry</td>
-                    <td>exampleSeller</td>
-                    <td>$50.00</td>
-                    <td><a href="www.google.com">Buy</a></td>
-                </tr>
-                <tr>
-                    <td>00002</td>
-                    <td>Cherry MX Red</td>
-                    <td>Linear</td>
-                    <td>Cherry</td>
-                    <td>exampleSeller</td>
-                    <td>$50.00</td>
-                    <td><a href="www.google.com">Buy</a></td>
-                </tr>
-                <tr>
-                    <td>00003</td>
-                    <td>Cherry MX Blue</td>
-                    <td>Tactile</td>
-                    <td>Cherry</td>
-                    <td>exampleSeller2</td>
-                    <td>$45.00</td>
-                    <td><a href="www.google.com">Buy</a></td>
-                </tr>
+                <SwitchesRow />
+                <SwitchesRow />
+                <SwitchesRow />
             </table>
         </div>
     )

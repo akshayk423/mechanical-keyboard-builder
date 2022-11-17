@@ -1,5 +1,6 @@
 import "./styles.css";
 import NavbarComp from "../NavbarComponent";
+import StabilizersRow from "./StabilizersRow";
 
 function Stabilizers() {
     return(
@@ -14,41 +15,14 @@ function Stabilizers() {
                         <td>Brand</td>
                         <td>Price</td>
                         <td>Url</td>
-                        <td>SwitchType</td>
-                        <td>Hotswappable</td>
+                        <td>StabType</td>
+                        <td>Info</td>
                         <td>Username</td>
                     </tr>
                 </thead>
-                <tr>
-                    <td>PartID</td>
-                    <td>Name</td>
-                    <td>Brand</td>
-                    <td>Price</td>
-                    <td>Url</td>
-                    <td>SwitchType</td>
-                    <td>Hotswappable</td>
-                    <td>Username</td>
-                </tr>
-                <tr>
-                    <td>PartID</td>
-                    <td>Name</td>
-                    <td>Brand</td>
-                    <td>Price</td>
-                    <td>Url</td>
-                    <td>SwitchType</td>
-                    <td>Hotswappable</td>
-                    <td>Username</td>
-                </tr>
-                <tr>
-                    <td>PartID</td>
-                    <td>Name</td>
-                    <td>Brand</td>
-                    <td>Price</td>
-                    <td>Url</td>
-                    <td>SwitchType</td>
-                    <td>Hotswappable</td>
-                    <td>Username</td>
-                </tr>
+                <StabilizersRow />
+                <StabilizersRow />
+                <StabilizersRow />
             </table>
         </div>
     )

@@ -1,5 +1,6 @@
 import "./styles.css";
 import NavbarComp from "../NavbarComponent";
+import PrebuiltRow from "./PrebuiltRow";
 
 function Prebuilt() {
     return(
@@ -19,36 +20,9 @@ function Prebuilt() {
                         <td>Username</td>
                     </tr>
                 </thead>
-                <tr>
-                    <td>PartID</td>
-                    <td>Name</td>
-                    <td>Brand</td>
-                    <td>Price</td>
-                    <td>Url</td>
-                    <td>Switch Name</td>
-                    <td>Hotswappable</td>
-                    <td>Username</td>
-                </tr>
-                <tr>
-                    <td>PartID</td>
-                    <td>Name</td>
-                    <td>Brand</td>
-                    <td>Price</td>
-                    <td>Url</td>
-                    <td>Switch Name</td>
-                    <td>Hotswappable</td>
-                    <td>Username</td>
-                </tr>
-                <tr>
-                    <td>PartID</td>
-                    <td>Name</td>
-                    <td>Brand</td>
-                    <td>Price</td>
-                    <td>Url</td>
-                    <td>Switch Name</td>
-                    <td>Hotswappable</td>
-                    <td>Username</td>
-                </tr>
+                <PrebuiltRow />
+                <PrebuiltRow />
+                <PrebuiltRow />
             </table>
         </div>
     )
