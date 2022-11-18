@@ -5,7 +5,16 @@
             Partlists
         </title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
         <style>
+            .btn-secondary {
+                color: #000;
+                background-color: #ffc1078a!important;
+                border-color: #ffc1078a!important;
+            }
             .bg-light{
                 background-color: #7A62CB!important  ;
             }
@@ -37,6 +46,11 @@
                 font-size: inherit;
                 line-height: inherit;
             }
+            .btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+                color: #000;
+                background-color: #ffc1078a!important;
+                border-color: #ffc1078a!important;
+            }
 
             .btn {
                 padding-top: 0.15rem!important;
@@ -45,9 +59,11 @@
                 padding-left: 0.15rem!important;
             }
         </style>
+        
     </head>
 
     <body>
+        
         <div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
@@ -65,6 +81,20 @@
                         </li>
                         <li class="nav-item">
                         <a class="nav-link" href="/login.jsp">Login</a>
+                        </li>
+                        <li>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown-menu" aria-haspopup="true" aria-expanded="false">
+                                  Action
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Action</a>
+                                  <a class="dropdown-item" href="#">Another action</a>
+                                  <a class="dropdown-item" href="#">Something else here</a>
+                                  <div class="dropdown-divider"></div>
+                                  <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
+                              </div>
                         </li>
                     </ul>
                     </div>
@@ -101,17 +131,32 @@
                                 %>
                                 <tr>
 
-                                    <td><% 
+                                    <td>
+                                        
+                                        
+                                        <% 
                                         String prebuilt = rs.getString("prebuilt_id");
                                         if(prebuilt.length() > 0){
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                                             ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + prebuilt + "';");
                                             rs1.next();
-                                            if(rs1.getString("name").length() < 50)
-                                                out.println(rs1.getString("name"));
-                                            else
-                                                out.println(rs1.getString("brand"));
-                                            rs1.close();
+                                        %>
+                                        <div class="dropdown show">
+                                            <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <%       if(rs1.getString("name").length() < 50)
+                                                    out.println(rs1.getString("name"));
+                                                else
+                                                    out.println(rs1.getString("brand"));
+                                                rs1.close();
+                                        %>
+                                            </a>
+                                          
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                              <a class="dropdown-item" href="#">Purchase</a>
+                                              <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                        <%
                                         }
                                         else{
                                         %>            
@@ -192,7 +237,7 @@
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                                             ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + keycaps_id + "';");
                                             rs1.next();
-                                             if(rs1.getString("name").length() < 20)
+                                             if(rs1.getString("name").length() < 50)
                                                 out.println(rs1.getString("name"));
                                             else
                                                 out.println(rs1.getString("brand"));
@@ -242,6 +287,8 @@
 				</tbody>
 			</table>
 		</div>
+        
     </body>
+   
 
 </html>
