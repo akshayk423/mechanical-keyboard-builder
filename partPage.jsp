@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Switch Parts: Keyboard Part Picker</title>
-    </head>
+  </head>
   <body>
 
     <form action="editPart.jsp">
@@ -12,16 +12,15 @@
     <h1>Switch Parts</h1>
 
     <table border="1">
-      <tr>
-        <td>PartID</td>
-        <td>Name</td>
-        <td>SwitchType</td>
-        <td>Brand</td>
-        <td>Username</td>
-        <td>Price</td>
-        <td>Url</td>
-    </tr>
-    </table>
+      <thead>
+        <tr>
+          <td>PartID</td>
+          <td>Switch Type</td>
+          <td>Brand</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      <tbody>
     <% 
 
     /*
@@ -46,21 +45,14 @@
             String submitted = request.getParameter("submit");
             if(submitted != null && submitted.equals("Add Entry")){
               String partID = request.getParameter("iPartID");
-              String name = request.getParameter("iName");
               String type = request.getParameter("iSwitchType");
-              String brand = request.getParameter("iBrand");
-              String userName = request.getParameter("iUserName");
-              String price = request.getParameter("iPrice");
-              String url = request.getParameter("iUrl");
+              String stem = request.getParameter("iStem");
+              
 
               rs.moveToInsertRow();
               rs.updateString(1, partID);
-              rs.updateString(2, name);
-              rs.updateString(3, type);
-              rs.updateString(4, brand);
-              rs.updateString(5, userName);
-              rs.updateString(6, price);
-              rs.updateString(7, url);
+              rs.updateString(2, type);
+              rs.updateString(3, stem);
               rs.insertRow();
             }
 
@@ -70,7 +62,6 @@
               String id = request.getParameter("rPartID");
               //find the ID
               rs.beforeFirst();
-              out.println("<br></br>");
               boolean flag = true;
               while(rs.next()){
                 if(id.equals(rs.getString(1))){
@@ -92,7 +83,7 @@
             out.println("<br></br>");
             int i = 1;
             while (rs.next()) {
-                out.println("row" + i + ": " + rs.getString(1) + ", " + rs.getString(2) + ", " + rs.getString(3) + ", " + rs.getString(4) + ", " + rs.getString(5) + ", " + rs.getString(6) + ", " + rs.getString(7) + "<br/><br/>");
+                out.println("<tr><td>" + rs.getString(1) + "</td><td>" + rs.getString(2) + "</td><td>" + rs.getString(3) + "</td><td><button>Bookmark</button></tr>");
                 i++;
               }
             rs.close();
@@ -102,5 +93,7 @@
             out.println("SQLException caught: " + e.getMessage()); 
         }
     %>
+    </tbody>
+    </table>
   </body>
 </html>
