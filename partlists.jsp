@@ -73,10 +73,9 @@
         </div>
 
         <div>
-			<table width="80%">
+			<table width="100%">
 				<thead>
 					<tr>
-						<th>List</th>
 						<th>Keyboard</th>
 						<th>Case</th>
 						<th>PCB</th>
@@ -95,17 +94,25 @@
                             Class.forName("com.mysql.jdbc.Driver");
                             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
                             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                            ResultSet rs = stmt.executeQuery("SELECT * FROM mkbb.partlist;");
                             
+                            ResultSet rs = stmt.executeQuery("SELECT * FROM mkbb.partlist;");
                             rs.beforeFirst();
                             while(rs.next()){
                                 %>
                                 <tr>
-                                    <td><%out.println(rs.getString(1));%></td>
+
                                     <td><% 
                                         String prebuilt = rs.getString("prebuilt_id");
-                                        if(prebuilt.length() > 0)
-                                            out.println(prebuilt);
+                                        if(prebuilt.length() > 0){
+                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + prebuilt + "';");
+                                            rs1.next();
+                                            if(rs1.getString("name").length() < 50)
+                                                out.println(rs1.getString("name"));
+                                            else
+                                                out.println(rs1.getString("brand"));
+                                            rs1.close();
+                                        }
                                         else{
                                         %>            
                                         <a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Prebuilt</button>
@@ -116,8 +123,16 @@
                                     <td>
                                     <%
                                         String case_id = rs.getString("case_id");
-                                        if(case_id.length() > 0)
-                                            out.println(case_id);
+                                        if(case_id.length() > 0){
+                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + case_id + "';");
+                                            rs1.next();
+                                             if(rs1.getString("name").length() < 50)
+                                                out.println(rs1.getString("name"));
+                                            else
+                                                out.println(rs1.getString("brand"));
+                                            rs1.close();
+                                        }
                                         else{
                                     %>
                                             <a href="/cases.jsp" type="button" class="btn btn-primary">Add Case</button>
@@ -130,7 +145,16 @@
                                     <%
                                         String pcb_id = rs.getString("pcb_id");
                                         if(pcb_id.length() > 0)
-                                            out.println(pcb_id);
+                                        {
+                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + pcb_id + "';");
+                                            rs1.next();
+                                             if(rs1.getString("name").length() < 50)
+                                                out.println(rs1.getString("name"));
+                                            else
+                                                out.println(rs1.getString("brand"));
+                                            rs1.close();
+                                        }
                                         else{
                                     %>
                                             <a href="/pcbs.jsp" type="button" class="btn btn-primary">Add PCB</button>
@@ -142,7 +166,16 @@
                                     <%
                                         String switch_id = rs.getString("switches_id");
                                         if(switch_id.length() > 0)
-                                            out.println(switch_id);
+                                        {
+                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + switch_id + "';");
+                                            rs1.next();
+                                             if(rs1.getString("name").length() < 30)
+                                                out.println(rs1.getString("name"));
+                                            else
+                                                out.println(rs1.getString("brand"));
+                                            rs1.close();
+                                        }
                                         else{
                                     %>
                                             <a href="/switches.jsp" type="button" class="btn btn-primary">Add PCB</button>
@@ -155,7 +188,16 @@
                                     <%
                                         String keycaps_id = rs.getString("keycaps_id");
                                         if(keycaps_id.length() > 0)
-                                            out.println(keycaps_id);
+                                        {
+                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + keycaps_id + "';");
+                                            rs1.next();
+                                             if(rs1.getString("name").length() < 20)
+                                                out.println(rs1.getString("name"));
+                                            else
+                                                out.println(rs1.getString("brand"));
+                                            rs1.close();
+                                        }
                                         else{
                                     %>
                                             <a href="/keycaps.jsp" type="button" class="btn btn-primary">Add Keycaps</button>
@@ -167,7 +209,16 @@
                                     <%
                                         String stab_id = rs.getString("stab_id");
                                         if(stab_id.length() > 0)
-                                            out.println(stab_id);
+                                        {
+                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + stab_id + "';");
+                                            rs1.next();
+                                             if(rs1.getString("name").length() < 50)
+                                                out.println(rs1.getString("name"));
+                                            else
+                                                out.println(rs1.getString("brand"));
+                                            rs1.close();
+                                        }
                                         else{
                                     %>
                                             <a href="/stabs.jsp" type="button" class="btn btn-primary">Add Stabilizers</button>
@@ -191,10 +242,6 @@
 				</tbody>
 			</table>
 		</div>
-
-
     </body>
-
-
 
 </html>
