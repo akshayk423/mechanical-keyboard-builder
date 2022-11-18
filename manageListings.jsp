@@ -5,7 +5,6 @@
     <title>Manage Listings</title>
     </head>
   <body>
-
     <form action="editPart.jsp">
       <input type="submit" value="Go to Edit Page">
     </form>
