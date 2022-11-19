@@ -1,6 +1,7 @@
 <%@ page import="java.sql.*"%>
 <html>
     <head>
+
         <title>
             Partlists
         </title>
@@ -82,20 +83,6 @@
                         <li class="nav-item">
                         <a class="nav-link" href="/login.jsp">Login</a>
                         </li>
-                        <li>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown-menu" aria-haspopup="true" aria-expanded="false">
-                                  Action
-                                </button>
-                                <div class="dropdown-menu">
-                                  <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
-                                  <a class="dropdown-item" href="#">Something else here</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item" href="#">Separated link</a>
-                                </div>
-                              </div>
-                        </li>
                     </ul>
                     </div>
                 </div>
@@ -132,14 +119,13 @@
                                 <tr>
 
                                     <td>
-                                        
-                                        
                                         <% 
                                         String prebuilt = rs.getString("prebuilt_id");
                                         if(prebuilt.length() > 0){
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                                             ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + prebuilt + "';");
                                             rs1.next();
+                                            String prebuilt_url = rs1.getString("URL");
                                         %>
                                         <div class="dropdown show">
                                             <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -148,11 +134,12 @@
                                                 else
                                                     out.println(rs1.getString("brand"));
                                                 rs1.close();
+                                                stmt1.close();
                                         %>
                                             </a>
                                           
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                              <a class="dropdown-item" href="#">Purchase</a>
+                                              <a class="dropdown-item" href="<%=prebuilt_url%>" onclick="window.open('<%=prebuilt_url%>'),'_blank'">Purchase</a>
                                               <a class="dropdown-item" href="#">Delete</a>
                                             </div>
                                         </div>
@@ -165,6 +152,7 @@
                                         }
                                         %>
                                     </td>
+                                
                                     <td>
                                     <%
                                         String case_id = rs.getString("case_id");
@@ -172,11 +160,26 @@
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                                             ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + case_id + "';");
                                             rs1.next();
+                                            String case_url = rs1.getString("URL");
+                                    %>
+                                    <div class="dropdown show">
+                                        <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <%
                                              if(rs1.getString("name").length() < 50)
                                                 out.println(rs1.getString("name"));
                                             else
                                                 out.println(rs1.getString("brand"));
                                             rs1.close();
+                                            stmt1.close();
+                                    %>
+                                            </a>
+                                                    
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="<%=case_url%>" onclick="window.open('<%=case_url%>'),'_blank'">Purchase</a>
+                                            <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    <%
                                         }
                                         else{
                                     %>
@@ -194,11 +197,25 @@
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                                             ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + pcb_id + "';");
                                             rs1.next();
+                                            String pcb_url = rs1.getString("URL");
+                                        %>
+                                        <div class="dropdown show">
+                                            <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <%
                                              if(rs1.getString("name").length() < 50)
                                                 out.println(rs1.getString("name"));
                                             else
                                                 out.println(rs1.getString("brand"));
                                             rs1.close();
+                                            stmt1.close();
+                                    %>
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="<%=pcb_url%>" onclick="window.open('<%=pcb_url%>'),'_blank'">Purchase</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                                </div>
+                                            </div>
+                                    <%
                                         }
                                         else{
                                     %>
@@ -215,11 +232,25 @@
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                                             ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + switch_id + "';");
                                             rs1.next();
+                                            String switch_url = rs1.getString("URL");
+                                    %>
+                                        <div class="dropdown show">
+                                            <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <%
                                              if(rs1.getString("name").length() < 30)
                                                 out.println(rs1.getString("name"));
                                             else
                                                 out.println(rs1.getString("brand"));
                                             rs1.close();
+                                            stmt1.close();
+                                    %>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="<%=switch_url%>" onclick="window.open('<%=switch_url%>'),'_blank'">Purchase</a>
+                                    <a class="dropdown-item" href="#">Delete</a>
+                                    </div>
+                                </div>
+                                    <%
                                         }
                                         else{
                                     %>
@@ -237,11 +268,25 @@
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                                             ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + keycaps_id + "';");
                                             rs1.next();
+                                            String keycap_url = rs1.getString("URL");
+                                    %>
+                                        <div class="dropdown show">
+                                            <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <%
                                              if(rs1.getString("name").length() < 50)
                                                 out.println(rs1.getString("name"));
                                             else
                                                 out.println(rs1.getString("brand"));
                                             rs1.close();
+                                            stmt1.close();
+                                    %>
+                                            </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="<%=keycap_url%>" onclick="window.open('<%=keycap_url%>'),'_blank'">Purchase</a>
+                                            <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    <%
                                         }
                                         else{
                                     %>
@@ -258,11 +303,25 @@
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                                             ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + stab_id + "';");
                                             rs1.next();
+                                            String stab_url = rs1.getString("URL");
+                                    %>
+                                    <div class="dropdown show">
+                                        <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <%
                                              if(rs1.getString("name").length() < 50)
                                                 out.println(rs1.getString("name"));
                                             else
                                                 out.println(rs1.getString("brand"));
                                             rs1.close();
+                                            stmt1.close();
+                                    %>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="<%=stab_url%>" onclick="window.open('<%=stab_url%>'),'_blank'">Purchase</a>
+                                            <a class="dropdown-item" href="#">Delete</a>
+                                        </div>
+                                    </div>
+                                    <%
                                         }
                                         else{
                                     %>
