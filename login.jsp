@@ -11,7 +11,7 @@
     <td>Username:</td>
     <td><input type="text" name="iUserName"></td></br>
     <td>Password:</td>
-    <td><input type="text" name="iPassword"></td></br>
+    <td><input type="password" name="iPassword"></td></br>
 
     <input type="submit" value="Sign In" name="signIn">
     <input type="submit" value="Sign Up" name="signUp">

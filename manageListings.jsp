@@ -722,7 +722,7 @@
         <td>Brand:</td>
         <td><input type="text" name="pBrand"></td></br>
         <td>Price:</td>
-        <td><input type="text" name="pPrice"></td></br>
+        <td><input type="number" name="pPrice"></td></br>
         <input type="hidden" name="partType" value="<%= partType %>">
         <%
 
