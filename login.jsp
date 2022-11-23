@@ -11,7 +11,7 @@
     <td>Username:</td>
     <td><input type="text" name="iUserName"></td></br>
     <td>Password:</td>
-    <td><input type="text" name="iPassword"></td></br>
+    <td><input type="password" name="iPassword"></td></br>
 
     <input type="submit" value="Sign In" name="signIn">
     <input type="submit" value="Sign Up" name="signUp">
@@ -19,8 +19,10 @@
     </form>
   </body>
   <% 
-            String user = "root";
-            String password = "157a1965";
+            session.setAttribute("dbuser", "root");
+            session.setAttribute("dbpassword", "password");
+            String user = (String) session.getAttribute("dbuser");
+            String password = (String) session.getAttribute("dbpassword");
             try {
                 java.sql.Connection con; 
                 Class.forName("com.mysql.jdbc.Driver");
@@ -39,7 +41,7 @@
                     while(rs.next()){
                         if(inputUser.equals(rs.getString(1)) && inputPass.equals(rs.getString(2))){
                             session.setAttribute("username", inputUser);
-                            response.sendRedirect("success.jsp");
+                            response.sendRedirect("home.jsp");
                             flag = false;
                             break;
                         }
@@ -51,7 +53,6 @@
 
                 sign = request.getParameter("signOut");
                 if(sign != null && sign.equals("Sign Out")){
-                    out.println("hi"); 
                     session.invalidate();
                 }
 

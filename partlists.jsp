@@ -68,7 +68,7 @@
         <div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
-                    <a class="navbar-brand" href="/home.jsp">
+                    <a class="navbar-brand" href="/CS157A-team4/home.jsp">
                         <img alt src="logo.png" width="50" height="50">
                         Mechanical Keyboard Builder
                     </a>
@@ -104,15 +104,15 @@
 				</thead>
 				<tbody>
 					<% 
-                        String user = "root";
-                        String password = "Akshayk123!";
+                        String user = (String) session.getAttribute("dbuser");
+                        String password = (String) session.getAttribute("dbpassword");
                         try {
                             java.sql.Connection con; 
                             Class.forName("com.mysql.jdbc.Driver");
                             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
                             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                             
-                            ResultSet rs = stmt.executeQuery("SELECT * FROM mkbb.partlist;");
+                            ResultSet rs = stmt.executeQuery("SELECT * FROM mkdb.partlist;");
                             rs.beforeFirst();
                             while(rs.next()){
                                 %>
@@ -123,7 +123,7 @@
                                         String prebuilt = rs.getString("prebuilt_id");
                                         if(prebuilt.length() > 0){
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + prebuilt + "';");
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkdb.keyboardpart WHERE PartID = '" + prebuilt + "';");
                                             rs1.next();
                                             String prebuilt_url = rs1.getString("URL");
                                         %>
@@ -158,7 +158,7 @@
                                         String case_id = rs.getString("case_id");
                                         if(case_id.length() > 0){
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + case_id + "';");
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkdb.keyboardpart WHERE PartID = '" + case_id + "';");
                                             rs1.next();
                                             String case_url = rs1.getString("URL");
                                     %>
@@ -195,7 +195,7 @@
                                         if(pcb_id.length() > 0)
                                         {
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + pcb_id + "';");
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkdb.keyboardpart WHERE PartID = '" + pcb_id + "';");
                                             rs1.next();
                                             String pcb_url = rs1.getString("URL");
                                         %>
@@ -230,7 +230,7 @@
                                         if(switch_id.length() > 0)
                                         {
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + switch_id + "';");
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkdb.keyboardpart WHERE PartID = '" + switch_id + "';");
                                             rs1.next();
                                             String switch_url = rs1.getString("URL");
                                     %>
@@ -266,7 +266,7 @@
                                         if(keycaps_id.length() > 0)
                                         {
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + keycaps_id + "';");
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkdb.keyboardpart WHERE PartID = '" + keycaps_id + "';");
                                             rs1.next();
                                             String keycap_url = rs1.getString("URL");
                                     %>
@@ -301,14 +301,14 @@
                                         if(stab_id.length() > 0)
                                         {
                                             Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + stab_id + "';");
+                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkdb.keyboardpart WHERE PartID = '" + stab_id + "';");
                                             rs1.next();
                                             String stab_url = rs1.getString("URL");
                                     %>
                                     <div class="dropdown show">
                                         <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <%
-                                             if(rs1.getString("name").length() < 50)
+                                            if(rs1.getString("name").length() < 50)
                                                 out.println(rs1.getString("name"));
                                             else
                                                 out.println(rs1.getString("brand"));
@@ -339,7 +339,7 @@
                             rs.close();
                             stmt.close();
                             con.close();
-                        }catch(SQLException e) { 
+                        } catch(SQLException e) { 
                             out.println("SQLException caught: " + e.getMessage()); 
                         }
                     %>
