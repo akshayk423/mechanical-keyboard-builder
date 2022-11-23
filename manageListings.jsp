@@ -44,20 +44,103 @@
                 //generate new id
                 boolean unique = false;
                 Random random = new Random();
-                String id = 0000;
+                String id = "0000";
                 while(!unique){
-                    curId = String.format("%04d", random.nextInt(10000));
+                    String curId = String.format("%04d", random.nextInt(10000));
                     if(!idSet.contains(id)){
                         id = curId;
                         unique = true;
                         break;
                     }
                 }
-                
+
+                //with the new ID and part Type attributes from the post call
+                //we can now add it to the database
+
+                String kbPartType = request.getParameter("partType");
+
+                String name = request.getParameter("pName");
+                String url = request.getParameter("pURL");
+                String brand = request.getParameter("pBrand");
+                String price = request.getParameter("pPrice");
+
+                switch(request.getParameter("partType")){
+                    case "prebuilt": {
+                        id = "PB" + id;
+                        String switchName = request.getParameter("pSwitchName");
+                        String hotSwap = request.getParameter("pHotSwappable");
+
+                        //add entry
+                        out.println(name + "<br>");
+                        out.println(url + "<br>");
+                        out.println(brand + "<br>");
+                        out.println(id + "<br>");
+                        out.println(switchName + "<br>");
+                        out.println(hotSwap + "<br>");
+                        break;
+                    }
+                    case "pcb": {
+                        id = "PC" + id;
+                        String containsRGB = request.getParameter("pContainsRGB");
+                        String hotSwap = request.getParameter("pHotSwappable");
+                        String size = request.getParameter("pSize");
+
+                        out.println(name + "<br>");
+                        out.println(url + "<br>");
+                        out.println(brand + "<br>");
+                        out.println(price + "<br>");
+                        out.println(id + "<br>");
+                        out.println(containsRGB + "<br>");
+                        out.println(hotSwap + "<br>");
+                        out.println(size + "<br>");
+                        break;
+                    }
+                    case "stabilizers": {
+                        id = "SB" + id;
+                        String info = request.getParameter("pInfo");
+
+                        String type1 = request.getParameter("2U");
+                        String type2 = request.getParameter("6.25U");
+                        String type3 = request.getParameter("7U");
+                        String stabType = "";
+                        ArrayList<String> stabList = new ArrayList<String>();
+
+                        if(type1 != null) {stabList.add(type1);}
+                        if(type2 != null) {stabList.add(type2);}
+                        if(type3 != null) {stabList.add(type3);}
+                        if(stabList.isEmpty()){
+                            stabType = "Unknown";
+                        }else{
+                            stabType = String.join(", ", stabList);
+                        }
+
+                        //add entry
+                        out.println(name + "<br>");
+                        out.println(url + "<br>");
+                        out.println(brand + "<br>");
+                        out.println(price + "<br>");
+                        out.println(info + "<br>");
+                        out.println(stabType + "<br>");
+                        break;
+                    }
+                    case "keycap": {
+                        id = "KC" + id;
+                        break;
+                    }
+                    case "kbcase":{
+                        id = "CS" + id;
+                        break;
+                    }
+                    case"accessories": {
+                        id = "AC" + id;
+                        break;
+                    }
+                    default:
+                        break;
+                }
             }
 
             rs = stmt.executeQuery("SELECT * FROM mkdb.switches");
-
 
             //REMOVE
             String removed = request.getParameter("removeEntryButton");
@@ -121,6 +204,7 @@
         <td><input type="text" name="pBrand"></td></br>
         <td>Price:</td>
         <td><input type="text" name="pPrice"></td></br>
+        <input type="hidden" name="partType" value="<%= partType %>">
         <%
 
 
@@ -139,7 +223,6 @@
                 <input type="submit" value="Add Entry" name="addPartButton">
                 </form>
             <%
-
             break;
         case "pcb":
             %>
@@ -169,6 +252,32 @@
                 <br></br>
                 <input type="submit" value="Add Entry" name="addPartButton">
                 </form>
+            <%
+            break;
+        case "stabilizers":
+            %>
+                <select name="pInfo">
+                <option value="plate mount">Plate Mount</option>
+                <option value="screw-in, pcb mount">PCB Mount</option>
+                </select></br>
+
+                <input type="checkbox" name="2U" value="2U" checked>2U</label><br />
+                <input type="checkbox" name="6.25U" value="6.25U">6.25U</label><br />
+                <input type="checkbox" name="7U" value="7U">7U</label><br />
+
+                <br></br>
+                <input type="submit" value="Add Entry" name="addPartButton">
+                </form>
+            <%
+            break;
+        case "keycap":
+            %>
+
+            <%
+            break;
+        case "case":
+            %>
+
             <%
             break;
         default:
