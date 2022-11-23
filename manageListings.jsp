@@ -23,7 +23,7 @@
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = stmt.executeQuery("SELECT * FROM mkdb.switches");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart");
 
             //get current username
             String username = (String) session.getAttribute("username");
@@ -32,22 +32,40 @@
             //REMOVE
             String removed = request.getParameter("removeListing");
             if(removed != null && removed.equals("Remove Listing")){
-              String id = request.getParameter("partType");
-              out.println(id + "<br>");
-            //   //find the ID
-            //   rs.beforeFirst();
-            //   boolean flag = true;
-            //   while(rs.next()){
-            //     if(id.equals(rs.getString(1))){
-            //       out.println("deleted row: " + rs.getRow());
-            //       rs.deleteRow();
-            //       flag = false;
-            //       break;
-            //     }
-            //   }
-            //   if(flag){
-            //     out.println("Could not find ID: " + id + ", nothing was deleted");
-            //   }
+              String id = request.getParameter("partID");
+              String prefix = id.charAt(0) + "" + id.charAt(1);
+
+                rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart");
+
+                rs.beforeFirst();
+                rs.next();
+                
+                Map<String, String> dict = new HashMap<String, String>();
+                dict.put("SW", "switches");
+                dict.put("PB", "prebuilt");
+                dict.put("PC", "pcb");
+                dict.put("SB", "stabilizers");
+                dict.put("KC", "keycap");
+                dict.put("CS", "kbcase");
+                dict.put("AC", "accessories");
+
+                //find the ID
+                rs.beforeFirst();
+                while(rs.next()){
+                    if(id.equals(rs.getString(1))){
+                    rs.deleteRow();
+                    break;
+                    }
+                }
+
+                rs = stmt.executeQuery("SELECT * FROM mkdb." + dict.get(prefix));
+                rs.beforeFirst();
+                while(rs.next()){
+                    if(id.equals(rs.getString(1))){
+                    rs.deleteRow();
+                    break;
+                    }
+                }
             }
 
             //INSERT FOR EACH PART
@@ -275,13 +293,13 @@
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
                             <input type='submit' value='Edit Listing' name='editPrebuilt'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
                             <input type='submit' value='Remove Listing' name='removeListing'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                     </tr>
@@ -341,13 +359,13 @@
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
                             <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
                             <input type='submit' value='Remove Listing' name='removeListing'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                     </tr>
@@ -405,13 +423,13 @@
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
                             <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
                             <input type='submit' value='Remove Listing' name='removeListing'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                     </tr>
@@ -469,13 +487,13 @@
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
                             <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
                             <input type='submit' value='Remove Listing' name='removeListing'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                     </tr>
@@ -531,13 +549,13 @@
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
                             <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
                             <input type='submit' value='Remove Listing' name='removeListing'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                     </tr>
@@ -593,13 +611,13 @@
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
                             <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
                             <input type='submit' value='Remove Listing' name='removeListing'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                     </tr>
@@ -657,13 +675,13 @@
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
                             <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
                             <input type='submit' value='Remove Listing' name='removeListing'>
-                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
                     </tr>
