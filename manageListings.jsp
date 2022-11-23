@@ -14,10 +14,8 @@
     <h2>Your Parts:</h2>
     <% 
      String db = "team4";
-        String user; // assumes database name is the same as username
-        //change these
-          user = "root";
-        String password = "157a1965";
+     String user = (String) session.getAttribute("dbuser");
+     String password = (String) session.getAttribute("dbpassword");
         try {
             java.sql.Connection con; 
             Class.forName("com.mysql.jdbc.Driver");
@@ -358,7 +356,7 @@
 
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
-                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type='submit' value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
@@ -422,7 +420,7 @@
 
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
-                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type='submit' value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
@@ -486,7 +484,7 @@
 
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
-                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type='submit' value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
@@ -548,7 +546,7 @@
 
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
-                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type='submit' value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
@@ -610,7 +608,7 @@
 
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
-                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type='submit' value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
@@ -674,7 +672,7 @@
 
                         <td>
                             <form action='editPrebuilt.jsp' method='post'>
-                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type='submit' value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>

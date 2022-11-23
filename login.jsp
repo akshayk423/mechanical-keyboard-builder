@@ -41,7 +41,7 @@
                     while(rs.next()){
                         if(inputUser.equals(rs.getString(1)) && inputPass.equals(rs.getString(2))){
                             session.setAttribute("username", inputUser);
-                            response.sendRedirect("success.jsp");
+                            response.sendRedirect("home.jsp");
                             flag = false;
                             break;
                         }
