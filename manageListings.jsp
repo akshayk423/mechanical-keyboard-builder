@@ -5,8 +5,8 @@
     <title>Manage Listings</title>
     </head>
   <body>
-    <form action="editPart.jsp">
-      <input type="submit" value="Go to Edit Page">
+  <form action="login.jsp" method="post">
+        <button type="submit" value = "Sign Out" name="signOut">Sign Out</button>
     </form>
 
     <h1>Manage Listings:</h1>
@@ -25,6 +25,30 @@
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = stmt.executeQuery("SELECT * FROM mkdb.switches");
 
+            //get current username
+            String username = (String) session.getAttribute("username");
+
+            
+            //REMOVE
+            String removed = request.getParameter("removeListing");
+            if(removed != null && removed.equals("Remove Listing")){
+              String id = request.getParameter("partType");
+              out.println(id + "<br>");
+            //   //find the ID
+            //   rs.beforeFirst();
+            //   boolean flag = true;
+            //   while(rs.next()){
+            //     if(id.equals(rs.getString(1))){
+            //       out.println("deleted row: " + rs.getRow());
+            //       rs.deleteRow();
+            //       flag = false;
+            //       break;
+            //     }
+            //   }
+            //   if(flag){
+            //     out.println("Could not find ID: " + id + ", nothing was deleted");
+            //   }
+            }
 
             //INSERT FOR EACH PART
 
@@ -59,44 +83,78 @@
 
                 String kbPartType = request.getParameter("partType");
 
+                //Update ID with prefix
+                switch(kbPartType){
+                    case "prebuilt":
+                        id = "PB" + id;
+                        break;
+                    case "pcb": 
+                        id = "PC" + id;
+                        break;
+                    case "stabilizers": 
+                        id = "SB" + id;
+                        break;
+                    case "keycaps": 
+                        id = "KC" + id;
+                        break;
+                    case "kbcase":
+                        id = "CS" + id;
+                        break;
+                    case "accessories":
+                        id = "AC" + id;
+                        break;
+                    case "switches":
+                        id = "SW" + id;
+                        break;
+                    default:
+                        break;
+                }
+
                 String name = request.getParameter("pName");
                 String url = request.getParameter("pURL");
                 String brand = request.getParameter("pBrand");
                 String price = request.getParameter("pPrice");
 
-                switch(request.getParameter("partType")){
+                rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart");
+
+                //add entry
+                rs.moveToInsertRow();
+                rs.updateString(1, id);
+                rs.updateString(2, url);
+                rs.updateString(3, name);
+                rs.updateString(4, brand);
+                rs.updateString(5, price);
+                rs.updateString(6, username);
+                rs.insertRow();
+
+                switch(kbPartType){
                     case "prebuilt": {
-                        id = "PB" + id;
                         String switchName = request.getParameter("pSwitchName");
                         String hotSwap = request.getParameter("pHotSwappable");
-
-                        //add entry
-                        out.println(name + "<br>");
-                        out.println(url + "<br>");
-                        out.println(brand + "<br>");
-                        out.println(id + "<br>");
-                        out.println(switchName + "<br>");
-                        out.println(hotSwap + "<br>");
+                        
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.prebuilt");
+                        rs.moveToInsertRow();
+                        rs.updateString(1, id);
+                        rs.updateString(2, switchName);
+                        rs.updateString(3, hotSwap);
+                        rs.insertRow();
                         break;
                     }
                     case "pcb": {
-                        id = "PC" + id;
                         String containsRGB = request.getParameter("pContainsRGB");
                         String hotSwap = request.getParameter("pHotSwappable");
                         String size = request.getParameter("pSize");
 
-                        out.println(name + "<br>");
-                        out.println(url + "<br>");
-                        out.println(brand + "<br>");
-                        out.println(price + "<br>");
-                        out.println(id + "<br>");
-                        out.println(containsRGB + "<br>");
-                        out.println(hotSwap + "<br>");
-                        out.println(size + "<br>");
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.pcb");
+                        rs.moveToInsertRow();
+                        rs.updateString(1, id);
+                        rs.updateString(2, containsRGB);
+                        rs.updateString(3, hotSwap);
+                        rs.updateString(4,size);
+                        rs.insertRow();
                         break;
                     }
                     case "stabilizers": {
-                        id = "SB" + id;
                         String info = request.getParameter("pInfo");
 
                         String type1 = request.getParameter("2U");
@@ -114,51 +172,56 @@
                             stabType = String.join(", ", stabList);
                         }
 
-                        //add entry
-                        out.println(name + "<br>");
-                        out.println(url + "<br>");
-                        out.println(brand + "<br>");
-                        out.println(price + "<br>");
-                        out.println(info + "<br>");
-                        out.println(stabType + "<br>");
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.stabilizers");
+                        rs.moveToInsertRow();
+                        rs.updateString(1, id);
+                        rs.updateString(2, stabType);
+                        rs.updateString(3, info);
+                        rs.insertRow();
                         break;
                     }
                     case "keycaps": {
-                        id = "KC" + id;
                         String profile = request.getParameter("pProfile");
                         String material = request.getParameter("pMaterial");
 
-                        out.println(name + "<br>");
-                        out.println(url + "<br>");
-                        out.println(brand + "<br>");
-                        out.println(price + "<br>");
-                        out.println(id + "<br>");
-                        out.println(profile + "<br>");
-                        out.println(material + "<br>");
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.keycaps");
+                        rs.moveToInsertRow();
+                        rs.updateString(1, id);
+                        rs.updateString(2, profile);
+                        rs.updateString(3, material);
+                        rs.insertRow();
                         break;
                     }
                     case "kbcase":{
-                        id = "CS" + id;
                         String size = request.getParameter("pSize");
 
-                        out.println(name + "<br>");
-                        out.println(url + "<br>");
-                        out.println(brand + "<br>");
-                        out.println(price + "<br>");
-                        out.println(id + "<br>");
-                        out.println(size + "<br>");
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.kbcase");
+                        rs.moveToInsertRow();
+                        rs.updateString(1, id);
+                        rs.updateString(2, size);
+                        rs.insertRow();
                         break;
                     }
-                    case"accessories": {
-                        id = "AC" + id;
+                    case "accessories": {
                         String type = request.getParameter("pType");
 
-                        out.println(name + "<br>");
-                        out.println(url + "<br>");
-                        out.println(brand + "<br>");
-                        out.println(price + "<br>");
-                        out.println(id + "<br>");
-                        out.println(type + "<br>");
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.accessories");
+                        rs.moveToInsertRow();
+                        rs.updateString(1, id);
+                        rs.updateString(2, type);
+                        rs.insertRow();
+                        break;
+                    }
+                    case "switches": {
+                        String type = request.getParameter("pType"); 
+                        String stem = request.getParameter("pStem");
+
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.");
+                        rs.moveToInsertRow();
+                        rs.updateString(1, id);
+                        rs.updateString(2, type);
+                        rs.updateString(3, stem);
+                        rs.insertRow();
                         break;
                     }
                     default:
@@ -166,39 +229,451 @@
                 }
             }
 
-            rs = stmt.executeQuery("SELECT * FROM mkdb.switches");
-
-            //REMOVE
-            String removed = request.getParameter("removeEntryButton");
-            if(removed != null && removed.equals("Remove Entry")){
-              String id = request.getParameter("rPartID");
-              //find the ID
-              rs.beforeFirst();
-              out.println("<br></br>");
-              boolean flag = true;
-              while(rs.next()){
-                if(id.equals(rs.getString(1))){
-                  out.println("deleted row: " + rs.getRow());
-                  rs.deleteRow();
-                  flag = false;
-                  break;
-                }
-              }
-              if(flag){
-                out.println("Could not find ID: " + id + ", nothing was deleted");
-              }
-            }
-
-            //VIEW ROWS
+            //PRINT EACH LIST FOR EACH PART
+            %><h3>Prebuilts:</h3><%
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.prebuilt WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'PB%'");
             //move cursor back to first position
             rs.beforeFirst();
-
-            int i = 1;
-            while (rs.next()) {
-                out.println("row" + i + ": " + rs.getString(1) + ", " + rs.getString(2) + ", " + rs.getString(3) + "<br/><br/>");
-                i++;
+            if(!rs.next()){
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>No Listings</td>
+                    </tr>
+                <%
+            }else{
+                rs.beforeFirst();
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>Name:</td>
+                        <td>URL:</td>
+                        <td>Brand:</td>
+                        <td>Price:</td>
+                        <td>Switches:</td>
+                        <td>Hot Swappable:</td>
+                        <td>Edit Listing:</td>
+                        <td>Remove Listing:</td>
+                <%
+                while (rs.next()) {
+                    String name = rs.getString(3);
+                    if(name.length() > 40){ name = name.substring(0,40) + "...";}
+                    String url = rs.getString(2);
+                    if(url.length() > 40){ url = url.substring(0,40) + "...";}
+                    %>
+                    <tr>
+                        <td><%=name%></td>
+                        <td><%=url%></td>
+                        <td><%=rs.getString(4)%></td>
+                        <td><%=rs.getString(5)%></td>
+                        <td><%=rs.getString(7)%></td>
+                        <td><%=rs.getString(8)%></td>
+                        <td>
+                            <form action='editPrebuilt.jsp' method='post'>
+                            <input type='submit' value='Edit Listing' name='editPrebuilt'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                        <td>
+                            <form action='manageListings.jsp' method='post'>
+                            <input type='submit' value='Remove Listing' name='removeListing'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                    </tr>
+                    <%
+                }
             }
-    %>
+            %>
+                </tbody>
+                </table>
+            <%
+
+            %><h3>PCB:</h3><%
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.pcb WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'PC%'");
+            //move cursor back to first position
+            rs.beforeFirst();
+            if(!rs.next()){
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>No Listings</td>
+                    </tr>
+                <%
+            }else{
+                rs.beforeFirst();
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>Name:</td>
+                        <td>URL:</td>
+                        <td>Brand:</td>
+                        <td>Price:</td>
+                        <td>Contains RGB:</td>
+                        <td>Hot Swappable:</td>
+                        <td>Size:</td>
+                        <td>Edit Listing:</td>
+                        <td>Remove Listing:</td>
+                <%
+                while (rs.next()) {
+                    String name = rs.getString(3);
+                    if(name.length() > 40){ name = name.substring(0,40) + "...";}
+                    String url = rs.getString(2);
+                    if(url.length() > 40){ url = url.substring(0,40) + "...";}
+                    %>
+                    <tr>
+                        <td><%=name%></td>
+                        <td><%=url%></td>
+                        <td><%=rs.getString(4)%></td>
+                        <td><%=rs.getString(5)%></td>
+                        <td><%=rs.getString(7)%></td>
+                        <td><%=rs.getString(8)%></td>
+                        <td><%=rs.getString(9)%></td>
+
+                        <td>
+                            <form action='editPrebuilt.jsp' method='post'>
+                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                        <td>
+                            <form action='manageListings.jsp' method='post'>
+                            <input type='submit' value='Remove Listing' name='removeListing'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                    </tr>
+                    <%
+                }
+            }
+            %>
+                </tbody>
+                </table>
+            <%
+
+            %><h3>Stabilizers:</h3><%
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.stabilizers WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'SB%'");
+            //move cursor back to first position
+            rs.beforeFirst();
+            if(!rs.next()){
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>No Listings</td>
+                    </tr>
+                <%
+            }else{
+                rs.beforeFirst();
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>Name:</td>
+                        <td>URL:</td>
+                        <td>Brand:</td>
+                        <td>Price:</td>
+                        <td>Stabilizer Type(s):</td>
+                        <td>Info:</td>
+                        <td>Edit Listing:</td>
+                        <td>Remove Listing:</td>
+                <%
+                while (rs.next()) {
+                    String name = rs.getString(3);
+                    if(name.length() > 40){ name = name.substring(0,40) + "...";}
+                    String url = rs.getString(2);
+                    if(url.length() > 40){ url = url.substring(0,40) + "...";}
+                    %>
+                    <tr>
+                        <td><%=name%></td>
+                        <td><%=url%></td>
+                        <td><%=rs.getString(4)%></td>
+                        <td><%=rs.getString(5)%></td>
+                        <td><%=rs.getString(7)%></td>
+                        <td><%=rs.getString(8)%></td>
+
+                        <td>
+                            <form action='editPrebuilt.jsp' method='post'>
+                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                        <td>
+                            <form action='manageListings.jsp' method='post'>
+                            <input type='submit' value='Remove Listing' name='removeListing'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                    </tr>
+                    <%
+                }
+            }
+            %>
+                </tbody>
+                </table>
+            <%
+
+            %><h3>Keycaps:</h3><%
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.keycaps WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'KC%'");
+            //move cursor back to first position
+            rs.beforeFirst();
+            if(!rs.next()){
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>No Listings</td>
+                    </tr>
+                <%
+            }else{
+                rs.beforeFirst();
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>Name:</td>
+                        <td>URL:</td>
+                        <td>Brand:</td>
+                        <td>Price:</td>
+                        <td>Profile:</td>
+                        <td>Material:</td>
+                        <td>Edit Listing:</td>
+                        <td>Remove Listing:</td>
+                <%
+                while (rs.next()) {
+                    String name = rs.getString(3);
+                    if(name.length() > 40){ name = name.substring(0,40) + "...";}
+                    String url = rs.getString(2);
+                    if(url.length() > 40){ url = url.substring(0,40) + "...";}
+                    %>
+                    <tr>
+                        <td><%=name%></td>
+                        <td><%=url%></td>
+                        <td><%=rs.getString(4)%></td>
+                        <td><%=rs.getString(5)%></td>
+                        <td><%=rs.getString(7)%></td>
+                        <td><%=rs.getString(8)%></td>
+
+                        <td>
+                            <form action='editPrebuilt.jsp' method='post'>
+                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                        <td>
+                            <form action='manageListings.jsp' method='post'>
+                            <input type='submit' value='Remove Listing' name='removeListing'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                    </tr>
+                    <%
+                }
+            }
+            %>
+                </tbody>
+                </table>
+            <%
+
+            %><h3>Cases:</h3><%
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.kbcase WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'CS%'");
+            //move cursor back to first position
+            rs.beforeFirst();
+            if(!rs.next()){
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>No Listings</td>
+                    </tr>
+                <%
+            }else{
+                rs.beforeFirst();
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>Name:</td>
+                        <td>URL:</td>
+                        <td>Brand:</td>
+                        <td>Price:</td>
+                        <td>Size:</td>
+                        <td>Edit Listing:</td>
+                        <td>Remove Listing:</td>
+                <%
+                while (rs.next()) {
+                    String name = rs.getString(3);
+                    if(name.length() > 40){ name = name.substring(0,40) + "...";}
+                    String url = rs.getString(2);
+                    if(url.length() > 40){ url = url.substring(0,40) + "...";}
+                    %>
+                    <tr>
+                        <td><%=name%></td>
+                        <td><%=url%></td>
+                        <td><%=rs.getString(4)%></td>
+                        <td><%=rs.getString(5)%></td>
+                        <td><%=rs.getString(7)%></td>
+
+                        <td>
+                            <form action='editPrebuilt.jsp' method='post'>
+                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                        <td>
+                            <form action='manageListings.jsp' method='post'>
+                            <input type='submit' value='Remove Listing' name='removeListing'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                    </tr>
+                    <%
+                }
+            }
+            %>
+                </tbody>
+                </table>
+            <%
+
+            %><h3>Accessories:</h3><%
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.accessories WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'AC%'");
+            //move cursor back to first position
+            rs.beforeFirst();
+            if(!rs.next()){
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>No Listings</td>
+                    </tr>
+                <%
+            }else{
+                rs.beforeFirst();
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>Name:</td>
+                        <td>URL:</td>
+                        <td>Brand:</td>
+                        <td>Price:</td>
+                        <td>Type:</td>
+                        <td>Edit Listing:</td>
+                        <td>Remove Listing:</td>
+                <%
+                while (rs.next()) {
+                    String name = rs.getString(3);
+                    if(name.length() > 40){ name = name.substring(0,40) + "...";}
+                    String url = rs.getString(2);
+                    if(url.length() > 40){ url = url.substring(0,40) + "...";}
+                    %>
+                    <tr>
+                        <td><%=name%></td>
+                        <td><%=url%></td>
+                        <td><%=rs.getString(4)%></td>
+                        <td><%=rs.getString(5)%></td>
+                        <td><%=rs.getString(7)%></td>
+
+                        <td>
+                            <form action='editPrebuilt.jsp' method='post'>
+                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                        <td>
+                            <form action='manageListings.jsp' method='post'>
+                            <input type='submit' value='Remove Listing' name='removeListing'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                    </tr>
+                    <%
+                }
+            }
+            %>
+                </tbody>
+                </table>
+            <%
+
+            %><h3>Switches:</h3><%
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.switches WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'SW%'");
+            //move cursor back to first position
+            rs.beforeFirst();
+            if(!rs.next()){
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>No Listings</td>
+                    </tr>
+                <%
+            }else{
+                rs.beforeFirst();
+                %>
+                <table>
+                    <table border="1">
+                    <tbody>
+                    <tr>
+                        <td>Name:</td>
+                        <td>URL:</td>
+                        <td>Brand:</td>
+                        <td>Price:</td>
+                        <td>Type:</td>
+                        <td>Stem:</td>
+                        <td>Edit Listing:</td>
+                        <td>Remove Listing:</td>
+                <%
+                while (rs.next()) {
+                    String name = rs.getString(3);
+                    if(name.length() > 40){ name = name.substring(0,40) + "...";}
+                    String url = rs.getString(2);
+                    if(url.length() > 40){ url = url.substring(0,40) + "...";}
+                    %>
+                    <tr>
+                        <td><%=name%></td>
+                        <td><%=url%></td>
+                        <td><%=rs.getString(4)%></td>
+                        <td><%=rs.getString(5)%></td>
+                        <td><%=rs.getString(7)%></td>
+                        <td><%=rs.getString(8)%></td>
+
+                        <td>
+                            <form action='editPrebuilt.jsp' method='post'>
+                            <input type='submit' value='Edit Prebuilt' name='editPrebuilt'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                        <td>
+                            <form action='manageListings.jsp' method='post'>
+                            <input type='submit' value='Remove Listing' name='removeListing'>
+                            <input type="hidden" name="partType" value="<%=rs.getString(1)%>">
+                            </form>
+                        </td>
+                    </tr>
+                    <%
+                }
+            }
+            %>
+                </tbody>
+                </table>
+
 
     <h2>Add a Listing:</h2>
     <h3>Select Keyboard Part Type:</h3>
@@ -210,6 +685,7 @@
             <option value="keycaps">Keycaps</option>
             <option value="kbcase">Case</option>
             <option value="accessories">Accessory</option>
+            <option value="switches">Switches</option>
         </select>
         <input type="submit" value="Select" name="selectPartButton">
     </form>
@@ -336,6 +812,22 @@
             <td><input type="text" name="pType"></td></br>
 
             <br></br>
+                <input type="submit" value="Add Entry" name="addPartButton">
+                </form>
+            <%
+        break;
+        case "switches":
+            %>
+                <td>Type:</td>
+                    <select name="pType">
+                        <option value="Linear">Linear</option>
+                        <option value="Clicky">Clicky</option>
+                        <option value="Tactile">Tactile</option>
+                    </select></br>
+                <td>Stem:</td>
+                <td><input type="text" name="pStem"></td></br>
+
+                <br></br>
                 <input type="submit" value="Add Entry" name="addPartButton">
                 </form>
             <%
