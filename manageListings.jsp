@@ -123,16 +123,42 @@
                         out.println(stabType + "<br>");
                         break;
                     }
-                    case "keycap": {
+                    case "keycaps": {
                         id = "KC" + id;
+                        String profile = request.getParameter("pProfile");
+                        String material = request.getParameter("pMaterial");
+
+                        out.println(name + "<br>");
+                        out.println(url + "<br>");
+                        out.println(brand + "<br>");
+                        out.println(price + "<br>");
+                        out.println(id + "<br>");
+                        out.println(profile + "<br>");
+                        out.println(material + "<br>");
                         break;
                     }
                     case "kbcase":{
                         id = "CS" + id;
+                        String size = request.getParameter("pSize");
+
+                        out.println(name + "<br>");
+                        out.println(url + "<br>");
+                        out.println(brand + "<br>");
+                        out.println(price + "<br>");
+                        out.println(id + "<br>");
+                        out.println(size + "<br>");
                         break;
                     }
                     case"accessories": {
                         id = "AC" + id;
+                        String type = request.getParameter("pType");
+
+                        out.println(name + "<br>");
+                        out.println(url + "<br>");
+                        out.println(brand + "<br>");
+                        out.println(price + "<br>");
+                        out.println(id + "<br>");
+                        out.println(type + "<br>");
                         break;
                     }
                     default:
@@ -181,7 +207,7 @@
             <option value="prebuilt">Prebuilt</option>
             <option value="pcb">PCB</option>
             <option value="stabilizers">Stabilizer</option>
-            <option value="keycap">Keycap</option>
+            <option value="keycaps">Keycaps</option>
             <option value="kbcase">Case</option>
             <option value="accessories">Accessory</option>
         </select>
@@ -194,6 +220,7 @@
        String partType = request.getParameter("selectPart");
 
         %>
+        <h3><%=partType%></h3>
         <form name="addEntry" action="manageListings.jsp" method="post">
         <tr>
         <td>Name:</td>
@@ -245,8 +272,8 @@
                     <option value="65%">65%</option>
                     <option value="75%">75%</option>
                     <option value="TKL">Tenkeyless</option>
-                    <option value="fullSized">Full Sized</option>
-                    <option value="numpad">Numpad</option>
+                    <option value="Full Sized">Full Sized</option>
+                    <option value="Numpad">Numpad</option>
                 </select></br>
                 </tr>
                 <br></br>
@@ -270,16 +297,49 @@
                 </form>
             <%
             break;
-        case "keycap":
+        case "keycaps":
             %>
+            <td>Profile:</td>
+            <td><input type="text" name="pProfile"></td></br>
+            <td>Material:</td>
+            <td><select name="Material">
+                <option value="PBT">PBT</option>
+                <option value="ABS">ABS</option>
+            </select></td></br>
 
+            <br></br>
+            <input type="submit" value="Add Entry" name="addPartButton">
+            </form>
             <%
             break;
-        case "case":
+        case "kbcase":
             %>
+                <td>Size:</td>
+                <select name="pSize">
+                    <option value="40%">40%</option>
+                    <option value="60%">60%</option>
+                    <option value="65%">65%</option>
+                    <option value="75%">75%</option>
+                    <option value="TKL">Tenkeyless</option>
+                    <option value="Full Sized">Full Sized</option>
+                    <option value="Numpad">Numpad</option>
+                </select></br>
 
+                <br></br>
+                <input type="submit" value="Add Entry" name="addPartButton">
+                </form>
             <%
             break;
+        case "accessories":
+            %>
+            <td>Type:</td>
+            <td><input type="text" name="pType"></td></br>
+
+            <br></br>
+                <input type="submit" value="Add Entry" name="addPartButton">
+                </form>
+            <%
+        break;
         default:
             break;
        }
