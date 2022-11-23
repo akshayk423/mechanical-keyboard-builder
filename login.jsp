@@ -19,8 +19,10 @@
     </form>
   </body>
   <% 
-            String user = "root";
-            String password = "157a1965";
+            session.setAttribute("dbuser", "root");
+            session.setAttribute("dbpassword", "password");
+            String user = (String) session.getAttribute("dbuser");
+            String password = (String) session.getAttribute("dbpassword");
             try {
                 java.sql.Connection con; 
                 Class.forName("com.mysql.jdbc.Driver");
@@ -51,7 +53,6 @@
 
                 sign = request.getParameter("signOut");
                 if(sign != null && sign.equals("Sign Out")){
-                    out.println("hi"); 
                     session.invalidate();
                 }
 

@@ -10,8 +10,7 @@
     </form>
 
     <form action="login.jsp" method="post">
-
-    <button type="submit" value = "Sign Out" name="signOut">Sign Out</button>
+      <button type="submit" value = "Sign Out" name="signOut">Sign Out</button>
     </form>
 
     <%
