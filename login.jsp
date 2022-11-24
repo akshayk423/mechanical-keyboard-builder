@@ -64,14 +64,12 @@
                 //IF USER REGISTERD FROM signup.jsp
                 sign = request.getParameter("register");
                 if(sign != null && sign.equals("Sign Up")){
-                    String inputMail = request.getParameter("iMail");
                     String inputUser = request.getParameter("iUser");
                     String inputPass = request.getParameter("iPass");
 
                     rs.moveToInsertRow();
-                    rs.updateString(1, inputMail);
-                    rs.updateString(2, inputUser);
-                    rs.updateString(3, inputPass);
+                    rs.updateString(1, inputUser);
+                    rs.updateString(2, inputPass);
                     rs.insertRow();
                 }
 

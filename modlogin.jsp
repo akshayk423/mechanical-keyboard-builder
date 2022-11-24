@@ -37,7 +37,7 @@
                     boolean flag = true;
                     while(rs.next()){
                         if(inputUser.equals(rs.getString(1)) && inputPass.equals(rs.getString(2))){
-                            session.setAttribute("username", inputUser);
+                            session.setAttribute("modUser", inputUser);
                             response.sendRedirect("reportList.jsp");
                             flag = false;       
                             break;
@@ -46,6 +46,12 @@
                     if(flag){
                         out.println("Incorrect Username and Password");
                     }
+                }
+
+                sign = request.getParameter("signOut");
+                if(sign != null && sign.equals("Sign Out")){
+                    out.println("Logged Out"); 
+                    session.invalidate();
                 }
 
                 rs.close();
