@@ -1,8 +1,9 @@
+
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.*" %>
 <html>
   <head>
-    <title>Bookmarks</title>
+    <title>Report Listings</title>
     <script>
         function del(s) {
             console.log(s);
@@ -10,18 +11,24 @@
     </script>
     </head>
   <body>
-    <h1>Bookmarks</h1>
-    <form action="bookmarks.jsp">
-        <td>PartID:</td>
-        <td><input type="text" name="removeBookmarkPartID"></td></br>
-        <input type="submit" value="Delete bookmark">
+    <%if(session.getAttribute("modUser") == null){
+        %><h1>No Permission To Access Page</h1><%
+    }else{%>
+    <form action="modlogin.jsp" method="post">
+    <button type="submit" value = "Sign Out" name="signOut">Sign Out</button>
     </form>
+    <h1>Report Listings</h1>
     <table border="1">
         <thead>
           <tr>
+            <td>ReportID</td>
             <td>PartID</td>
+            <td>Name</td>
+            <td>URL</td>
+            <td>Brand</td>
             <td>Price</td>
-            <td>Remove bookmark</td>
+            <td>Seller</td>
+            <td>Remove Listing:</td>
           </tr>
         </thead>
         <tbody>
@@ -37,11 +44,28 @@
             ResultSet rs = stmt.executeQuery("SELECT * FROM mkdb.reportlistings");
 
             try {
-                rs.beforeFirst();
-                rs.next();
-                String asd = rs.getString(2);
-                String fds = asd.charAt(0) + "" + asd.charAt(1);
-                out.println(fds);
+                // rs.beforeFirst();
+                // rs.next();
+                // String asd = rs.getString(2);
+                // String fds = asd.charAt(0) + "" + asd.charAt(1);
+                // out.println(fds);
+
+                // Map<String, String> dict = new HashMap<String, String>();
+                // dict.put("SW", "switches");
+                // dict.put("PB", "prebuilt");
+                // dict.put("PC", "pcb");
+                // dict.put("SB", "stabilizers");
+                // dict.put("KC", "keycap");
+                // dict.put("CS", "kbcase");
+                // dict.put("AC", "accessories");
+
+                // rs = stmt.executeQuery("SELECT * FROM mkdb." + dict.get(fds));
+
+            String removed = request.getParameter("removeReport");
+            if(removed != null && removed.equals("Remove Report")){
+                String id = request.getParameter("partID");
+
+                String prefix = id.charAt(0) + "" + id.charAt(1);
 
                 Map<String, String> dict = new HashMap<String, String>();
                 dict.put("SW", "switches");
@@ -52,67 +76,75 @@
                 dict.put("CS", "kbcase");
                 dict.put("AC", "accessories");
 
-                rs = stmt.executeQuery("SELECT * FROM mkdb." + dict.get(fds));
-
-
+                rs = stmt.executeQuery("SELECT * FROM mkdb.reportlistings");
                 rs.beforeFirst();
-                int i = 1;
-                while (rs.next()) {
-                %>
-                    <tr>
-                        <td><%out.println(rs.getString(1));%></td>
-                        <td><%out.println(rs.getString(2));%></td>
-                        <td>
-                        <%
-                            out.println("<form action='bookmarks.jsp?removeBId=" + rs.getString(1) + "' method='post'><input type='submit' value='Remove Bookmark' name='removeBookmarkButton'></form>");
-                        %>
-                        </td>
-                    </tr>
-                <%
-                    i++;
-                }
-            } catch(SQLException e) { 
-                out.println("SQLException caught: " + e.getMessage()); 
-            }
-
-            String removed = request.getParameter("removeBookmarkButton");
-            if(removed != null && removed.equals("Remove Bookmark")){
-                String id = request.getParameter("removeBId");
-                String prefix = id.charAt(0) + "" + id.charAt(1);
-                out.println(prefix);
-
-                rs.beforeFirst();
-                boolean couldNotFind = false;
+                boolean couldNotFind = true;
                 while(rs.next()){
-                  if(id.equals(rs.getString(1))){
+                  if(id.equals(rs.getString("PartID"))){
                     rs.deleteRow();
-                    couldNotFind = true;
+                    couldNotFind = false;
                     break;
                   }
                 }
                 if(couldNotFind){
-                  out.println("Could not find ID: " + id + ", nothing was deleted");
-                }//else{//something was deleted in reported listing, therefore also delete in listings
+                  out.println("Could not find ID: " + id + " in Report Listings, nothing was deleted<br>");
+                }
 
+                //delete from keyboard part table
+                rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart");
+                rs.beforeFirst();
+                couldNotFind = true;
+                while(rs.next()){
+                  if(id.equals(rs.getString("PartID"))){
+                    rs.deleteRow();
+                    couldNotFind = false;
+                    break;
+                  }
+                }
+                if(couldNotFind){
+                  out.println("Could not find ID: " + id + " in keyboard parts, nothing was deleted<br>");
+                }
+                
+                //something was deleted in reported listing, therefore also delete in listings
+                rs = stmt.executeQuery("SELECT * FROM mkdb." + dict.get(prefix));
+                rs.beforeFirst();
+                couldNotFind = true;
+                while(rs.next()){
+                  if(id.equals(rs.getString("PartID"))){
+                    rs.deleteRow();
+                    couldNotFind = false;
+                    break;
+                  }
+                }
+                if(couldNotFind){
+                  out.println("Could not find ID: " + id + " in " + dict.get(prefix) + ", nothing was deleted<br>");
+                }
             }
 
-            try {
-                rs = stmt.executeQuery("SELECT * FROM mkdb.reportlistings");
+                rs = stmt.executeQuery("SELECT * FROM mkdb.reportlistings NATURAL JOIN mkdb.keyboardpart");
                 rs.beforeFirst();
-                int i = 1;
                 while (rs.next()) {
-                %>
+                    String name = rs.getString("name");
+                    if(name.length() > 40){ name = name.substring(0,40) + "...";}
+                    String url = rs.getString("URL");
+                    if(url.length() > 40){ url = url.substring(0,40) + "...";}
+                    %>
                     <tr>
-                        <td><%out.println(rs.getString(1));%></td>
-                        <td><%out.println(rs.getString(2));%></td>
+                        <td><%=rs.getString("ReportListID")%></td>
+                        <td><%=rs.getString("PartID")%></td>
+                        <td><%=name%></td>
+                        <td><a href=<%=rs.getString("URL")%>>(<%=url%></td>
+                        <td><%=rs.getString("brand")%></td>
+                        <td><%=rs.getString("price")%></td>
+                        <td><%=rs.getString("username")%></td>
                         <td>
-                        <%
-                            out.println("<form action='bookmarks.jsp?removeBId=" + rs.getString(1) + "' method='post'><input type='submit' value='Remove Bookmark' name='removeBookmarkButton'></form>");
-                        %>
+                            <form action='reportList.jsp' method='post'>
+                            <input type='submit' value='Remove Report' name='removeReport'>
+                            <input type='hidden' value="<%=rs.getString("PartID")%>" name='partID'>
+                            </form>
                         </td>
                     </tr>
                 <%
-                    i++;
                 }
                 rs.close();
                 stmt.close();
@@ -120,6 +152,7 @@
             } catch(SQLException e) { 
                 out.println("SQLException caught: " + e.getMessage()); 
             }
+        }
         %>
   </body>
 </html>

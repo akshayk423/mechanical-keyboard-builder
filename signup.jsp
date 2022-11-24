@@ -7,9 +7,7 @@
     <form action="login.jsp" method="post">
 
     <h1>Sign Up:</h1>
-
-    <td>Email:</td>
-    <td><input type="text" name="iMail"></td></br>
+    
     <td>Username:</td>
     <td><input type="text" name="iUser"></td></br>
     <td>Password:</td>
