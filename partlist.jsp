@@ -224,7 +224,7 @@
                                             rs3.beforeFirst();
                                             if (!rs3.next()) {
                                     %>
-                                                <td><a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Accessories</button></td>
+                                                <td><a href="/CS157A-team4/partPages/accessories.jsp" type="button" class="btn btn-primary">Add Accessories</button></td>
                                         <%
                                             } else {
                                                 rs3.beforeFirst();
@@ -273,7 +273,7 @@
                                             rs4.beforeFirst();
                                             if (!rs4.next()) {
                                     %>
-                                                <td><a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Switches</button></td>
+                                                <td><a href="/CS157A-team4/partPages/switches.jsp" type="button" class="btn btn-primary">Add Switches</button></td>
                                         <%
                                             } else {
                                                 rs4.beforeFirst();
@@ -323,7 +323,7 @@
                                             rs5.beforeFirst();
                                             if (!rs5.next()) {
                                     %>
-                                                <td><a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Case</button></td>
+                                                <td><a href="/CS157A-team4/partPages/cases.jsp" type="button" class="btn btn-primary">Add Case</button></td>
                                         <%
                                             } else {
                                                 rs5.beforeFirst();

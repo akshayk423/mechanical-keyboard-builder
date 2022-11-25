@@ -97,6 +97,23 @@
                     con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
                     Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                     String username = (String) session.getAttribute("username");
+            %>
+                    <div>
+                        <h3>Cases</h3>
+                        <p>Table of cases</p>
+                        <table>
+                            <thead>
+                                <th>Brand</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>URL</th>
+                                <th>Seller</th>
+                                <th>Size</th>
+                                <th>Add</th>
+                            </thead>
+                        </table>
+                    </div>
+            <%
                     stmt.close();
                     con.close();
                 } catch(SQLException e) { 
