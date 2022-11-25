@@ -3,7 +3,7 @@
     <head>
 
         <title>
-            Keycaps
+            Partlists
         </title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -68,7 +68,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
                     <a class="navbar-brand" href="/CS157A-team4/home.jsp">
-                        <img alt src="../logo.png" width="50" height="50">
+                        <img alt src="logo.png" width="50" height="50">
                         Mechanical Keyboard Builder
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/CS157A-team4/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/CS157A-team4/login.jsp">Login</a>
@@ -87,22 +87,68 @@
                 </div>
             </nav>
         </div>
+
         <div>
-            <% 
-                String user = (String) session.getAttribute("dbuser");
-                String password = (String) session.getAttribute("dbpassword");
-                try {
-                    java.sql.Connection con; 
-                    Class.forName("com.mysql.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
-                    Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                    String username = (String) session.getAttribute("username");
-                    stmt.close();
-                    con.close();
-                } catch(SQLException e) { 
-                    out.println("SQLException caught: " + e.getMessage()); 
-                }
-            %>
+            <table border="1" width="100%">
+                <thead>
+                    <tr>
+                        <th>Part List</th>
+                        <th>Total Price</th>
+                        <th>Prebuilt</th>
+                        <th>PCB</th>
+                        <th>Accessories</th>
+                        <th>Switches</th>
+                        <th>Case</th>
+                        <th>Stabilizer</th>
+                        <th>Keycaps</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                        String user = (String) session.getAttribute("dbuser");
+                        String password = (String) session.getAttribute("dbpassword");
+                        java.sql.Connection con; 
+                        Class.forName("com.mysql.jdbc.Driver");
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
+                        Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                        String username = (String) session.getAttribute("username");
+                        ResultSet rs = stmt.executeQuery("SELECT * FROM partlist WHERE username='" + username + "';");
+
+                        try {
+                            rs.beforeFirst();
+                            int i = 1;
+                            while (rs.next()) {
+                    %>
+                                <tr>
+                                    <td>
+                                        <form action='/CS157A-team4/partlist.jsp' method='post'>
+                                            <% out.println(rs.getString(1)); %>
+                                            <input type='submit' value='Add part' name='addPart'>
+                                            <input type='hidden' value='<%=rs.getString(1)%>' name="partListID">
+                                        </form>
+                                    </td>
+                                    <td><%out.println(rs.getString(2));%></td>
+                                    <td><%out.println(rs.getString(4));%></td>
+                                    <td><%out.println(rs.getString(5));%></td>
+                                    <td><%out.println(rs.getString(6));%></td>
+                                    <td><%out.println(rs.getString(7));%></td>
+                                    <td><%out.println(rs.getString(8));%></td>
+                                    <td><%out.println(rs.getString(9));%></td>
+                                    <td><%out.println(rs.getString(10));%></td>
+                                </tr>
+                    <%
+                                i++;
+                            }
+
+                            
+                            stmt.close();
+                            con.close();
+                        } catch(SQLException e) { 
+                            out.println("SQLException caught: " + e.getMessage()); 
+                        }
+                    %>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>

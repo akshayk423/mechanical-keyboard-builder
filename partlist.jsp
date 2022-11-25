@@ -98,6 +98,9 @@
                     con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
                     Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                     String username = (String) session.getAttribute("username");
+                    String partListID = (String) request.getAttribute("partListID");
+                    out.println(partListID);
+
             %>
                         <h3>Prebuilt</h3>
                         <table width="100%">
@@ -116,7 +119,7 @@
                             <tbody>
                                 <tr>
                                     <% 
-                                            ResultSet rs1 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, switchName, hotSwappable FROM keyboardpart NATURAL JOIN prebuilt, partlist WHERE partlist.username = '" + username + "' AND prebuilt_id = keyboardpart.partID");
+                                            ResultSet rs1 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, switchName, hotSwappable FROM keyboardpart NATURAL JOIN prebuilt, partlist WHERE partlist.username = '" + username + "' AND prebuilt_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
                                             rs1.beforeFirst();
                                             if (!rs1.next()) {
                                     %>
@@ -234,7 +237,7 @@
                                                 String prebuilt_price = rs3.getString(3);
                                                 String prebuilt_url = rs3.getString(4);
                                                 String prebuilt_seller = rs3.getString(5);
-                                                String prebuilt_type = rs3.getString(8);
+                                                String prebuilt_type = rs3.getString(6);
                                         %>
                                                 <td><%out.println(prebuilt_brand);%></td>
                                                 <td><%out.println(prebuilt_name);%></td>
