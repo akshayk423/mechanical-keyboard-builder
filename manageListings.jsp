@@ -247,7 +247,7 @@
 
             //PRINT EACH LIST FOR EACH PART
             %><h3>Prebuilts:</h3><%
-            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.prebuilt WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'PB%'");
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.prebuilt WHERE seller = '" + username  + "' AND keyboardpart.PartID LIKE 'PB%'");
             //move cursor back to first position
             rs.beforeFirst();
             if(!rs.next()){
@@ -310,7 +310,7 @@
             <%
 
             %><h3>PCB:</h3><%
-            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.pcb WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'PC%'");
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.pcb WHERE seller = '" + username  + "' AND keyboardpart.PartID LIKE 'PC%'");
             //move cursor back to first position
             rs.beforeFirst();
             if(!rs.next()){
@@ -376,7 +376,7 @@
             <%
 
             %><h3>Stabilizers:</h3><%
-            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.stabilizers WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'SB%'");
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.stabilizers WHERE seller = '" + username  + "' AND keyboardpart.PartID LIKE 'SB%'");
             //move cursor back to first position
             rs.beforeFirst();
             if(!rs.next()){
@@ -440,7 +440,7 @@
             <%
 
             %><h3>Keycaps:</h3><%
-            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.keycaps WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'KC%'");
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.keycaps WHERE seller = '" + username  + "' AND keyboardpart.PartID LIKE 'KC%'");
             //move cursor back to first position
             rs.beforeFirst();
             if(!rs.next()){
@@ -504,7 +504,7 @@
             <%
 
             %><h3>Cases:</h3><%
-            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.kbcase WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'CS%'");
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.kbcase WHERE seller = '" + username  + "' AND keyboardpart.PartID LIKE 'CS%'");
             //move cursor back to first position
             rs.beforeFirst();
             if(!rs.next()){
@@ -566,7 +566,7 @@
             <%
 
             %><h3>Accessories:</h3><%
-            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.accessories WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'AC%'");
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.accessories WHERE seller = '" + username  + "' AND keyboardpart.PartID LIKE 'AC%'");
             //move cursor back to first position
             rs.beforeFirst();
             if(!rs.next()){
@@ -628,7 +628,7 @@
             <%
 
             %><h3>Switches:</h3><%
-            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.switches WHERE username = '" + username  + "' AND keyboardpart.PartID LIKE 'SW%'");
+            rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.switches WHERE seller = '" + username  + "' AND keyboardpart.PartID LIKE 'SW%'");
             //move cursor back to first position
             rs.beforeFirst();
             if(!rs.next()){
