@@ -91,7 +91,6 @@
 
         <div>
             <% 
-                boolean foo = false;
                 String user = (String) session.getAttribute("dbuser");
                 String password = (String) session.getAttribute("dbpassword");
                 try {
@@ -104,23 +103,20 @@
                     String partListID = "";
                     if(pList != null && pList.equals("View Part List")){
                         partListID = request.getParameter("partListID");
-                        session.setAttribute("partListID", partListID);
                     }
-
-                    
-                    String pLId = (String) session.getAttribute("partListID");
 
                     // add part code
                     String add = request.getParameter("addPart");
                     String partId = "";
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM mkdb.partlist WHERE PartListID='" + pLId + "'");
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM mkdb.partlist WHERE PartListID='" + partListID + "'");
                     
                     if (add != null && add.equals("Add Part")) {
                         partId = request.getParameter("addPartID"); // get substring of partID
+                        partListID = request.getParameter("partListID");    //get current part list
                         String prefix = partId.substring(0, 2);
 
                         // execute insertion query
-                        rs = stmt.executeQuery("SELECT * FROM mkdb.partlist WHERE PartListID='" + pLId + "'");
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.partlist WHERE PartListID='" + partListID + "'");
                         rs.beforeFirst();
                         rs.next();
 
@@ -135,18 +131,54 @@
                         dict.put("AC", "accessories_id");
                         
                         // print the values
-                        out.println(pLId);
-                        out.println(dict.get(prefix));
-                        out.println(partId);
+                        // out.println(partListID);
+                        // out.println(dict.get(prefix));
+                        // out.println(partId);
 
                         // update row
                         rs.updateString(dict.get(prefix), partId);
                         rs.updateRow();
-                        rs.close();
-                        foo = true;
-                        out.println(foo);
                         // response.sendRedirect("partlist.jsp");
                     }
+
+                    String remove = request.getParameter("Delete");
+                    if(remove != null && remove.equals(request.getParameter("Delete"))){
+                        partId = request.getParameter("partID"); // get substring of partID
+                        partListID = request.getParameter("partListID");    //get current part list
+
+                        String prefix = partId.substring(0, 2);
+
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.partlist WHERE PartListID='" + partListID + "'");
+                        rs.beforeFirst();
+                        rs.next();
+
+                        // check prefix of string
+                        Map<String, String> dict = new HashMap<String, String>();
+                        dict.put("SW", "switches_id");
+                        dict.put("PB", "prebuilt_id");
+                        dict.put("PC", "pcb_id");
+                        dict.put("SB", "stab_id");
+                        dict.put("KC", "keycaps_id");
+                        dict.put("CS", "case_id");
+                        dict.put("AC", "accessories_id");
+
+                        rs.updateString(dict.get(prefix), null);
+                        rs.updateRow();
+                    }
+
+                    //use this to refer to the current partlistid and partid
+                    rs = stmt.executeQuery("SELECT * FROM mkdb.partlist WHERE PartListID='" + partListID + "'");
+                    rs.beforeFirst();
+                    rs.next();
+
+                    partListID = rs.getString("PartListID");
+                    String prebuilt_id = rs.getString("prebuilt_id");
+                    String pcb_id = rs.getString("pcb_id");
+                    String accessories_id = rs.getString("accessories_id");
+                    String switches_id = rs.getString("switches_id");
+                    String case_id = rs.getString("case_id");
+                    String stab_id = rs.getString("stab_id");
+                    String keycaps_id = rs.getString("keycaps_id");
 
             %>
                         <h3>Prebuilt</h3>
@@ -187,12 +219,18 @@
                                                 <td><%out.println(prebuilt_name);%></td>
                                                 <td><%out.println(prebuilt_price);%></td>
                                                 <td>
-                                                    <a href=<%= prebuilt_url%>>Buy</a>
+                                                    <a href=<%= prebuilt_url%> target="_blank" rel="noopener noreferrer">Buy</a>
                                                 </td>
                                                 <td><%out.println(prebuilt_seller);%></td>
                                                 <td><%out.println(prebuilt_switchName);%></td>
                                                 <td><%out.println(prebuilt_hotswappable);%></td>
-                                                <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                                <td>
+                                                        <form action='partlist.jsp' method='post'>
+                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='hidden' value="<%=prebuilt_id%>" name='partID'>
+                                                            <input type='hidden' value="<%=partListID%>" name="partListID">
+                                                        </form>
+                                                    </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -240,13 +278,19 @@
                                                 <td><%out.println(prebuilt_name);%></td>
                                                 <td><%out.println(prebuilt_price);%></td>
                                                 <td>
-                                                    <a href=<%= prebuilt_url%>>Buy</a>
+                                                    <a href=<%= prebuilt_url%> target="_blank" rel="noopener noreferrer">Buy</a>
                                                 </td>
                                                 <td><%out.println(prebuilt_seller);%></td>
                                                 <td><%out.println(prebuilt_containsRGB);%></td>
                                                 <td><%out.println(prebuilt_hotswappable);%></td>
                                                 <td><%out.println(prebuilt_size);%></td>
-                                                <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                                <td>
+                                                <form action='partlist.jsp' method='post'>
+                                                    <input type='submit' value='Delete' name='Delete'>
+                                                    <input type='hidden' value="<%=pcb_id%>" name='partID'>
+                                                    <input type='hidden' value="<%=partListID%>" name="partListID">
+                                                </form>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -292,7 +336,7 @@
                                                     <td><%out.println(prebuilt_name);%></td>
                                                     <td><%out.println(prebuilt_price);%></td>
                                                     <td>
-                                                        <a href=<%= prebuilt_url%>>Buy</a>
+                                                        <a href=<%= prebuilt_url%> target="_blank" rel="noopener noreferrer">Buy</a>
                                                     </td>
                                                     <td><%out.println(prebuilt_seller);%></td>
                                                     <td><%out.println(prebuilt_type);%></td>
@@ -342,12 +386,18 @@
                                                 <td><%out.println(prebuilt_name);%></td>
                                                 <td><%out.println(prebuilt_price);%></td>
                                                 <td>
-                                                    <a href=<%= prebuilt_url%>>Buy</a>
+                                                    <a href=<%= prebuilt_url%> target="_blank" rel="noopener noreferrer">Buy</a>
                                                 </td>
                                                 <td><%out.println(prebuilt_seller);%></td>
                                                 <td><%out.println(prebuilt_type);%></td>
                                                 <td><%out.println(prebuilt_stem);%></td>
-                                                <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                                <td>
+                                                        <form action='partlist.jsp' method='post'>
+                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='hidden' value="<%=switches_id%>" name='partID'>
+                                                            <input type='hidden' value="<%=partListID%>" name="partListID">
+                                                        </form>
+                                                    </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -357,10 +407,10 @@
                         <br></br>
                         <h2>Case</h2>
                                     <%
-                                            out.println(foo);
-                                            rs = stmt.executeQuery("SELECT  brand, URL, name, price, seller, size FROM keyboardpart NATURAL JOIN kbcase, partlist WHERE partlist.username = '" + username + "' AND case_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
-                                            rs.beforeFirst();
-                                            if (!rs.next()) {
+                                            //out.println(partListID);
+                                            ResultSet rs5 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, size FROM keyboardpart NATURAL JOIN kbcase, partlist WHERE partlist.username = '" + username + "' AND case_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
+                                            rs5.beforeFirst();
+                                            if (!rs5.next()) {
                                     %>
                                                 <form action='cases.jsp' method='post'>
                                                     <input type='submit' class="btn btn-primary" value='Add Case' name='addCase'>
@@ -368,14 +418,14 @@
                                                 </form>
                                         <%
                                             } else {
-                                                rs.beforeFirst();
-                                                rs.next();
-                                                String prebuilt_brand = rs.getString(1);
-                                                String prebuilt_url = rs.getString(2);
-                                                String prebuilt_name = rs.getString(3);
-                                                String prebuilt_price = rs.getString(4);
-                                                String prebuilt_seller = rs.getString(5);
-                                                String prebuilt_size = rs.getString(6);
+                                                rs5.beforeFirst();
+                                                rs5.next();
+                                                String prebuilt_brand = rs5.getString(1);
+                                                String prebuilt_url = rs5.getString(2);
+                                                String prebuilt_name = rs5.getString(3);
+                                                String prebuilt_price = rs5.getString(4);
+                                                String prebuilt_seller = rs5.getString(5);
+                                                String prebuilt_size = rs5.getString(6);
                                         %>
                                         <table width="100%">
                                             <thead>
@@ -391,18 +441,24 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                <td><%out.println(prebuilt_brand);%></td>
-                                                <td><%out.println(prebuilt_name);%></td>
-                                                <td><%out.println(prebuilt_price);%></td>
-                                                <td>
-                                                    <a href=<%= prebuilt_url%>>Buy</a>
-                                                </td>
-                                                <td><%out.println(prebuilt_seller);%></td>
-                                                <td><%out.println(prebuilt_size);%></td>
-                                                <td><button type="button" class="btn btn-danger">Delete</button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                    <td><%out.println(prebuilt_brand);%></td>
+                                                    <td><%out.println(prebuilt_name);%></td>
+                                                    <td><%out.println(prebuilt_price);%></td>
+                                                    <td>
+                                                        <a href=<%= prebuilt_url%> target="_blank" rel="noopener noreferrer">Buy</a>
+                                                    </td>
+                                                    <td><%out.println(prebuilt_seller);%></td>
+                                                    <td><%out.println(prebuilt_size);%></td>
+                                                    <td>
+                                                        <form action='partlist.jsp' method='post'>
+                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='hidden' value="<%=case_id%>" name='partID'>
+                                                            <input type='hidden' value="<%=partListID%>" name="partListID">
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     <%
                                             }
                                     %>            
@@ -445,12 +501,18 @@
                                                 <td><%out.println(prebuilt_name);%></td>
                                                 <td><%out.println(prebuilt_price);%></td>
                                                 <td>
-                                                    <a href=<%= prebuilt_url%>>Buy</a>
+                                                    <a href=<%= prebuilt_url%> target="_blank" rel="noopener noreferrer">Buy</a>
                                                 </td>
                                                 <td><%out.println(prebuilt_seller);%></td>
                                                 <td><%out.println(prebuilt_stabType);%></td>
                                                 <td><%out.println(prebuilt_info);%></td>
-                                                <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                                <td>
+                                                        <form action='partlist.jsp' method='post'>
+                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='hidden' value="<%=stab_id%>" name='partID'>
+                                                            <input type='hidden' value="<%=partListID%>" name="partListID">
+                                                        </form>
+                                                    </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -496,12 +558,18 @@
                                                 <td><%out.println(prebuilt_name);%></td>
                                                 <td><%out.println(prebuilt_price);%></td>
                                                 <td>
-                                                    <a href=<%= prebuilt_url%>>Buy</a>
+                                                    <a href=<%= prebuilt_url%> target="_blank" rel="noopener noreferrer">Buy</a>
                                                 </td>
                                                 <td><%out.println(prebuilt_seller);%></td>
                                                 <td><%out.println(prebuilt_profile);%></td>
                                                 <td><%out.println(prebuilt_material);%></td>
-                                                <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                                <td>
+                                                        <form action='partlist.jsp' method='post'>
+                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='hidden' value="<%=keycaps_id%>" name='partID'>
+                                                            <input type='hidden' value="<%=partListID%>" name="partListID">
+                                                        </form>
+                                                    </td>
                                             </tr>
                                         </tbody>
                                     </table>

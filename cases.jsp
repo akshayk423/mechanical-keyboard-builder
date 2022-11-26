@@ -151,6 +151,13 @@
                     ascending.put("price",true);
                     ascending.put("size",true);
                     String sort = request.getParameter("sort");
+                    String partListID = "";
+                    String addCase = request.getParameter("addCase");
+                    if(addCase != null && addCase.equals("Add Case")){
+                        partListID = request.getParameter("partListID");
+                    }
+                    out.println(partListID);
+
                     if(sort != null && sort.equals("sort")){
                             ascending.put(request.getParameter("sortCase"), !ascending.get(request.getParameter("sortCase"))); 
                         if(ascending.get(request.getParameter("sortCase")) == true) 
@@ -178,6 +185,7 @@
                                 <form action='partlist.jsp' method='post'>
                                     <input type='submit' class="btn btn-primary" value='Add Part' name='addPart'>
                                     <input type='hidden' value='<%=rs.getString(1)%>' name='addPartID'>
+                                    <input type='hidden' value='<%=partListID%>' name= 'partListID'>
                                 </form>
                             </td>
                             <td width="2%"><button type="button" class="btn btn-dark">Bookmark</button></td>
