@@ -113,18 +113,20 @@
                         Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                         String username = (String) session.getAttribute("username");
                         ResultSet rs = stmt.executeQuery("SELECT * FROM partlist WHERE username='" + username + "';");
-
+                        
                         try {
                             rs.beforeFirst();
                             int i = 1;
+                            
                             while (rs.next()) {
+                                String pListId = rs.getString(1);
                     %>
                                 <tr>
                                     <td>
-                                        <form action='/CS157A-team4/partlist.jsp' method='post'>
-                                            <% out.println(rs.getString(1)); %>
-                                            <input type='submit' value='Add part' name='addPart'>
-                                            <input type='hidden' value='<%=rs.getString(1)%>' name="partListID">
+                                        <form action='partlist.jsp' method='post'>
+                                            <input type='submit' value='View Part List' name='viewPartList'>
+                                            <input type='hidden' value='<%=pListId%>' name="partListID">
+                                            <% out.println(pListId); %>
                                         </form>
                                     </td>
                                     <td><%out.println(rs.getString(2));%></td>

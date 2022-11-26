@@ -98,8 +98,14 @@
                     con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
                     Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                     String username = (String) session.getAttribute("username");
-                    String partListID = (String) request.getAttribute("partListID");
+                    String pList = (String) request.getParameter("viewPartList");
+                    String partListID = "";
+                    out.println(pList);
+                    if(pList != null && pList.equals("View Part List")){
+                        partListID = (String) request.getParameter("partListID");
+                    }
                     out.println(partListID);
+                    
 
             %>
                         <h3>Prebuilt</h3>
