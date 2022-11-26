@@ -342,7 +342,7 @@
             <option value="accessories">Accessory</option>
             <option value="switches">Switches</option>
         </select>
-        <input type="submit" value="Select" name="selectPartButton">
+        <input type="submit" class="btn btn-primary" value="Select" name="selectPartButton">
     </form>
 
     <%
@@ -389,7 +389,7 @@
                 </select></br>
                 </tr>
                 <br></br>
-                <input type="submit" value="Add Entry" name="addPartButton">
+                <input type="submit" class="btn btn-primary" value="Add Entry" name="addPartButton">
                 </div>
                 </form>
             <%
@@ -420,7 +420,7 @@
                 </select></br>
                 </tr>
                 <br></br>
-                <input type="submit" value="Add Entry" name="addPartButton">
+                <input type="submit" class="btn btn-primary" value="Add Entry" name="addPartButton">
                 </div>
                 </form>
             <%
