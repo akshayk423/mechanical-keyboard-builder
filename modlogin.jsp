@@ -18,8 +18,10 @@
   </body>
   <% 
             //set username and password
-            String user = "root";
-            String password = "157a1965";
+            session.setAttribute("dbuser", "root");
+            session.setAttribute("dbpassword", "password");
+            String user = (String) session.getAttribute("dbuser");
+            String password = (String) session.getAttribute("dbpassword");
             try {
                 java.sql.Connection con; 
                 Class.forName("com.mysql.jdbc.Driver");
@@ -37,7 +39,7 @@
                     boolean flag = true;
                     while(rs.next()){
                         if(inputUser.equals(rs.getString(1)) && inputPass.equals(rs.getString(2))){
-                            session.setAttribute("username", inputUser);
+                            session.setAttribute("modUser", inputUser);
                             response.sendRedirect("reportList.jsp");
                             flag = false;       
                             break;
@@ -46,6 +48,12 @@
                     if(flag){
                         out.println("Incorrect Username and Password");
                     }
+                }
+
+                sign = request.getParameter("signOut");
+                if(sign != null && sign.equals("Sign Out")){
+                    out.println("Logged Out"); 
+                    session.invalidate();
                 }
 
                 rs.close();

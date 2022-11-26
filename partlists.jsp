@@ -1,4 +1,5 @@
 <%@ page import="java.sql.*"%>
+<%@ page import="java.util.*"%>
 <html>
     <head>
 
@@ -64,11 +65,15 @@
     </head>
 
     <body>
-        
+        <%
+        if(session.getAttribute("username") == null){
+            %><h1>No Permission To Access Page</h1><%
+        } else {
+        %>
         <div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
-                    <a class="navbar-brand" href="/home.jsp">
+                    <a class="navbar-brand" href="/CS157A-team4/home.jsp">
                         <img alt src="logo.png" width="50" height="50">
                         Mechanical Keyboard Builder
                     </a>
@@ -78,10 +83,12 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                        <a class="nav-link" href="/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/CS157A-team4/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="/login.jsp">Login</a>
+                            <form action="login.jsp" method="post">
+                                <button type="submit" value = "Sign Out" name="signOut">Sign Out</button>
+                            </form>
                         </li>
                     </ul>
                     </div>
@@ -90,264 +97,129 @@
         </div>
 
         <div>
-			<table width="100%">
-				<thead>
-					<tr>
-						<th>Keyboard</th>
-						<th>Case</th>
-						<th>PCB</th>
-						<th>Switches</th>
-						<th>Keycaps</th>
-						<th>Stabilizers</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<% 
-                        String user = "root";
-                        String password = "Akshayk123!";
+            <table border="1" width="100%">
+                <thead>
+                    <tr>
+                        <th>Part List</th>
+                        <th>Total Price</th>
+                        <th>Prebuilt</th>
+                        <th>PCB</th>
+                        <th>Accessories</th>
+                        <th>Switches</th>
+                        <th>Case</th>
+                        <th>Stabilizer</th>
+                        <th>Keycaps</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                        String user = (String) session.getAttribute("dbuser");
+                        String password = (String) session.getAttribute("dbpassword");
+                        java.sql.Connection con; 
+                        Class.forName("com.mysql.jdbc.Driver");
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
+                        Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                        String username = (String) session.getAttribute("username");
+                        ResultSet rs = stmt.executeQuery("SELECT * FROM partlist WHERE username='" + username + "';");
                         try {
-                            java.sql.Connection con; 
-                            Class.forName("com.mysql.jdbc.Driver");
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
-                            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                            
-                            ResultSet rs = stmt.executeQuery("SELECT * FROM mkbb.partlist;");
-                            rs.beforeFirst();
-                            while(rs.next()){
-                                %>
-                                <tr>
-
-                                    <td>
-                                        <% 
-                                        String prebuilt = rs.getString("prebuilt_id");
-                                        if(prebuilt.length() > 0){
-                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + prebuilt + "';");
-                                            rs1.next();
-                                            String prebuilt_url = rs1.getString("URL");
-                                        %>
-                                        <div class="dropdown show">
-                                            <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <%       if(rs1.getString("name").length() < 50)
-                                                    out.println(rs1.getString("name"));
-                                                else
-                                                    out.println(rs1.getString("brand"));
-                                                rs1.close();
-                                                stmt1.close();
-                                        %>
-                                            </a>
-                                          
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                              <a class="dropdown-item" href="<%=prebuilt_url%>" onclick="window.open('<%=prebuilt_url%>'),'_blank'">Purchase</a>
-                                              <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                        <%
-                                        }
-                                        else{
-                                        %>            
-                                        <a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Prebuilt</button>
-                                        <%  
-                                        }
-                                        %>
-                                    </td>
-                                
-                                    <td>
-                                    <%
-                                        String case_id = rs.getString("case_id");
-                                        if(case_id.length() > 0){
-                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + case_id + "';");
-                                            rs1.next();
-                                            String case_url = rs1.getString("URL");
-                                    %>
-                                    <div class="dropdown show">
-                                        <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <%
-                                             if(rs1.getString("name").length() < 50)
-                                                out.println(rs1.getString("name"));
-                                            else
-                                                out.println(rs1.getString("brand"));
-                                            rs1.close();
-                                            stmt1.close();
-                                    %>
-                                            </a>
-                                                    
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item" href="<%=case_url%>" onclick="window.open('<%=case_url%>'),'_blank'">Purchase</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    <%
-                                        }
-                                        else{
-                                    %>
-                                            <a href="/cases.jsp" type="button" class="btn btn-primary">Add Case</button>
-                                    <%
-                                        }
-                                    %>
-                                    </td>
-                                    
-                                    <td>
-                                    <%
-                                        String pcb_id = rs.getString("pcb_id");
-                                        if(pcb_id.length() > 0)
-                                        {
-                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + pcb_id + "';");
-                                            rs1.next();
-                                            String pcb_url = rs1.getString("URL");
-                                        %>
-                                        <div class="dropdown show">
-                                            <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <%
-                                             if(rs1.getString("name").length() < 50)
-                                                out.println(rs1.getString("name"));
-                                            else
-                                                out.println(rs1.getString("brand"));
-                                            rs1.close();
-                                            stmt1.close();
-                                    %>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="<%=pcb_url%>" onclick="window.open('<%=pcb_url%>'),'_blank'">Purchase</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                                </div>
-                                            </div>
-                                    <%
-                                        }
-                                        else{
-                                    %>
-                                            <a href="/pcbs.jsp" type="button" class="btn btn-primary">Add PCB</button>
-                                    <%
-                                        }
-                                    %>
-                                    </td>
-                                    <td>
-                                    <%
-                                        String switch_id = rs.getString("switches_id");
-                                        if(switch_id.length() > 0)
-                                        {
-                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + switch_id + "';");
-                                            rs1.next();
-                                            String switch_url = rs1.getString("URL");
-                                    %>
-                                        <div class="dropdown show">
-                                            <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <%
-                                             if(rs1.getString("name").length() < 30)
-                                                out.println(rs1.getString("name"));
-                                            else
-                                                out.println(rs1.getString("brand"));
-                                            rs1.close();
-                                            stmt1.close();
-                                    %>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="<%=switch_url%>" onclick="window.open('<%=switch_url%>'),'_blank'">Purchase</a>
-                                    <a class="dropdown-item" href="#">Delete</a>
-                                    </div>
-                                </div>
-                                    <%
-                                        }
-                                        else{
-                                    %>
-                                            <a href="/switches.jsp" type="button" class="btn btn-primary">Add PCB</button>
-                                    <%
-                                        }
-                                    %>
-                                    
-                                    </td>
-                                    <td>
-                                    <%
-                                        String keycaps_id = rs.getString("keycaps_id");
-                                        if(keycaps_id.length() > 0)
-                                        {
-                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + keycaps_id + "';");
-                                            rs1.next();
-                                            String keycap_url = rs1.getString("URL");
-                                    %>
-                                        <div class="dropdown show">
-                                            <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <%
-                                             if(rs1.getString("name").length() < 50)
-                                                out.println(rs1.getString("name"));
-                                            else
-                                                out.println(rs1.getString("brand"));
-                                            rs1.close();
-                                            stmt1.close();
-                                    %>
-                                            </a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item" href="<%=keycap_url%>" onclick="window.open('<%=keycap_url%>'),'_blank'">Purchase</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    <%
-                                        }
-                                        else{
-                                    %>
-                                            <a href="/keycaps.jsp" type="button" class="btn btn-primary">Add Keycaps</button>
-                                    <%
-                                        }
-                                    %>
-                                    </td>
-                                    <td>
-                                    <%
-                                        String stab_id = rs.getString("stab_id");
-                                        if(stab_id.length() > 0)
-                                        {
-                                            Statement stmt1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM mkbb.keyboardpart WHERE PartID = '" + stab_id + "';");
-                                            rs1.next();
-                                            String stab_url = rs1.getString("URL");
-                                    %>
-                                    <div class="dropdown show">
-                                        <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <%
-                                             if(rs1.getString("name").length() < 50)
-                                                out.println(rs1.getString("name"));
-                                            else
-                                                out.println(rs1.getString("brand"));
-                                            rs1.close();
-                                            stmt1.close();
-                                    %>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item" href="<%=stab_url%>" onclick="window.open('<%=stab_url%>'),'_blank'">Purchase</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                        </div>
-                                    </div>
-                                    <%
-                                        }
-                                        else{
-                                    %>
-                                            <a href="/stabs.jsp" type="button" class="btn btn-primary">Add Stabilizers</button>
-                                    <%
-                                        }
-                                    %>
-                                    </td>
-                                    <td><button type="button" class="btn btn-danger">Delete</button></td>
-                                    <td><%out.println(rs.getString(3));%></td>
-                                    <td><%out.println(rs.getString(2));%></td>
-                                </tr>
-                            <%
+                            String removed = request.getParameter("removePartList");
+                            if(removed != null && removed.equals("Remove Part List")) {
+                                String id = request.getParameter("rmPartListID");
+                                rs = stmt.executeQuery("SELECT * FROM mkdb.partlist");
+                                rs.beforeFirst();
+                                boolean couldNotFind = true;
+                                while(rs.next()){
+                                    if(id.equals(rs.getString("PartListID"))){
+                                        rs.deleteRow();
+                                        couldNotFind = false;
+                                        break;
+                                    }
+                                }
+                                if(couldNotFind){
+                                    out.println("Could not find ID: " + id + " in Part Listings, nothing was deleted<br>");
+                                }
                             }
-                            rs.close();
+
+                            String add = request.getParameter("addPartList");
+                            if (add != null && add.equals("Add Part List")) {
+                                rs = stmt.executeQuery("SELECT * FROM mkdb.partlist");
+
+                                // add every id to a set
+                                Set<String> idSet = new HashSet<String>();
+                                //populate map with ID's
+                                rs.moveToInsertRow();
+                                while(rs.next()){
+                                    idSet.add(rs.getString(1).substring(2));
+                                }
+
+                                //generate new id
+                                boolean unique = false;
+                                Random random = new Random();
+                                String id = "0000";
+                                while(!unique){
+                                    String curId = String.format("%04d", random.nextInt(10000));
+                                    if(!idSet.contains(id)){
+                                        id = "PL" + curId;																									// change to id = "PL" + curId;
+                                        unique = true;
+                                        break;
+                                    }
+                                }
+
+                                //add entry
+                                rs.moveToInsertRow();
+                                rs.updateString("PartListID", id);
+                                rs.updateDouble("totalPrice", 0.0);
+                                rs.updateString("username", username);
+                                rs.insertRow();
+
+                            }
+                            
+                            rs = stmt.executeQuery("SELECT * FROM partlist WHERE username='" + username + "';");
+                            rs.beforeFirst();
+                            int i = 1;
+                            while (rs.next()) {
+                                String pListId = rs.getString(1);
+                    %>
+                                <tr>
+                                    <td>
+                                        <form action='partlist.jsp' method='post'>
+                                            <input type='submit' value='View Part List' name='viewPartList'>
+                                            <input type='hidden' value='<%=pListId%>' name="partListID">
+                                        </form>
+                                    </td>
+                                    <td><%out.println(rs.getString(2));%></td>
+                                    <td><%out.println(rs.getString(4));%></td>
+                                    <td><%out.println(rs.getString(5));%></td>
+                                    <td><%out.println(rs.getString(6));%></td>
+                                    <td><%out.println(rs.getString(7));%></td>
+                                    <td><%out.println(rs.getString(8));%></td>
+                                    <td><%out.println(rs.getString(9));%></td>
+                                    <td><%out.println(rs.getString(10));%></td>
+                                    <td>
+                                        <form action='partlists.jsp' method='post'>
+                                            <input type='submit' value='Remove Part List' name='removePartList'>
+                                            <input type='hidden' value='<%=rs.getString(1)%>' name='rmPartListID'>
+                                        </form>
+                                    </td>
+                                </tr>
+                    <%
+                                i++;
+                            }
+                    %>
+                    </tbody>
+                </table>
+                            <form action='partlists.jsp' method='post'>
+                                <input type='submit' value='Add Part List' name='addPartList'>
+                            </form>
+                    <%
                             stmt.close();
                             con.close();
-                        }catch(SQLException e) { 
+                        } catch(SQLException e) { 
                             out.println("SQLException caught: " + e.getMessage()); 
                         }
                     %>
-				</tbody>
-			</table>
-		</div>
-        
+                
+        </div>
+                    <%}%>
     </body>
-   
-
 </html>

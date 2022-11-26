@@ -98,12 +98,14 @@
 
         <div>
             <h1>Cases</h1>
+
        
             <form id="caseName" action="cases.jsp" method="post">
     
                     <input id="searchParams" type="text" placeholder="Search.." name="searchParams" onkeyup="myFunction()">
         
             </form>
+
         <table width="100%">
             
             <thead>
@@ -112,7 +114,6 @@
 
                         <form id="caseName" action="cases.jsp" method="post">
                             <input type="hidden" value = "name" name="sortCase">
-                            <input type="hidden" value=false name="ascending">
                             <button class="btn btn-primary" type="submit" value = "sort" name="sort">Name</button>
                         </form>
                             
@@ -121,7 +122,6 @@
                     <td>
                     <form id="caseBrand" action="cases.jsp" method="post">
                         <input type="hidden" value = "brand" name="sortCase">
-                        <input type="hidden" value=false name="ascending">
                         <button class="btn btn-primary" type="submit" value = "sort" name="sort">Brand</button>
                     </form>
                     
@@ -129,7 +129,6 @@
                     <td> 
                         <form id="casePrice" action="cases.jsp" method="post">
                             <input type="hidden" value = "price" name="sortCase">
-                            <input type="hidden" value=false name="ascending">
                             <button class="btn btn-primary" type="submit" value = "sort" name="sort">Price</button>
                         </form> 
                     </td>
@@ -137,8 +136,7 @@
                     <td>
                         <form id="caseSize" action="cases.jsp" method="post">
                                 <input type="hidden" value = "size" name="sortCase">
-                                <input type="hidden" value=false name="ascending">
-                                <button class="btn btn-primary" type="submit" value = "sort" name="sort">Price</button>
+                                <button class="btn btn-primary" type="submit" value = "sort" name="sort">Size</button>
                         </form>
                     </td>
                 
@@ -166,8 +164,8 @@
             </script>
             <tbody id="rows">
                 <%
-                String user = "root";
-                String password = "Akshayk123!";
+                String user = (String) session.getAttribute("dbuser");
+                String password = (String) session.getAttribute("dbpassword");
                 try {
                     java.sql.Connection con; 
                     Class.forName("com.mysql.jdbc.Driver");
@@ -176,6 +174,13 @@
                     String query = "SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.kbcase WHERE keyboardpart.PartID LIKE 'CS%';";
 
                     String sort = request.getParameter("sort");
+                    String partListID = "";
+                    String addCase = request.getParameter("addCase");
+                    if(addCase != null && addCase.equals("Add Case")){
+                        partListID = request.getParameter("partListID");
+                    }
+                    out.println(partListID);
+
                     if(sort != null && sort.equals("sort")){
                     //   String ascending = request.getAttribute("ascending");
                     //   if(ascending.equals("true")){
@@ -199,10 +204,16 @@
                             <td width="10%"><%=price%></td>
                             <td width="10%"><a href="<%=rs.getString("URL")%>">Purchase</a></td>
                             <td width="10%"><%=rs.getString("Size")%></td>
+                            <td>
+                                <form action='partlist.jsp' method='post'>
+                                    <input type='submit' class="btn btn-primary" value='Add Part' name='addPart'>
+                                    <input type='hidden' value='<%=rs.getString(1)%>' name='addPartID'>
+                                    <input type='hidden' value='<%=partListID%>' name= 'partListID'>
+                                </form>
+                            </td>
                             <td width="2%"><button type="button" class="btn btn-dark">Bookmark</button></td>
                             <td width="2%"><button type="button" class="btn btn-danger">Report</button></td>
-                            <td><%=request.getParameter("searchParams")%></td>
-                            
+
                         </tr><%
                     }
 

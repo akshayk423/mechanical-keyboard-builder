@@ -11,7 +11,7 @@
     <td>Username:</td>
     <td><input type="text" name="iUserName"></td></br>
     <td>Password:</td>
-    <td><input type="text" name="iPassword"></td></br>
+    <td><input type="password" name="iPassword"></td></br>
 
     <input type="submit" value="Sign In" name="signIn">
     <input type="submit" value="Sign Up" name="signUp">
@@ -19,8 +19,10 @@
     </form>
   </body>
   <% 
-            String user = "root";
-            String password = "157a1965";
+            session.setAttribute("dbuser", "root");
+            session.setAttribute("dbpassword", "password");
+            String user = (String) session.getAttribute("dbuser");
+            String password = (String) session.getAttribute("dbpassword");
             try {
                 java.sql.Connection con; 
                 Class.forName("com.mysql.jdbc.Driver");
@@ -39,7 +41,7 @@
                     while(rs.next()){
                         if(inputUser.equals(rs.getString(1)) && inputPass.equals(rs.getString(2))){
                             session.setAttribute("username", inputUser);
-                            response.sendRedirect("success.jsp");
+                            response.sendRedirect("home.jsp");
                             flag = false;
                             break;
                         }
@@ -51,7 +53,7 @@
 
                 sign = request.getParameter("signOut");
                 if(sign != null && sign.equals("Sign Out")){
-                    out.println("hi"); 
+                    out.println("Signed out");
                     session.invalidate();
                 }
 
@@ -63,14 +65,12 @@
                 //IF USER REGISTERD FROM signup.jsp
                 sign = request.getParameter("register");
                 if(sign != null && sign.equals("Sign Up")){
-                    String inputMail = request.getParameter("iMail");
                     String inputUser = request.getParameter("iUser");
                     String inputPass = request.getParameter("iPass");
 
                     rs.moveToInsertRow();
-                    rs.updateString(1, inputMail);
-                    rs.updateString(2, inputUser);
-                    rs.updateString(3, inputPass);
+                    rs.updateString(1, inputUser);
+                    rs.updateString(2, inputPass);
                     rs.insertRow();
                 }
 
