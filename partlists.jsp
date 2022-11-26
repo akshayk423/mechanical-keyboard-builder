@@ -1,4 +1,5 @@
 <%@ page import="java.sql.*"%>
+<%@ page import="java.util.*"%>
 <html>
     <head>
 
@@ -64,6 +65,11 @@
     </head>
 
     <body>
+        <%
+        if(session.getAttribute("username") == null){
+            %><h1>No Permission To Access Page</h1><%
+        } else {
+        %>
         <div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
@@ -77,10 +83,12 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/CS157A-team4/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/CS157A-team4/login.jsp">Login</a>
+                            <form action="login.jsp" method="post">
+                                <button type="submit" value = "Sign Out" name="signOut">Sign Out</button>
+                            </form>
                         </li>
                     </ul>
                     </div>
@@ -113,11 +121,62 @@
                         Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                         String username = (String) session.getAttribute("username");
                         ResultSet rs = stmt.executeQuery("SELECT * FROM partlist WHERE username='" + username + "';");
-                        
                         try {
+                            String removed = request.getParameter("removePartList");
+                            if(removed != null && removed.equals("Remove Part List")) {
+                                String id = request.getParameter("rmPartListID");
+                                rs = stmt.executeQuery("SELECT * FROM mkdb.partlist");
+                                rs.beforeFirst();
+                                boolean couldNotFind = true;
+                                while(rs.next()){
+                                    if(id.equals(rs.getString("PartListID"))){
+                                        rs.deleteRow();
+                                        couldNotFind = false;
+                                        break;
+                                    }
+                                }
+                                if(couldNotFind){
+                                    out.println("Could not find ID: " + id + " in Part Listings, nothing was deleted<br>");
+                                }
+                            }
+
+                            String add = request.getParameter("addPartList");
+                            if (add != null && add.equals("Add Part List")) {
+                                rs = stmt.executeQuery("SELECT * FROM mkdb.partlist");
+
+                                // add every id to a set
+                                Set<String> idSet = new HashSet<String>();
+                                //populate map with ID's
+                                rs.moveToInsertRow();
+                                while(rs.next()){
+                                    idSet.add(rs.getString(1).substring(2));
+                                }
+
+                                //generate new id
+                                boolean unique = false;
+                                Random random = new Random();
+                                String id = "0000";
+                                while(!unique){
+                                    String curId = String.format("%04d", random.nextInt(10000));
+                                    if(!idSet.contains(id)){
+                                        id = "PL" + curId;																									// change to id = "PL" + curId;
+                                        unique = true;
+                                        break;
+                                    }
+                                }
+
+                                //add entry
+                                rs.moveToInsertRow();
+                                rs.updateString("PartListID", id);
+                                rs.updateDouble("totalPrice", 0.0);
+                                rs.updateString("username", username);
+                                rs.insertRow();
+
+                            }
+                            
+                            rs = stmt.executeQuery("SELECT * FROM partlist WHERE username='" + username + "';");
                             rs.beforeFirst();
                             int i = 1;
-                            
                             while (rs.next()) {
                                 String pListId = rs.getString(1);
                     %>
@@ -137,20 +196,31 @@
                                     <td><%out.println(rs.getString(8));%></td>
                                     <td><%out.println(rs.getString(9));%></td>
                                     <td><%out.println(rs.getString(10));%></td>
+                                    <td>
+                                        <form action='partlists.jsp' method='post'>
+                                            <input type='submit' value='Remove Part List' name='removePartList'>
+                                            <input type='hidden' value='<%=rs.getString(1)%>' name='rmPartListID'>
+                                        </form>
+                                    </td>
                                 </tr>
                     <%
                                 i++;
                             }
-
-                            
+                    %>
+                    </tbody>
+                </table>
+                            <form action='partlists.jsp' method='post'>
+                                <input type='submit' value='Add Part List' name='addPartList'>
+                            </form>
+                    <%
                             stmt.close();
                             con.close();
                         } catch(SQLException e) { 
                             out.println("SQLException caught: " + e.getMessage()); 
                         }
                     %>
-                </tbody>
-            </table>
+                
         </div>
+                    <%}%>
     </body>
 </html>

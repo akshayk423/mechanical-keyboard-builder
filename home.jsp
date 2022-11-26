@@ -56,6 +56,9 @@
     </style>
   </head>
   <body>
+    <%if(session.getAttribute("username") == null){
+      %><h1>No Permission To Access Page</h1><%
+    }else{%>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
           <a class="navbar-brand" href="/CS157A-team4/home.jsp">
@@ -87,6 +90,6 @@
     <form action="manageListings.jsp">
       <input type="submit" value="Home to manage listings">
     </form>
-    
+    <%}%>
   </body>
 </html>

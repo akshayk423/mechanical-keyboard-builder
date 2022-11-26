@@ -77,10 +77,10 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/CS157A-team4/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/CS157A-team4/login.jsp">Login</a>
+                            <a class="nav-link" href="/CS157A-team4/login.jsp">Log out</a>
                         </li>
                     </ul>
                     </div>
@@ -100,36 +100,20 @@
                     String username = (String) session.getAttribute("username");
                     String pList = (String) request.getParameter("viewPartList");
                     String partListID = "";
-                    out.println(pList);
                     if(pList != null && pList.equals("View Part List")){
                         partListID = (String) request.getParameter("partListID");
+                        out.println(partListID);
                     }
-                    out.println(partListID);
                     
 
             %>
                         <h3>Prebuilt</h3>
-                        <table width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Brand</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>URL</th>
-                                    <th>Seller</th>
-                                    <th>Switch Name</th>
-                                    <th>Hotswappable</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
                                     <% 
                                             ResultSet rs1 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, switchName, hotSwappable FROM keyboardpart NATURAL JOIN prebuilt, partlist WHERE partlist.username = '" + username + "' AND prebuilt_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
                                             rs1.beforeFirst();
                                             if (!rs1.next()) {
                                     %>
-                                                <td><a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Prebuilt</button></td>
+                                                <a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Prebuilt</a>
                                         <%
                                             } else {
                                                 rs1.beforeFirst();
@@ -142,6 +126,21 @@
                                                 String prebuilt_switchName = rs1.getString(6);
                                                 String prebuilt_hotswappable = rs1.getString(7);
                                         %>
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Brand</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>URL</th>
+                                                    <th>Seller</th>
+                                                    <th>Switch Name</th>
+                                                    <th>Hotswappable</th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
                                                 <td><%out.println(prebuilt_brand);%></td>
                                                 <td><%out.println(prebuilt_name);%></td>
                                                 <td><%out.println(prebuilt_price);%></td>
@@ -152,36 +151,20 @@
                                                 <td><%out.println(prebuilt_switchName);%></td>
                                                 <td><%out.println(prebuilt_hotswappable);%></td>
                                                 <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     <%
                                             }
                                     %>
-                                </tr>
-                            </tbody>
-                        </table>
                         <br></br>
                         <h3>PCB</h3>
-                        <table width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Brand</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>URL</th>
-                                    <th>Seller</th>
-                                    <th>ContainsRGB</th>
-                                    <th>Hotswappable</th>
-                                    <th>Size</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
                                     <%
-                                            ResultSet rs2 = stmt.executeQuery("SELECT brand, name, url, price, seller, containsRGB, hotSwappable, size FROM keyboardpart NATURAL JOIN pcb, partlist WHERE partlist.username = '" + username + "' AND pcb_id = keyboardpart.partID");
+                                            ResultSet rs2 = stmt.executeQuery("SELECT brand, name, url, price, seller, containsRGB, hotSwappable, size FROM keyboardpart NATURAL JOIN pcb, partlist WHERE partlist.username = '" + username + "' AND pcb_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
                                             rs2.beforeFirst();
                                             if (!rs2.next()) {
                                     %>
-                                                <td><a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add PCB</button></td>
+                                                <a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add PCB</a>
                                         <%
                                             } else {
                                                 rs2.beforeFirst();
@@ -195,6 +178,22 @@
                                                 String prebuilt_hotswappable = rs2.getString(7);
                                                 String prebuilt_size = rs2.getString(8);
                                         %>
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Brand</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>URL</th>
+                                                    <th>Seller</th>
+                                                    <th>ContainsRGB</th>
+                                                    <th>Hotswappable</th>
+                                                    <th>Size</th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
                                                 <td><%out.println(prebuilt_brand);%></td>
                                                 <td><%out.println(prebuilt_name);%></td>
                                                 <td><%out.println(prebuilt_price);%></td>
@@ -206,34 +205,22 @@
                                                 <td><%out.println(prebuilt_hotswappable);%></td>
                                                 <td><%out.println(prebuilt_size);%></td>
                                                 <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     <%
                                             }
                                     %>
-                                </tr>
-                            </tbody>
-                        </table>
+                                
                         <br></br>
                         <h3>Accessories</h3>
-                        <table width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Brand</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>URL</th>
-                                    <th>Seller</th>
-                                    <th>Type</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
+
                                     <%
-                                            ResultSet rs3 = stmt.executeQuery("SELECT brand, name, price, URL, seller, type FROM keyboardpart NATURAL JOIN accessories, partlist WHERE partlist.username = '" + username + "' AND accessories_id = keyboardpart.partID");
+                                            ResultSet rs3 = stmt.executeQuery("SELECT brand, name, price, URL, seller, type FROM keyboardpart NATURAL JOIN accessories, partlist WHERE partlist.username = '" + username + "' AND accessories_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
                                             rs3.beforeFirst();
                                             if (!rs3.next()) {
                                     %>
-                                                <td><a href="/CS157A-team4/partPages/accessories.jsp" type="button" class="btn btn-primary">Add Accessories</button></td>
+                                                <a href="/CS157A-team4/partPages/accessories.jsp" type="button" class="btn btn-primary">Add Accessories</a>
                                         <%
                                             } else {
                                                 rs3.beforeFirst();
@@ -245,21 +232,35 @@
                                                 String prebuilt_seller = rs3.getString(5);
                                                 String prebuilt_type = rs3.getString(6);
                                         %>
-                                                <td><%out.println(prebuilt_brand);%></td>
-                                                <td><%out.println(prebuilt_name);%></td>
-                                                <td><%out.println(prebuilt_price);%></td>
-                                                <td>
-                                                    <a href=<%= prebuilt_url%>>Buy</a>
-                                                </td>
-                                                <td><%out.println(prebuilt_seller);%></td>
-                                                <td><%out.println(prebuilt_type);%></td>
-                                                <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Brand</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>URL</th>
+                                                    <th>Seller</th>
+                                                    <th>Type</th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><%out.println(prebuilt_brand);%></td>
+                                                    <td><%out.println(prebuilt_name);%></td>
+                                                    <td><%out.println(prebuilt_price);%></td>
+                                                    <td>
+                                                        <a href=<%= prebuilt_url%>>Buy</a>
+                                                    </td>
+                                                    <td><%out.println(prebuilt_seller);%></td>
+                                                    <td><%out.println(prebuilt_type);%></td>
+                                                    <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     <%
                                             }
                                     %>
-                                </tr>
-                            </tbody>
-                        </table>
                         <br></br>
                         <h2>Switches</h2>
                         <table width="100%">
@@ -278,11 +279,11 @@
                             <tbody>
                                 <tr>
                                     <%
-                                            ResultSet rs4 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, type, stem FROM keyboardpart NATURAL JOIN switches, partlist WHERE partlist.username = '" + username + "' AND switches_id = keyboardpart.partID");
+                                            ResultSet rs4 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, type, stem FROM keyboardpart NATURAL JOIN switches, partlist WHERE partlist.username = '" + username + "' AND switches_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
                                             rs4.beforeFirst();
                                             if (!rs4.next()) {
                                     %>
-                                                <td><a href="/CS157A-team4/partPages/switches.jsp" type="button" class="btn btn-primary">Add Switches</button></td>
+                                                <a href="/CS157A-team4/partPages/switches.jsp" type="button" class="btn btn-primary">Add Switches</a>
                                         <%
                                             } else {
                                                 rs4.beforeFirst();
@@ -313,26 +314,12 @@
                         </table>
                         <br></br>
                         <h2>Case</h2>
-                        <table width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Brand</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>URL</th>
-                                    <th>Seller</th>
-                                    <th>Size</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
                                     <%
-                                            ResultSet rs5 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, size FROM keyboardpart NATURAL JOIN kbcase, partlist WHERE partlist.username = '" + username + "' AND case_id = keyboardpart.partID");
+                                            ResultSet rs5 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, size FROM keyboardpart NATURAL JOIN kbcase, partlist WHERE partlist.username = '" + username + "' AND case_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
                                             rs5.beforeFirst();
                                             if (!rs5.next()) {
                                     %>
-                                                <td><a href="/CS157A-team4/partPages/cases.jsp" type="button" class="btn btn-primary">Add Case</button></td>
+                                                <a href="/CS157A-team4/partPages/cases.jsp" type="button" class="btn btn-primary">Add Case</a>
                                         <%
                                             } else {
                                                 rs5.beforeFirst();
@@ -344,6 +331,20 @@
                                                 String prebuilt_seller = rs5.getString(5);
                                                 String prebuilt_size = rs5.getString(6);
                                         %>
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Brand</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>URL</th>
+                                                    <th>Seller</th>
+                                                    <th>Size</th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
                                                 <td><%out.println(prebuilt_brand);%></td>
                                                 <td><%out.println(prebuilt_name);%></td>
                                                 <td><%out.println(prebuilt_price);%></td>
@@ -353,35 +354,20 @@
                                                 <td><%out.println(prebuilt_seller);%></td>
                                                 <td><%out.println(prebuilt_size);%></td>
                                                 <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     <%
                                             }
                                     %>            
-                                </tr>
-                            </tbody>
-                        </table>
                         <br></br>
                         <h2>Stabilizer</h2>
-                        <table width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Brand</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>URL</th>
-                                    <th>Seller</th>
-                                    <th>Stabilizer Type</th>
-                                    <th>Info</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
                                     <%
-                                            ResultSet rs6 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, stabtype, info FROM keyboardpart NATURAL JOIN stabilizers, partlist WHERE partlist.username = '" + username + "' AND stab_id = keyboardpart.partID");
+                                            ResultSet rs6 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, stabtype, info FROM keyboardpart NATURAL JOIN stabilizers, partlist WHERE partlist.username = '" + username + "' AND stab_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
                                             rs6.beforeFirst();
                                             if (!rs6.next()) {
                                     %>
-                                                <td><a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Prebuilt</button></td>
+                                                <a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Stabilizer</a>
                                         <%
                                             } else {
                                                 rs6.beforeFirst();
@@ -394,6 +380,21 @@
                                                 String prebuilt_stabType = rs6.getString(6);
                                                 String prebuilt_info = rs6.getString(7);
                                         %>
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Brand</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>URL</th>
+                                                    <th>Seller</th>
+                                                    <th>Stabilizer Type</th>
+                                                    <th>Info</th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
                                                 <td><%out.println(prebuilt_brand);%></td>
                                                 <td><%out.println(prebuilt_name);%></td>
                                                 <td><%out.println(prebuilt_price);%></td>
@@ -404,35 +405,20 @@
                                                 <td><%out.println(prebuilt_stabType);%></td>
                                                 <td><%out.println(prebuilt_info);%></td>
                                                 <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     <%
                                             }
                                     %>            
-                                </tr>
-                            </tbody>
-                        </table>
                         <br></br>
                         <h2>Keycaps</h2>
-                        <table width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Brand</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>URL</th>
-                                    <th>Seller</th>
-                                    <th>Profile</th>
-                                    <th>Material</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
                                     <%
-                                            ResultSet rs7 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, profile, material, PartID FROM keyboardpart NATURAL JOIN keycaps, partlist WHERE partlist.username = '" + username + "' AND keycaps_id = keyboardpart.partID");
+                                            ResultSet rs7 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, profile, material, PartID FROM keyboardpart NATURAL JOIN keycaps, partlist WHERE partlist.username = '" + username + "' AND keycaps_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
                                             rs7.beforeFirst();
                                             if (!rs7.next()) {
                                     %>
-                                                <td><a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Prebuilt</button></td>
+                                                <a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Prebuilt</a>
                                         <%
                                             } else {
                                                 rs7.beforeFirst();
@@ -445,6 +431,21 @@
                                                 String prebuilt_profile = rs7.getString(6);
                                                 String prebuilt_material = rs7.getString(7);
                                         %>
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Brand</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>URL</th>
+                                                    <th>Seller</th>
+                                                    <th>Profile</th>
+                                                    <th>Material</th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
                                                 <td><%out.println(prebuilt_brand);%></td>
                                                 <td><%out.println(prebuilt_name);%></td>
                                                 <td><%out.println(prebuilt_price);%></td>
@@ -455,12 +456,13 @@
                                                 <td><%out.println(prebuilt_profile);%></td>
                                                 <td><%out.println(prebuilt_material);%></td>
                                                 <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     <%
                                             }
                                     %>            
-                                </tr>
-                            </tbody>
-                        </table>
+                                
                         
             <%
                     stmt.close();
