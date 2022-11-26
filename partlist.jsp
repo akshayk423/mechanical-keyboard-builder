@@ -1,4 +1,5 @@
 <%@ page import="java.sql.*"%>
+<%@ page import="java.util.*"%>
 <html>
     <head>
 
@@ -90,6 +91,7 @@
 
         <div>
             <% 
+                boolean foo = false;
                 String user = (String) session.getAttribute("dbuser");
                 String password = (String) session.getAttribute("dbpassword");
                 try {
@@ -101,10 +103,50 @@
                     String pList = (String) request.getParameter("viewPartList");
                     String partListID = "";
                     if(pList != null && pList.equals("View Part List")){
-                        partListID = (String) request.getParameter("partListID");
-                        out.println(partListID);
+                        partListID = request.getParameter("partListID");
+                        session.setAttribute("partListID", partListID);
                     }
+
                     
+                    String pLId = (String) session.getAttribute("partListID");
+
+                    // add part code
+                    String add = request.getParameter("addPart");
+                    String partId = "";
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM mkdb.partlist WHERE PartListID='" + pLId + "'");
+                    
+                    if (add != null && add.equals("Add Part")) {
+                        partId = request.getParameter("addPartID"); // get substring of partID
+                        String prefix = partId.substring(0, 2);
+
+                        // execute insertion query
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.partlist WHERE PartListID='" + pLId + "'");
+                        rs.beforeFirst();
+                        rs.next();
+
+                        // check prefix of string
+                        Map<String, String> dict = new HashMap<String, String>();
+                        dict.put("SW", "switches_id");
+                        dict.put("PB", "prebuilt_id");
+                        dict.put("PC", "pcb_id");
+                        dict.put("SB", "stab_id");
+                        dict.put("KC", "keycaps_id");
+                        dict.put("CS", "case_id");
+                        dict.put("AC", "accessories_id");
+                        
+                        // print the values
+                        out.println(pLId);
+                        out.println(dict.get(prefix));
+                        out.println(partId);
+
+                        // update row
+                        rs.updateString(dict.get(prefix), partId);
+                        rs.updateRow();
+                        rs.close();
+                        foo = true;
+                        out.println(foo);
+                        // response.sendRedirect("partlist.jsp");
+                    }
 
             %>
                         <h3>Prebuilt</h3>
@@ -263,21 +305,6 @@
                                     %>
                         <br></br>
                         <h2>Switches</h2>
-                        <table width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Brand</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>URL</th>
-                                    <th>Seller</th>
-                                    <th>Type</th>
-                                    <th>Stem</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
                                     <%
                                             ResultSet rs4 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, type, stem FROM keyboardpart NATURAL JOIN switches, partlist WHERE partlist.username = '" + username + "' AND switches_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
                                             rs4.beforeFirst();
@@ -296,6 +323,21 @@
                                                 String prebuilt_type = rs4.getString(6);
                                                 String prebuilt_stem = rs4.getString(7);
                                         %>
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Brand</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>URL</th>
+                                                    <th>Seller</th>
+                                                    <th>Type</th>
+                                                    <th>Stem</th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
                                                 <td><%out.println(prebuilt_brand);%></td>
                                                 <td><%out.println(prebuilt_name);%></td>
                                                 <td><%out.println(prebuilt_price);%></td>
@@ -306,30 +348,34 @@
                                                 <td><%out.println(prebuilt_type);%></td>
                                                 <td><%out.println(prebuilt_stem);%></td>
                                                 <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     <%
                                             }
                                     %>            
-                                </tr>
-                            </tbody>
-                        </table>
                         <br></br>
                         <h2>Case</h2>
                                     <%
-                                            ResultSet rs5 = stmt.executeQuery("SELECT  brand, URL, name, price, seller, size FROM keyboardpart NATURAL JOIN kbcase, partlist WHERE partlist.username = '" + username + "' AND case_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
-                                            rs5.beforeFirst();
-                                            if (!rs5.next()) {
+                                            out.println(foo);
+                                            rs = stmt.executeQuery("SELECT  brand, URL, name, price, seller, size FROM keyboardpart NATURAL JOIN kbcase, partlist WHERE partlist.username = '" + username + "' AND case_id = keyboardpart.partID AND PartListID = '" + partListID + "'");
+                                            rs.beforeFirst();
+                                            if (!rs.next()) {
                                     %>
-                                                <a href="/CS157A-team4/partPages/cases.jsp" type="button" class="btn btn-primary">Add Case</a>
+                                                <form action='cases.jsp' method='post'>
+                                                    <input type='submit' class="btn btn-primary" value='Add Case' name='addCase'>
+                                                    <input type='hidden' value='<%=partListID%>' name="partListID">
+                                                </form>
                                         <%
                                             } else {
-                                                rs5.beforeFirst();
-                                                rs5.next();
-                                                String prebuilt_brand = rs5.getString(1);
-                                                String prebuilt_url = rs5.getString(2);
-                                                String prebuilt_name = rs5.getString(3);
-                                                String prebuilt_price = rs5.getString(4);
-                                                String prebuilt_seller = rs5.getString(5);
-                                                String prebuilt_size = rs5.getString(6);
+                                                rs.beforeFirst();
+                                                rs.next();
+                                                String prebuilt_brand = rs.getString(1);
+                                                String prebuilt_url = rs.getString(2);
+                                                String prebuilt_name = rs.getString(3);
+                                                String prebuilt_price = rs.getString(4);
+                                                String prebuilt_seller = rs.getString(5);
+                                                String prebuilt_size = rs.getString(6);
                                         %>
                                         <table width="100%">
                                             <thead>
@@ -465,6 +511,7 @@
                                 
                         
             <%
+                    rs.close();
                     stmt.close();
                     con.close();
                 } catch(SQLException e) { 

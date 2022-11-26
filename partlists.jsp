@@ -185,7 +185,6 @@
                                         <form action='partlist.jsp' method='post'>
                                             <input type='submit' value='View Part List' name='viewPartList'>
                                             <input type='hidden' value='<%=pListId%>' name="partListID">
-                                            <% out.println(pListId); %>
                                         </form>
                                     </td>
                                     <td><%out.println(rs.getString(2));%></td>
