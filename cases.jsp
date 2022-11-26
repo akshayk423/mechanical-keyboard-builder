@@ -98,44 +98,73 @@
 
         <div>
             <h1>Cases</h1>
-        <table width="80%">
+       
+            <form id="caseName" action="cases.jsp" method="post">
+    
+                    <input id="searchParams" type="text" placeholder="Search.." name="searchParams" onkeyup="myFunction()">
+        
+            </form>
+        <table width="100%">
             
             <thead>
                 <tr>
                     <td>
 
-                        <form action="cases.jsp" method="post">
+                        <form id="caseName" action="cases.jsp" method="post">
                             <input type="hidden" value = "name" name="sortCase">
-                            <button type="submit" value = "sort" name="sort">Name</button>
+                            <input type="hidden" value=false name="ascending">
+                            <button class="btn btn-primary" type="submit" value = "sort" name="sort">Name</button>
                         </form>
                             
                     </td>
                         
                     <td>
-                    <form action="cases.jsp" method="post">
+                    <form id="caseBrand" action="cases.jsp" method="post">
                         <input type="hidden" value = "brand" name="sortCase">
-                        <button type="submit" value = "sort" name="sort">Brand</button>
+                        <input type="hidden" value=false name="ascending">
+                        <button class="btn btn-primary" type="submit" value = "sort" name="sort">Brand</button>
                     </form>
                     
                     </td>
                     <td> 
-                        <form action="cases.jsp" method="post">
+                        <form id="casePrice" action="cases.jsp" method="post">
                             <input type="hidden" value = "price" name="sortCase">
-                            <button type="submit" value = "sort" name="sort">Price</button>
+                            <input type="hidden" value=false name="ascending">
+                            <button class="btn btn-primary" type="submit" value = "sort" name="sort">Price</button>
                         </form> 
                     </td>
                     <td>Url</td>
                     <td>
-                        <form action="cases.jsp" method="post">
+                        <form id="caseSize" action="cases.jsp" method="post">
                                 <input type="hidden" value = "size" name="sortCase">
-                                <button type="submit" value = "sort" name="sort">Price</button>
+                                <input type="hidden" value=false name="ascending">
+                                <button class="btn btn-primary" type="submit" value = "sort" name="sort">Price</button>
                         </form>
                     </td>
                 
                 </tr>
             </thead>    
 
-            <tbody>
+            <script>
+               function myFunction() {
+                    var input, filter, ul, li, a, i, txtValue;
+                    input = document.getElementById("searchParams");
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById("rows");
+                    li = ul.getElementsByTagName("tr");
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName("td")[0];
+                        txtValue = a.textContent || a.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "";
+                        } else {
+                            li[i].style.display = "none";
+                        }
+                    }
+                }
+                    
+            </script>
+            <tbody id="rows">
                 <%
                 String user = "root";
                 String password = "Akshayk123!";
@@ -145,28 +174,24 @@
                     con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
                     Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                     String query = "SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.kbcase WHERE keyboardpart.PartID LIKE 'CS%';";
-                    HashMap<String,Boolean> ascending = new HashMap<>();
-                    ascending.put("brand",true);
-                    ascending.put("name",true);
-                    ascending.put("price",true);
-                    ascending.put("size",true);
+
                     String sort = request.getParameter("sort");
                     if(sort != null && sort.equals("sort")){
-                            ascending.put(request.getParameter("sortCase"), !ascending.get(request.getParameter("sortCase"))); 
-                        if(ascending.get(request.getParameter("sortCase")) == true) 
-                            query = query.substring(0,query.length()-1) + " ORDER BY " + request.getParameter("sortCase") + ";"; 
-                        if(ascending.get(request.getParameter("sortCase")) == false)
-                            query = query.substring(0,query.length()-1) + " ORDER BY " + request.getParameter("sortCase") + " DESC;"; 
-
+                    //   String ascending = request.getAttribute("ascending");
+                    //   if(ascending.equals("true")){
+                        query = query.substring(0,query.length()-1) + " ORDER BY " + request.getParameter("sortCase") + ";"; 
+                    //     ascending = "false";
+                    //   }
+                    //   else{
+                    //     query = query.substring(0,query.length()-1) + " ORDER BY " + request.getParameter("sortCase") + " DESC;"; 
+                    //     ascending = "true";
+                    //   }
                     } 
                     ResultSet rs = stmt.executeQuery(query);
                     while(rs.next()){
 
                         String partName = rs.getString("Name");
                         String price = String.format("%.2f",rs.getDouble("Price"));
-                        if(price.length() > 5){
-
-                        }
                         if(partName.length() > 40){ partName = partName.substring(0,40) + "...";}
                         %><tr>
                             <td width="25%"><%=partName%></td>
@@ -176,7 +201,7 @@
                             <td width="10%"><%=rs.getString("Size")%></td>
                             <td width="2%"><button type="button" class="btn btn-dark">Bookmark</button></td>
                             <td width="2%"><button type="button" class="btn btn-danger">Report</button></td>
-                            
+                            <td><%=request.getParameter("searchParams")%></td>
                             
                         </tr><%
                     }
@@ -189,6 +214,12 @@
 
 
             </tbody>
+
+            <table width="20%">
+                <thead>
+                    <h3>Filter</h3>
+                </thead>
+            </table>
 
         </div>
 
