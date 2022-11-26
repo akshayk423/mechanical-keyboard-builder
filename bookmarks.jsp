@@ -25,10 +25,8 @@
         </thead>
         <tbody>
             <% 
-            String db = "team4";
-            String user;
-            user = "root";
-            String password = "password";
+            String user = (String) session.getAttribute("dbuser");
+            String password = (String) session.getAttribute("dbpassword");
 
             java.sql.Connection con; 
             Class.forName("com.mysql.jdbc.Driver");
