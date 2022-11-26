@@ -73,25 +73,24 @@
     <body>
         <div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container">
-                    <a class="navbar-brand" href="/home.jsp">
-                        <img alt src="logo.png" width="50" height="50">
-                        Mechanical Keyboard Builder
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                        <a class="nav-link" href="/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="/login.jsp">Login</a>
-                        </li>
-                    </ul>
-                    </div>
+            <div class="container">
+                <a class="navbar-brand" href="/CS157A-team4/home.jsp">
+                    <img alt src="logo.png" width="50" height="50">
+                    Mechanical Keyboard Builder
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <form action="login.jsp" method="post" value = "Sign Out" name="signOut">
+                        <button type="submit" class="signOut" value = "Sign Out" name="signOut">Sign Out</button>
+                      </form>
+                    </li>
+                </ul>
                 </div>
+              </div>
             </nav>
         </div>
 
