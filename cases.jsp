@@ -98,7 +98,7 @@
 
         <div>
             <h1>Cases</h1>
-        <table width="80%">
+        <table width="100%">
             
             <thead>
                 <tr>
@@ -128,7 +128,7 @@
                     <td>
                         <form action="cases.jsp" method="post">
                                 <input type="hidden" value = "size" name="sortCase">
-                                <button type="submit" value = "sort" name="sort">Price</button>
+                                <button type="submit" value = "sort" name="sort">Size</button>
                         </form>
                     </td>
                 
@@ -137,8 +137,8 @@
 
             <tbody>
                 <%
-                String user = "root";
-                String password = "Akshayk123!";
+                String user = (String) session.getAttribute("dbuser");
+                String password = (String) session.getAttribute("dbpassword");
                 try {
                     java.sql.Connection con; 
                     Class.forName("com.mysql.jdbc.Driver");
@@ -151,6 +151,13 @@
                     ascending.put("price",true);
                     ascending.put("size",true);
                     String sort = request.getParameter("sort");
+                    String partListID = "";
+                    String addCase = request.getParameter("addCase");
+                    if(addCase != null && addCase.equals("Add Case")){
+                        partListID = request.getParameter("partListID");
+                    }
+                    out.println(partListID);
+
                     if(sort != null && sort.equals("sort")){
                             ascending.put(request.getParameter("sortCase"), !ascending.get(request.getParameter("sortCase"))); 
                         if(ascending.get(request.getParameter("sortCase")) == true) 
@@ -174,10 +181,15 @@
                             <td width="10%"><%=price%></td>
                             <td width="10%"><a href="<%=rs.getString("URL")%>">Purchase</a></td>
                             <td width="10%"><%=rs.getString("Size")%></td>
+                            <td>
+                                <form action='partlist.jsp' method='post'>
+                                    <input type='submit' class="btn btn-primary" value='Add Part' name='addPart'>
+                                    <input type='hidden' value='<%=rs.getString(1)%>' name='addPartID'>
+                                    <input type='hidden' value='<%=partListID%>' name= 'partListID'>
+                                </form>
+                            </td>
                             <td width="2%"><button type="button" class="btn btn-dark">Bookmark</button></td>
                             <td width="2%"><button type="button" class="btn btn-danger">Report</button></td>
-                            
-                            
                         </tr><%
                     }
 

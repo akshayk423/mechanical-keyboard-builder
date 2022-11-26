@@ -53,6 +53,7 @@
 
                 sign = request.getParameter("signOut");
                 if(sign != null && sign.equals("Sign Out")){
+                    out.println("Signed out");
                     session.invalidate();
                 }
 

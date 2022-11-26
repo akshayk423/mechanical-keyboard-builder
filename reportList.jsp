@@ -33,10 +33,8 @@
         </thead>
         <tbody>
             <% 
-            String db = "team4";
-            String user;
-            user = "root";
-            String password = "157a1965";
+            String user = (String) session.getAttribute("dbuser");
+            String password = (String) session.getAttribute("dbpassword");
             java.sql.Connection con; 
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
@@ -136,7 +134,7 @@
                         <td><a href=<%=rs.getString("URL")%>>(<%=url%></td>
                         <td><%=rs.getString("brand")%></td>
                         <td><%=rs.getString("price")%></td>
-                        <td><%=rs.getString("username")%></td>
+                        <td><%=rs.getString("seller")%></td>
                         <td>
                             <form action='reportList.jsp' method='post'>
                             <input type='submit' value='Remove Report' name='removeReport'>
