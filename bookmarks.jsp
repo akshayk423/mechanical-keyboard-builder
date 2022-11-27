@@ -99,17 +99,17 @@
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "DELETE FROM mkdb.bookmarks WHERE username='" + username + "'";
             
             try {
                 String removed = request.getParameter("removeBookmarkButton");
                 if(removed != null && removed.equals("Remove Bookmark")){
                     PreparedStatement ps = null;
+                    String sql = "DELETE FROM mkdb.bookmarks WHERE username='" + username + "' AND PartID = '" + request.getParameter("partID") + "'";
                     ps = con.prepareStatement(sql);
                     int i = ps.executeUpdate();
                 }
 
-                ResultSet rs = stmt.executeQuery("SELECT URL, name, brand, price FROM mkdb.bookmarks NATURAL JOIN keyboardpart  WHERE username = '" + username + "'");
+                ResultSet rs = stmt.executeQuery("SELECT URL, name, brand, price, PartID FROM mkdb.bookmarks NATURAL JOIN keyboardpart  WHERE username = '" + username + "'");
 
                 rs.beforeFirst();
                 int i = 1;
@@ -141,9 +141,10 @@
                             <td><%out.println(rs.getString(4));%></td>
                             <td><a href='<%=rs.getString(1)%>'>Buy</a></td>
                             <td>
-                            <%
-                                out.println("<form action='bookmarks.jsp?removeBId=" + rs.getString(1) + "' method='post'><input type='submit' value='Remove Bookmark' name='removeBookmarkButton'></form>");
-                            %>
+                                <form action='bookmarks.jsp' method='post'>
+                                  <input type='submit' value='Remove Bookmark' name='removeBookmarkButton'>
+                                  <input type='hidden' value='<%=rs.getString(5)%>' name='partID'>
+                                </form>
                             </td>
                         </tr>
                     <%

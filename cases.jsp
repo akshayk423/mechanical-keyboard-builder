@@ -171,6 +171,7 @@
                 <%
                 String user = (String) session.getAttribute("dbuser");
                 String password = (String) session.getAttribute("dbpassword");
+                String username = (String) session.getAttribute("username");
                 try {
                     java.sql.Connection con; 
                     Class.forName("com.mysql.jdbc.Driver");
@@ -185,6 +186,17 @@
                         partListID = request.getParameter("partListID");
                     }
                     //out.println(partListID);
+
+                    String bookmark = request.getParameter("bookmark");
+                    String addBookmarkID = "";
+                    if (bookmark != null && bookmark.equals("Bookmark")) {
+                        addBookmarkID = request.getParameter("addBookmarkID");
+                        out.println(addBookmarkID);
+                        String sql = "INSERT INTO bookmarks VALUES ('" + username + "', '" + addBookmarkID + "')";
+                        PreparedStatement ps = null;
+                        ps = con.prepareStatement(sql);
+                        int i = ps.executeUpdate();
+                    }
 
                     if(sort != null && sort.equals("sort")){
                     //   String ascending = request.getAttribute("ascending");
@@ -216,9 +228,18 @@
                                     <input type='hidden' value='<%=partListID%>' name= 'partListID'>
                                 </form>
                             </td>
-                            <td width="2%"><button type="button" class="btn btn-dark">Bookmark</button></td>
-                            <td width="2%"><button type="button" class="btn btn-danger">Report</button></td>
-                            <td><%=request.getParameter("searchParams")%></td>
+                            <td width="2%">
+                                <form action="cases.jsp" method="post">
+                                    <input type="submit" class="btn btn-dark" value="Bookmark" name="bookmark">
+                                    <% out.println(rs.getString(1)); %>
+                                    <input type='hidden' value='<%=rs.getString(1)%>' name="addBookmarkID">
+                                </form>
+                            </td>
+                            <td width="2%">
+                                <form action="cases.jsp" method="post"></form>
+                                    <button type="button" class="btn btn-danger">Report</button>
+                                </form>
+                            </td>
                             
                         </tr><%
                     }
