@@ -60,6 +60,21 @@
                 padding-bottom: 0.15rem!important;
                 padding-left: 0.15rem!important;
             }
+
+            .signOut {
+                border: none;
+                background: none;
+                color:aliceblue!important;
+            }
+            .center {
+                margin: 0;
+                position: absolute;
+                top: 40%;
+                left: 50%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                text-align:center;
+            }
         </style>
         
     </head>
@@ -78,10 +93,13 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                      <form action="login.jsp" method="post" value = "Sign Out" name="signOut">
-                        <button type="submit" class="signOut" value = "Sign Out" name="signOut">Sign Out</button>
-                      </form>
+                      <button class="signOut"><a href="partlists.jsp" class="signOut">Part Lists</a></button>
                     </li>
+                    <li class="nav-item">
+                        <form action="login.jsp" method="post" value = "Sign Out" name="signOut">
+                          <button type="submit" class="signOut" value = "Sign Out" name="signOut">Sign Out</button>
+                        </form>
+                      </li>
                 </ul>
                 </div>
               </div>
@@ -225,7 +243,7 @@
                                                 <td><%out.println(prebuilt_hotswappable);%></td>
                                                 <td>
                                                         <form action='partlist.jsp' method='post'>
-                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                             <input type='hidden' value="<%=prebuilt_id%>" name='partID'>
                                                             <input type='hidden' value="<%=partListID%>" name="partListID">
                                                         </form>
@@ -285,7 +303,7 @@
                                                 <td><%out.println(prebuilt_size);%></td>
                                                 <td>
                                                 <form action='partlist.jsp' method='post'>
-                                                    <input type='submit' value='Delete' name='Delete'>
+                                                    <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                     <input type='hidden' value="<%=pcb_id%>" name='partID'>
                                                     <input type='hidden' value="<%=partListID%>" name="partListID">
                                                 </form>
@@ -392,7 +410,7 @@
                                                 <td><%out.println(prebuilt_stem);%></td>
                                                 <td>
                                                         <form action='partlist.jsp' method='post'>
-                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                             <input type='hidden' value="<%=switches_id%>" name='partID'>
                                                             <input type='hidden' value="<%=partListID%>" name="partListID">
                                                         </form>
@@ -450,7 +468,7 @@
                                                     <td><%out.println(prebuilt_size);%></td>
                                                     <td>
                                                         <form action='partlist.jsp' method='post'>
-                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                             <input type='hidden' value="<%=case_id%>" name='partID'>
                                                             <input type='hidden' value="<%=partListID%>" name="partListID">
                                                         </form>
@@ -507,7 +525,7 @@
                                                 <td><%out.println(prebuilt_info);%></td>
                                                 <td>
                                                         <form action='partlist.jsp' method='post'>
-                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                             <input type='hidden' value="<%=stab_id%>" name='partID'>
                                                             <input type='hidden' value="<%=partListID%>" name="partListID">
                                                         </form>
@@ -564,7 +582,7 @@
                                                 <td><%out.println(prebuilt_material);%></td>
                                                 <td>
                                                         <form action='partlist.jsp' method='post'>
-                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                             <input type='hidden' value="<%=keycaps_id%>" name='partID'>
                                                             <input type='hidden' value="<%=partListID%>" name="partListID">
                                                         </form>

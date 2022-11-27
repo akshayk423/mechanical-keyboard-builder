@@ -60,6 +60,21 @@
                 padding-bottom: 0.15rem!important;
                 padding-left: 0.15rem!important;
             }
+
+            .signOut {
+                border: none;
+                background: none;
+                color:aliceblue!important;
+            }
+            .center {
+                margin: 0;
+                position: absolute;
+                top: 40%;
+                left: 50%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                text-align:center;
+            }
         </style>
         
     </head>
@@ -180,8 +195,8 @@
                                 <tr>
                                     <td>
                                         <form action='partlist.jsp' method='post'>
-                                            <input type='submit' value='View Part List' name='viewPartList'>
-                                            <input type='hidden' value='<%=pListId%>' name="partListID">
+                                            <input class="btn btn-primary" type='submit' value='View Part List' name='viewPartList'>
+                                            <input class="btn btn-primary" type='hidden' value='<%=pListId%>' name="partListID">
                                         </form>
                                     </td>
                                     <td><%out.println(rs.getString(2));%></td>
@@ -194,7 +209,7 @@
                                     <td><%out.println(rs.getString(10));%></td>
                                     <td>
                                         <form action='partlists.jsp' method='post'>
-                                            <input type='submit' value='Remove Part List' name='removePartList'>
+                                            <input class="btn btn-primary" type='submit' value='Remove Part List' name='removePartList'>
                                             <input type='hidden' value='<%=rs.getString(1)%>' name='rmPartListID'>
                                         </form>
                                     </td>
@@ -206,7 +221,7 @@
                     </tbody>
                 </table>
                             <form action='partlists.jsp' method='post'>
-                                <input type='submit' value='Add Part List' name='addPartList'>
+                                <input class="btn btn-primary" type='submit' value='Add Part List' name='addPartList'>
                             </form>
                     <%
                             stmt.close();
