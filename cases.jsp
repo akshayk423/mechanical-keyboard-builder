@@ -192,11 +192,46 @@
                     String addBookmarkID = "";
                     if (bookmark != null && bookmark.equals("Bookmark")) {
                         addBookmarkID = request.getParameter("addBookmarkID");
-                        out.println(addBookmarkID);
                         String sql = "INSERT INTO bookmarks VALUES ('" + username + "', '" + addBookmarkID + "')";
                         PreparedStatement ps = null;
                         ps = con.prepareStatement(sql);
                         int i = ps.executeUpdate();
+                    }
+
+                    String reported = request.getParameter("reportListing");
+                    out.println("reported is " + reported);
+                    String reportPartID = "";
+                    if (reported != null && reported.equals("Report")) {
+                        reportPartID = request.getParameter("reportPartID");
+                        out.println(reportPartID);
+                        ResultSet rs1 = stmt.executeQuery("SELECT * FROM mkdb.reportlistings");
+
+                        // add every id to a set
+                        Set<String> idSet = new HashSet<String>();
+                        //populate map with ID's
+                        rs1.moveToInsertRow();
+                        while(rs1.next()){
+                            idSet.add(rs1.getString(1).substring(2));
+                        }
+
+                        //generate new id
+                        boolean unique = false;
+                        Random random = new Random();
+                        String id = "0000";
+                        while(!unique){
+                            String curId = String.format("%04d", random.nextInt(10000));
+                            if(!idSet.contains(id)){
+                                id = "RL" + curId;																									// change to id = "PL" + curId;
+                                unique = true;
+                                break;
+                            }
+                        }
+
+                        //add entry
+                        rs1.moveToInsertRow();
+                        rs1.updateString("ReportListID", id);
+                        rs1.updateString("PartID", reportPartID);
+                        rs1.insertRow();
                     }
                     
                     if(sort != null && sort.equals("sort")){
@@ -232,13 +267,13 @@
                             <td width="2%">
                                 <form action="cases.jsp" method="post">
                                     <input type="submit" class="btn btn-dark" value="Bookmark" name="bookmark">
-                                    <% out.println(rs.getString(1)); %>
                                     <input type='hidden' value='<%=rs.getString(1)%>' name="addBookmarkID">
                                 </form>
                             </td>
                             <td width="2%">
-                                <form action="cases.jsp" method="post"></form>
-                                    <button type="button" class="btn btn-danger">Report</button>
+                                <form action="cases.jsp" method="post">
+                                    <input type="submit" class="btn btn-danger" value="Report" name="reportListing">
+                                    <input type="hidden" value='<%=rs.getString(1)%>' name="reportPartID">
                                 </form>
                             </td>
                         </tr><%
