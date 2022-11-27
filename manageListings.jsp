@@ -554,7 +554,7 @@
                         <td><%=rs.getString(7)%></td>
                         <td><%=rs.getString(8)%></td>
                         <td>
-                            <form action='editPrebuilt.jsp' method='post'>
+                            <form action='editPart.jsp' method='post'>
                             <input type='submit' class="btn btn-primary" value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
@@ -615,7 +615,7 @@
                         <td><%=rs.getString(9)%></td>
 
                         <td>
-                            <form action='editPrebuilt.jsp' method='post'>
+                            <form action='editPart.jsp' method='post'>
                             <input type='submit' class="btn btn-primary" value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
@@ -674,7 +674,7 @@
                         <td><%=rs.getString(8)%></td>
 
                         <td>
-                            <form action='editPrebuilt.jsp' method='post'>
+                            <form action='editPart.jsp' method='post'>
                             <input type='submit' class="btn btn-primary" value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
@@ -734,7 +734,7 @@
                         <td><%=rs.getString(8)%></td>
 
                         <td>
-                            <form action='editPrebuilt.jsp' method='post'>
+                            <form action='editPart.jsp' method='post'>
                             <input type='submit' class="btn btn-primary" value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
@@ -791,7 +791,7 @@
                         <td><%=rs.getString(7)%></td>
 
                         <td>
-                            <form action='editPrebuilt.jsp' method='post'>
+                            <form action='editPart.jsp' method='post'>
                             <input type='submit' class="btn btn-primary" value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
@@ -848,7 +848,7 @@
                         <td><%=rs.getString(7)%></td>
 
                         <td>
-                            <form action='editPrebuilt.jsp' method='post'>
+                            <form action='editPart.jsp' method='post'>
                             <input type='submit' class="btn btn-primary" value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
@@ -907,7 +907,7 @@
                         <td><%=rs.getString(8)%></td>
 
                         <td>
-                            <form action='editPrebuilt.jsp' method='post'>
+                            <form action='editPart.jsp' method='post'>
                             <input type='submit' class="btn btn-primary" value='Edit Listing' name='editPrebuilt'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
