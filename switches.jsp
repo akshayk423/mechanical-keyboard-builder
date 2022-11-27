@@ -2,7 +2,7 @@
 <%@ page import="java.util.*"%>
 <html>
     <head>
-        <title>PCBs Page</title>
+        <title>Switches Page</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <style>
 
@@ -139,45 +139,20 @@
             <div class="parent">
                 <div class="child"> <input id="searchParams" type="text" placeholder="Search.." name="searchParams" onkeyup="myFunction()"></div>
                 <div class="child">
-                    <form id="filterOptions" action="pcb.jsp" method="post">
-                        <text>Sizes:  </text>
+                    <form id="filterOptions" action="switches.jsp" method="post">
+                        <text>Type:  </text>
                         <div id="sizeCheckbox" class="form-check form-check-inline">
                             
-                            <input class="form-check-input" type="checkbox"value="40%" name="40%">
-                            <label class="form-check-label">40%</label>
+                            <input class="form-check-input" type="checkbox"value="tactile" name="tactile">
+                            <label class="form-check-label">Tactile</label>
 
-                            <input class="form-check-input" type="checkbox"  value="60%" name="60%">
-                            <label class="form-check-label">60%</label>
+                            <input class="form-check-input" type="checkbox"  value="linear" name="linear">
+                            <label class="form-check-label">Linear</label>
 
-                            <input class="form-check-input" type="checkbox" value="65%" name="65%">
-                            <label class="form-check-label">65%</label>
-
-                            <input class="form-check-input" type="checkbox"  value="75%" name="75%">
-                            <label class="form-check-label">75%</label>
-
-                            <input class="form-check-input" type="checkbox"  value="TKL" name="TKL">
-                            <label class="form-check-label">TKL</label>
-
-                            <input class="form-check-input" type="checkbox"  value="Full Sized" name="FS">
-                            <label class="form-check-label">Full Sized</label>
-
-                            <input class="form-check-input" type="checkbox"  value="Numpad" name="NP">
-                            <label class="form-check-label">Numpad</label>
-
-                            
+                            <input class="form-check-input" type="checkbox" value="clicky" name="clicky">
+                            <label class="form-check-label">Clicky</label>                            
                         </div>
                         
-                        <div id="specsCheckbox">
-                            <text>Specs:&nbsp;&nbsp;&nbsp;&nbsp;</text>
-                            <label>
-                                <input class="form-check-input" type="checkbox"value="YES" name="RGB"> RGB
-                            </label>
-
-                            <label>
-                                <input class="form-check-input" type="checkbox"value="YES" name="HTSWP"> Hotswappable
-                            </label>
-                        </div>
-
                         <button class="btn btn-primary" type="submit" value = "filter" name="filter">Submit</button>
                     </form>
                     
@@ -205,16 +180,9 @@
                     <td>Url</td>
 
                     <td>
-                        <a onClick=sortTable(4)>RGB</a>
+                        <a onClick=sortTable(4)>Switch Type</a>
                     </td>
 
-                    <td>
-                        <a onClick=sortTable(5)>Hotswappable</a>
-                    </td>
-
-                    <td>
-                        <a onClick=sortTable(6)>Size</a>
-                    </td>
                 
                 </tr>
             </thead>    
@@ -352,7 +320,7 @@
             <tbody id="rows">
                 <%
                     Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                    String query = "SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.pcb;";
+                    String query = "SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.switches;";
                     String filter = request.getParameter("filter");
                     String sort = request.getParameter("sort");
                     String partListID = "";
@@ -375,58 +343,23 @@
 
                     if(filter != null && filter.equals("filter")){
                         
-                        String size40 = request.getParameter("40%");
-                        String size60 = request.getParameter("60%");
-                        String size65 = request.getParameter("65%");
-                        String size75 = request.getParameter("75%");
-                        String tkl = request.getParameter("TKL");
-                        String full = request.getParameter("FS");
-                        String num = request.getParameter("NP");
-                        String rgb = request.getParameter("RGB");
-                        String htswp = request.getParameter("HTSWP");
+                        String tactile = request.getParameter("tactile");
+                        String clicky = request.getParameter("clicky");
+                        String linear = request.getParameter("linear");
                         ArrayList<String> filters = new ArrayList<>();
-
-                        if(size40 != null){filters.add(size40);}
-                        if(size60 != null){filters.add(size60);}
-                        if(size65 != null){filters.add(size65);}
-                        if(size75 != null){filters.add(size75);}
-                        if(tkl != null){filters.add(tkl);}
-                        if(full != null){filters.add(full);}
-                        if(num != null){filters.add(num);}
-                  
+                        if(tactile != null){filters.add(tactile);}
+                        if(clicky != null){filters.add(clicky);}
+                        if(linear != null){filters.add(linear);}
                         if(filters.size() > 0){
                             query = query.substring(0,query.length()-1) + " WHERE ";
                             Iterator iterator = filters.iterator();
-                            query += "(size = '" + iterator.next() + "'";
+                            query += "type = '" + iterator.next() + "'";
                             while(iterator.hasNext()){
-                                query += " OR size = '" + iterator.next() + "'";
+                                query += " OR type = '" + iterator.next() + "'";
                             }
-                            query += ")";
-                            
-                            if(rgb != null){
-                                query += " AND containsRGB = 'YES'";
-                            }
-                            if(htswp != null){
-                                query += " AND hotSwappable = 'YES'";
-                            }   
                             query += ";";
-                        }
 
-                        if(rgb != null){
-                            query = query.substring(0,query.length()-1) + " WHERE";
-                            query += " containsRGB = 'YES'";
-                            if(htswp != null){
-                                query += " AND hotSwappable = 'YES'";
-
-                            }
-                            query += ";";
                         }
-                        if(htswp != null && rgb == null){
-                            query = query.substring(0,query.length()-1) + " WHERE ";
-                            query += "hotSwappable = 'YES'";
-                            query += ";";
-                        }
-                        
                     }
                 
 
@@ -484,9 +417,7 @@
                             <td width="15%"><%=rs.getString("Brand")%></td>
                             <td width="10%"><%=price%></td>
                             <td width="10%"><a href="<%=rs.getString("URL")%>">Purchase</a></td>
-                            <td width="10%"><%=rs.getString("containsRGB")%></td>
-                            <td width="10%"><%=rs.getString("hotSwappable")%></td>
-                            <td width="10%"><%=rs.getString("size")%></td>
+                            <td width="10%"><%=rs.getString("type")%></td>
                             <td>
                                 <form action='partlist.jsp' method='post'>
                                     <input type='submit' class="btn btn-primary" value='Add Part' name='addPart'>
