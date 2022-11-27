@@ -95,7 +95,7 @@
         <div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
-                    <a class="navbar-brand" href="/home.jsp">
+                    <a class="navbar-brand" href="home.jsp">
                         <img alt src="logo.png" width="50" height="50">
                         Mechanical Keyboard Builder
                     </a>
@@ -105,14 +105,17 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                        <a class="nav-link" href="/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="/login.jsp">Login</a>
+                        <a class="nav-link">
+                            
+                        Login</a>
                         </li>
                     </ul>
                     </div>
                 </div>
+              </div>
             </nav>
         </div>
 
@@ -125,6 +128,7 @@
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false","root", "password");
         %>
         <div>
+
             
             <div class="parent">
                 <div class="child"> <input id="searchParams" type="text" placeholder="Search.." name="searchParams" onkeyup="myFunction()"></div>
@@ -161,6 +165,7 @@
                 </div>
             </div>
 
+
         <table width="100%">
             
             <thead>
@@ -169,6 +174,7 @@
 
                         <form id="caseName" action="cases.jsp" method="post">
                             <input type="hidden" value = "name" name="sortCase">
+                            <input type="hidden" value=false name="ascending">
                             <button class="btn btn-primary" type="submit" value = "sort" name="sort">Name</button>
                         </form>
                             
@@ -177,6 +183,7 @@
                     <td>
                     <form id="caseBrand" action="cases.jsp" method="post">
                         <input type="hidden" value = "brand" name="sortCase">
+                        <input type="hidden" value=false name="ascending">
                         <button class="btn btn-primary" type="submit" value = "sort" name="sort">Brand</button>
                     </form>
                     
@@ -184,6 +191,7 @@
                     <td> 
                         <form id="casePrice" action="cases.jsp" method="post">
                             <input type="hidden" value = "price" name="sortCase">
+                            <input type="hidden" value=false name="ascending">
                             <button class="btn btn-primary" type="submit" value = "sort" name="sort">Price</button>
                         </form> 
                     </td>
@@ -191,6 +199,8 @@
                     <td>
                         <form id="caseSize" action="cases.jsp" method="post">
                                 <input type="hidden" value = "size" name="sortCase">
+                                <input type="hidden" value=false name="ascending">
+                                <button class="btn btn-primary" type="submit" value = "sort" name="sort">Price</button>
                                 <button class="btn btn-primary" type="submit" value = "sort" name="sort">Size</button>
                         </form>
                     </td>
@@ -219,7 +229,6 @@
             </script>
             <tbody id="rows">
                 <%
-               
                     Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                     String query = "SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.kbcase;";
                     String filter = request.getParameter("filter");
@@ -229,7 +238,18 @@
                     if(addCase != null && addCase.equals("Add Case")){
                         partListID = request.getParameter("partListID");
                     }
-                    out.println(partListID);
+                    //out.println(partListID);
+
+                    String bookmark = request.getParameter("bookmark");
+                    String addBookmarkID = "";
+                    if (bookmark != null && bookmark.equals("Bookmark")) {
+                        addBookmarkID = request.getParameter("addBookmarkID");
+                        String sql = "INSERT INTO bookmarks VALUES ('" + username + "', '" + addBookmarkID + "')";
+                        PreparedStatement ps = null;
+                        ps = con.prepareStatement(sql);
+                        int i = ps.executeUpdate();
+                    }
+
 
                     if(filter != null && filter.equals("filter")){
                         String size40 = request.getParameter("40%");
@@ -262,6 +282,43 @@
                     }
                 
 
+                    String reported = request.getParameter("reportListing");
+                    out.println("reported is " + reported);
+                    String reportPartID = "";
+                    if (reported != null && reported.equals("Report")) {
+                        reportPartID = request.getParameter("reportPartID");
+                        out.println(reportPartID);
+                        ResultSet rs1 = stmt.executeQuery("SELECT * FROM mkdb.reportlistings");
+
+                        // add every id to a set
+                        Set<String> idSet = new HashSet<String>();
+                        //populate map with ID's
+                        rs1.moveToInsertRow();
+                        while(rs1.next()){
+                            idSet.add(rs1.getString(1).substring(2));
+                        }
+
+                        //generate new id
+                        boolean unique = false;
+                        Random random = new Random();
+                        String id = "0000";
+                        while(!unique){
+                            String curId = String.format("%04d", random.nextInt(10000));
+                            if(!idSet.contains(id)){
+                                id = "RL" + curId;																									// change to id = "PL" + curId;
+                                unique = true;
+                                break;
+                            }
+                        }
+
+                        //add entry
+                        rs1.moveToInsertRow();
+                        rs1.updateString("ReportListID", id);
+                        rs1.updateString("PartID", reportPartID);
+                        rs1.insertRow();
+                    }
+                    
+
                     if(sort != null && sort.equals("sort")){
    
                         query = query.substring(0,query.length()-1) + " ORDER BY " + request.getParameter("sortCase") + ";"; 
@@ -286,8 +343,20 @@
                                     <input type='hidden' value='<%=partListID%>' name= 'partListID'>
                                 </form>
                             </td>
-                            <td width="2%"><button type="button" class="btn btn-dark">Bookmark</button></td>
-                            <td width="2%"><button type="button" class="btn btn-danger">Report</button></td>
+
+                            <td width="2%">
+                                <form action="cases.jsp" method="post">
+                                    <input type="submit" class="btn btn-dark" value="Bookmark" name="bookmark">
+                                    <input type='hidden' value='<%=rs.getString(1)%>' name="addBookmarkID">
+                                </form>
+                            </td>
+                            <td width="2%">
+                                <form action="cases.jsp" method="post">
+                                    <input type="submit" class="btn btn-danger" value="Report" name="reportListing">
+                                    <input type="hidden" value='<%=rs.getString(1)%>' name="reportPartID">
+                                </form>
+                            </td>
+
                         </tr><%
                     }
 
