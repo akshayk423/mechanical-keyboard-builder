@@ -122,7 +122,7 @@
         try {
             java.sql.Connection con; 
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false","root", "Akshayk123!");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false","root", "password");
         %>
         <div>
             
@@ -221,7 +221,7 @@
                 <%
                
                     Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                    String query = "SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.kbcase WHERE keyboardpart.PartID LIKE 'CS%';";
+                    String query = "SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.kbcase;";
                     String filter = request.getParameter("filter");
                     String sort = request.getParameter("sort");
                     String partListID = "";
@@ -231,19 +231,41 @@
                     }
                     out.println(partListID);
 
-                    if(filter != null %% )
+                    if(filter != null && filter.equals("filter")){
+                        String size40 = request.getParameter("40%");
+                        String size60 = request.getParameter("60%");
+                        String size65 = request.getParameter("65%");
+                        String size75 = request.getParameter("75%");
+                        String tkl = request.getParameter("TKL");
+                        String full = request.getParameter("FS");
+                        String num = request.getParameter("NP");
+
+                        ArrayList<String> filters = new ArrayList<>();
+
+                        if(size40 != null){filters.add(size40);}
+                        if(size60 != null){filters.add(size60);}
+                        if(size65 != null){filters.add(size65);}
+                        if(size75 != null){filters.add(size75);}
+                        if(tkl != null){filters.add(tkl);}
+                        if(full != null){filters.add(full);}
+                        if(num != null){filters.add(num);}
+
+                        if(filters.size() > 0){
+                            query = query.substring(0,query.length()-1) + " WHERE ";
+                            Iterator iterator = filters.iterator();
+                            query += "size = '" + iterator.next() + "'";
+                            if(iterator.hasNext()){
+                                query += " OR size = '" + iterator.next() + "'";
+                            }
+                            query += ";";
+                        }
+                    }
                 
 
                     if(sort != null && sort.equals("sort")){
-                    //   String ascending = request.getAttribute("ascending");
-                    //   if(ascending.equals("true")){
+   
                         query = query.substring(0,query.length()-1) + " ORDER BY " + request.getParameter("sortCase") + ";"; 
-                    //     ascending = "false";
-                    //   }
-                    //   else{
-                    //     query = query.substring(0,query.length()-1) + " ORDER BY " + request.getParameter("sortCase") + " DESC;"; 
-                    //     ascending = "true";
-                    //   }
+                    
                     } 
                     ResultSet rs = stmt.executeQuery(query);
                     while(rs.next()){
@@ -266,8 +288,6 @@
                             </td>
                             <td width="2%"><button type="button" class="btn btn-dark">Bookmark</button></td>
                             <td width="2%"><button type="button" class="btn btn-danger">Report</button></td>
-                            <td width="2%"><%=request.getParameter("filter")%></button></td>
-                            <td width="2%"><%=request.getParameter("filter")%></button></td>
                         </tr><%
                     }
 
