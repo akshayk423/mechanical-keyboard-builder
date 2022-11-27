@@ -142,6 +142,7 @@
                                 <input type="hidden" value = "size" name="sortCase">
                                 <input type="hidden" value=false name="ascending">
                                 <button class="btn btn-primary" type="submit" value = "sort" name="sort">Price</button>
+                                <button class="btn btn-primary" type="submit" value = "sort" name="sort">Size</button>
                         </form>
                     </td>
                 
@@ -197,7 +198,7 @@
                         ps = con.prepareStatement(sql);
                         int i = ps.executeUpdate();
                     }
-
+                    
                     if(sort != null && sort.equals("sort")){
                     //   String ascending = request.getAttribute("ascending");
                     //   if(ascending.equals("true")){
@@ -240,7 +241,6 @@
                                     <button type="button" class="btn btn-danger">Report</button>
                                 </form>
                             </td>
-                            
                         </tr><%
                     }
 
