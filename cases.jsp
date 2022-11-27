@@ -11,6 +11,27 @@
                 border: 1px solid !important;
                 border-collapse: collapse!important;
             }
+            .form-check-label {
+                margin-right: 25;
+            }
+
+            .parent {
+               
+                margin: 1rem;
+                
+                text-align: left;
+            }
+            .child {
+                display: inline-block;
+          
+                padding: 1rem 1rem;
+                vertical-align: middle;
+            }
+
+            input[type=checkbox], input[type=radio] {
+                box-sizing: border-box;
+                padding: 3;
+            }
 
             thead{
                 font-weight: bold;
@@ -95,16 +116,50 @@
             </nav>
         </div>
 
-
+        <%
+        String user = (String) session.getAttribute("dbuser");
+        String password = (String) session.getAttribute("dbpassword");
+        try {
+            java.sql.Connection con; 
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false","root", "Akshayk123!");
+        %>
         <div>
-            <h1>Cases</h1>
+            
+            <div class="parent">
+                <div class="child"> <input id="searchParams" type="text" placeholder="Search.." name="searchParams" onkeyup="myFunction()"></div>
+                <div class="child">
+                    <form id="filterOptions" action="cases.jsp" method="post">
+                        <h3>Sizes</h3>
+                        <div id="sizeCheckbox" class="form-check form-check-inline">
+                            
+                            <input class="form-check-input" type="checkbox"value="40%" name="40%">
+                            <label class="form-check-label">40%</label>
 
-       
-            <form id="caseName" action="cases.jsp" method="post">
-    
-                    <input id="searchParams" type="text" placeholder="Search.." name="searchParams" onkeyup="myFunction()">
-        
-            </form>
+                            <input class="form-check-input" type="checkbox"  value="60%" name="60%">
+                            <label class="form-check-label">60%</label>
+
+                            <input class="form-check-input" type="checkbox" value="65%" name="65%">
+                            <label class="form-check-label">65%</label>
+
+                            <input class="form-check-input" type="checkbox"  value="75%" name="75%">
+                            <label class="form-check-label">75%</label>
+
+                            <input class="form-check-input" type="checkbox"  value="TKL" name="TKL">
+                            <label class="form-check-label">TKL</label>
+
+                            <input class="form-check-input" type="checkbox"  value="Full Sized" name="FS">
+                            <label class="form-check-label">Full Sized</label>
+
+                            <input class="form-check-input" type="checkbox"  value="Numpad" name="NP">
+                            <label class="form-check-label">Numpad</label>
+
+                            <button class="btn btn-primary" type="submit" value = "filter" name="filter">Submit</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
 
         <table width="100%">
             
@@ -164,15 +219,10 @@
             </script>
             <tbody id="rows">
                 <%
-                String user = (String) session.getAttribute("dbuser");
-                String password = (String) session.getAttribute("dbpassword");
-                try {
-                    java.sql.Connection con; 
-                    Class.forName("com.mysql.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
+               
                     Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                     String query = "SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb.kbcase WHERE keyboardpart.PartID LIKE 'CS%';";
-
+                    String filter = request.getParameter("filter");
                     String sort = request.getParameter("sort");
                     String partListID = "";
                     String addCase = request.getParameter("addCase");
@@ -180,6 +230,9 @@
                         partListID = request.getParameter("partListID");
                     }
                     out.println(partListID);
+
+                    if(filter != null %% )
+                
 
                     if(sort != null && sort.equals("sort")){
                     //   String ascending = request.getAttribute("ascending");
@@ -196,7 +249,7 @@
                     while(rs.next()){
 
                         String partName = rs.getString("Name");
-                        String price = String.format("%.2f",rs.getDouble("Price"));
+                        String price = "$" + String.format("%.2f",rs.getDouble("Price"));
                         if(partName.length() > 40){ partName = partName.substring(0,40) + "...";}
                         %><tr>
                             <td width="25%"><%=partName%></td>
@@ -213,7 +266,8 @@
                             </td>
                             <td width="2%"><button type="button" class="btn btn-dark">Bookmark</button></td>
                             <td width="2%"><button type="button" class="btn btn-danger">Report</button></td>
-
+                            <td width="2%"><%=request.getParameter("filter")%></button></td>
+                            <td width="2%"><%=request.getParameter("filter")%></button></td>
                         </tr><%
                     }
 
@@ -225,12 +279,6 @@
 
 
             </tbody>
-
-            <table width="20%">
-                <thead>
-                    <h3>Filter</h3>
-                </thead>
-            </table>
 
         </div>
 
