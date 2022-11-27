@@ -167,49 +167,143 @@
             </div>
 
 
-        <table width="100%">
+        <table id="casesListings" width="100%">
             
             <thead>
                 <tr>
                     <td>
 
-                        <form id="caseName" action="cases.jsp" method="post">
-                            <input type="hidden" value = "name" name="sortCase">
-                            <input type="hidden" value=false name="ascending">
-                            <button class="btn btn-primary" type="submit" value = "sort" name="sort">Name</button>
-                        </form>
-                            
+                        <a onClick=sortTable(0)>Name</a>
+    
                     </td>
                         
                     <td>
-                    <form id="caseBrand" action="cases.jsp" method="post">
-                        <input type="hidden" value = "brand" name="sortCase">
-                        <input type="hidden" value=false name="ascending">
-                        <button class="btn btn-primary" type="submit" value = "sort" name="sort">Brand</button>
-                    </form>
+                        <a onClick=sortTable(1)>Brand</a>
                     
                     </td>
                     <td> 
-                        <form id="casePrice" action="cases.jsp" method="post">
-                            <input type="hidden" value = "price" name="sortCase">
-                            <input type="hidden" value=false name="ascending">
-                            <button class="btn btn-primary" type="submit" value = "sort" name="sort">Price</button>
-                        </form> 
+                        <a onClick=sortPrices(2)>Price</a>
                     </td>
                     <td>Url</td>
                     <td>
-                        <form id="caseSize" action="cases.jsp" method="post">
-                                <input type="hidden" value = "size" name="sortCase">
-                                <input type="hidden" value=false name="ascending">
-                                <button class="btn btn-primary" type="submit" value = "sort" name="sort">Price</button>
-                                <button class="btn btn-primary" type="submit" value = "sort" name="sort">Size</button>
-                        </form>
+                        <a onClick=sortTable(4)>Size</a>
                     </td>
                 
                 </tr>
             </thead>    
 
             <script>
+            function sortTable(n) {
+                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                table = document.getElementById("casesListings");
+                switching = true;
+                // Set the sorting direction to ascending:
+                dir = "asc";
+                /* Make a loop that will continue until
+                no switching has been done: */
+                while (switching) {
+                  // Start by saying: no switching is done:
+                  switching = false;
+                  rows = table.rows;
+                  /* Loop through all table rows (except the
+                  first, which contains table headers): */
+                  for (i = 1; i < (rows.length - 1); i++) {
+                    // Start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /* Get the two elements you want to compare,
+                    one from current row and one from the next: */
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    /* Check if the two rows should switch place,
+                    based on the direction, asc or desc: */
+                    if (dir == "asc") {
+                      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                      }
+                    } else if (dir == "desc") {
+                      if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                      }
+                    }
+                  }
+                  if (shouldSwitch) {
+                    /* If a switch has been marked, make the switch
+                    and mark that a switch has been done: */
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    // Each time a switch is done, increase this count by 1:
+                    switchcount ++;
+                  } else {
+                    /* If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again. */
+                    if (switchcount == 0 && dir == "asc") {
+                      dir = "desc";
+                      switching = true;
+                    }
+                  }
+                }
+              }
+
+              function sortPrices(n){
+                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                table = document.getElementById("casesListings");
+                switching = true;
+                // Set the sorting direction to ascending:
+                dir = "asc";
+                /* Make a loop that will continue until
+                no switching has been done: */
+                while (switching) {
+                  // Start by saying: no switching is done:
+                  switching = false;
+                  rows = table.rows;
+                  /* Loop through all table rows (except the
+                  first, which contains table headers): */
+                  for (i = 1; i < (rows.length - 1); i++) {
+                    // Start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /* Get the two elements you want to compare,
+                    one from current row and one from the next: */
+                    x = parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML.substring(1,rows[i].getElementsByTagName("TD")[n].innerHTML.length)) ;
+                    y = parseFloat(rows[i + 1].getElementsByTagName("TD")[n].innerHTML.substring(1,rows[i].getElementsByTagName("TD")[n].innerHTML.length));
+                    /* Check if the two rows should switch place,
+                    based on the direction, asc or desc: */
+                    if (dir == "asc") {
+                        
+                      if (x > y) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                      }
+                    } else if (dir == "desc") {
+                      if (x < y) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                      }
+                    }
+                  }
+                  if (shouldSwitch) {
+                    /* If a switch has been marked, make the switch
+                    and mark that a switch has been done: */
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    // Each time a switch is done, increase this count by 1:
+                    switchcount ++;
+                  } else {
+                    /* If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again. */
+                    if (switchcount == 0 && dir == "asc") {
+                      dir = "desc";
+                      switching = true;
+                    }
+                  }
+                }
+              }
+
                function myFunction() {
                     var input, filter, ul, li, a, i, txtValue;
                     input = document.getElementById("searchParams");
@@ -275,7 +369,7 @@
                             query = query.substring(0,query.length()-1) + " WHERE ";
                             Iterator iterator = filters.iterator();
                             query += "size = '" + iterator.next() + "'";
-                            if(iterator.hasNext()){
+                            while(iterator.hasNext()){
                                 query += " OR size = '" + iterator.next() + "'";
                             }
                             query += ";";
