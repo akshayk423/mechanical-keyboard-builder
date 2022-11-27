@@ -60,6 +60,21 @@
                 padding-bottom: 0.15rem!important;
                 padding-left: 0.15rem!important;
             }
+
+            .signOut {
+                border: none;
+                background: none;
+                color:aliceblue!important;
+            }
+            .center {
+                margin: 0;
+                position: absolute;
+                top: 40%;
+                left: 50%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                text-align:center;
+            }
         </style>
         
     </head>
@@ -67,27 +82,29 @@
     <body>
         <div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container">
-                    <a class="navbar-brand" href="/CS157A-team4/home.jsp">
-                        <img alt src="logo.png" width="50" height="50">
-                        Mechanical Keyboard Builder
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/CS157A-team4/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/CS157A-team4/login.jsp">Log out</a>
-                        </li>
-                    </ul>
-                    </div>
+            <div class="container">
+                <a class="navbar-brand" href="/CS157A-team4/home.jsp">
+                    <img alt src="logo.png" width="50" height="50">
+                    Mechanical Keyboard Builder
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <button class="signOut"><a href="partlists.jsp" class="signOut">Part Lists</a></button>
+                    </li>
+                    <li class="nav-item">
+                        <form action="login.jsp" method="post" value = "Sign Out" name="signOut">
+                          <button type="submit" class="signOut" value = "Sign Out" name="signOut">Sign Out</button>
+                        </form>
+                      </li>
+                </ul>
                 </div>
+              </div>
             </nav>
-        </div>
+          </div>
 
         <div>
             <% 
@@ -226,7 +243,7 @@
                                                 <td><%out.println(prebuilt_hotswappable);%></td>
                                                 <td>
                                                         <form action='partlist.jsp' method='post'>
-                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                             <input type='hidden' value="<%=prebuilt_id%>" name='partID'>
                                                             <input type='hidden' value="<%=partListID%>" name="partListID">
                                                         </form>
@@ -286,7 +303,7 @@
                                                 <td><%out.println(prebuilt_size);%></td>
                                                 <td>
                                                 <form action='partlist.jsp' method='post'>
-                                                    <input type='submit' value='Delete' name='Delete'>
+                                                    <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                     <input type='hidden' value="<%=pcb_id%>" name='partID'>
                                                     <input type='hidden' value="<%=partListID%>" name="partListID">
                                                 </form>
@@ -393,7 +410,7 @@
                                                 <td><%out.println(prebuilt_stem);%></td>
                                                 <td>
                                                         <form action='partlist.jsp' method='post'>
-                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                             <input type='hidden' value="<%=switches_id%>" name='partID'>
                                                             <input type='hidden' value="<%=partListID%>" name="partListID">
                                                         </form>
@@ -451,7 +468,7 @@
                                                     <td><%out.println(prebuilt_size);%></td>
                                                     <td>
                                                         <form action='partlist.jsp' method='post'>
-                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                             <input type='hidden' value="<%=case_id%>" name='partID'>
                                                             <input type='hidden' value="<%=partListID%>" name="partListID">
                                                         </form>
@@ -508,7 +525,7 @@
                                                 <td><%out.println(prebuilt_info);%></td>
                                                 <td>
                                                         <form action='partlist.jsp' method='post'>
-                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                             <input type='hidden' value="<%=stab_id%>" name='partID'>
                                                             <input type='hidden' value="<%=partListID%>" name="partListID">
                                                         </form>
@@ -565,7 +582,7 @@
                                                 <td><%out.println(prebuilt_material);%></td>
                                                 <td>
                                                         <form action='partlist.jsp' method='post'>
-                                                            <input type='submit' class="btn btn-primary" value='Delete' name='Delete'>
+                                                            <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
                                                             <input type='hidden' value="<%=keycaps_id%>" name='partID'>
                                                             <input type='hidden' value="<%=partListID%>" name="partListID">
                                                         </form>

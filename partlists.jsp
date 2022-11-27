@@ -60,6 +60,21 @@
                 padding-bottom: 0.15rem!important;
                 padding-left: 0.15rem!important;
             }
+
+            .signOut {
+                border: none;
+                background: none;
+                color:aliceblue!important;
+            }
+            .center {
+                margin: 0;
+                position: absolute;
+                top: 40%;
+                left: 50%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                text-align:center;
+            }
         </style>
         
     </head>
@@ -72,29 +87,26 @@
         %>
         <div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container">
-                    <a class="navbar-brand" href="/CS157A-team4/home.jsp">
-                        <img alt src="logo.png" width="50" height="50">
-                        Mechanical Keyboard Builder
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/CS157A-team4/partlists.jsp">Partlists <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <form action="login.jsp" method="post">
-                                <button type="submit" value = "Sign Out" name="signOut">Sign Out</button>
-                            </form>
-                        </li>
-                    </ul>
-                    </div>
+            <div class="container">
+                <a class="navbar-brand" href="/CS157A-team4/home.jsp">
+                    <img alt src="logo.png" width="50" height="50">
+                    Mechanical Keyboard Builder
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <form action="login.jsp" method="post" value = "Sign Out" name="signOut">
+                        <button type="submit" class="signOut" value = "Sign Out" name="signOut">Sign Out</button>
+                      </form>
+                    </li>
+                </ul>
                 </div>
+              </div>
             </nav>
-        </div>
+          </div>
 
         <div>
             <table border="1" width="100%">
@@ -183,8 +195,8 @@
                                 <tr>
                                     <td>
                                         <form action='partlist.jsp' method='post'>
-                                            <input type='submit' value='View Part List' name='viewPartList'>
-                                            <input type='hidden' value='<%=pListId%>' name="partListID">
+                                            <input class="btn btn-primary" type='submit' value='View Part List' name='viewPartList'>
+                                            <input class="btn btn-primary" type='hidden' value='<%=pListId%>' name="partListID">
                                         </form>
                                     </td>
                                     <td><%out.println(rs.getString(2));%></td>
@@ -197,7 +209,7 @@
                                     <td><%out.println(rs.getString(10));%></td>
                                     <td>
                                         <form action='partlists.jsp' method='post'>
-                                            <input type='submit' value='Remove Part List' name='removePartList'>
+                                            <input class="btn btn-primary" type='submit' value='Remove Part List' name='removePartList'>
                                             <input type='hidden' value='<%=rs.getString(1)%>' name='rmPartListID'>
                                         </form>
                                     </td>
@@ -209,7 +221,7 @@
                     </tbody>
                 </table>
                             <form action='partlists.jsp' method='post'>
-                                <input type='submit' value='Add Part List' name='addPartList'>
+                                <input class="btn btn-primary" type='submit' value='Add Part List' name='addPartList'>
                             </form>
                     <%
                             stmt.close();
