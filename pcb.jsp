@@ -167,16 +167,29 @@
                             
                         </div>
                         
-                        <div id="specsCheckbox">
-                            <text>Specs:&nbsp;&nbsp;&nbsp;&nbsp;</text>
+                        <div id="rgbCheckbox">
+                            <text>RGB:&nbsp;&nbsp;&nbsp;&nbsp;</text>
                             <label>
-                                <input class="form-check-input" type="checkbox"value="YES" name="RGB"> RGB
+                                <input class="form-check-input" type="checkbox"value="YES" name="RGB"> YES
                             </label>
 
                             <label>
-                                <input class="form-check-input" type="checkbox"value="YES" name="HTSWP"> Hotswappable
+                                <input class="form-check-input" type="checkbox"value="NO" name="RGB"> NO
                             </label>
                         </div>
+
+                        <div id="htswpCheckbox">
+                            <text>Hotswappable:&nbsp;&nbsp;&nbsp;&nbsp;</text>
+                            <label>
+                                <input class="form-check-input" type="checkbox"value="YES" name="HTSWP"> YES
+                            </label>
+
+                            <label>
+                                <input class="form-check-input" type="checkbox"value="NO" name="HTSWP"> NO
+                            </label>
+                        </div>
+
+                        
 
                         <button class="btn btn-primary" type="submit" value = "filter" name="filter">Submit</button>
                     </form>
@@ -414,16 +427,16 @@
 
                         if(rgb != null){
                             query = query.substring(0,query.length()-1) + " WHERE";
-                            query += " containsRGB = 'YES'";
+                            query += " containsRGB = '" + rgb + "'";
                             if(htswp != null){
-                                query += " AND hotSwappable = 'YES'";
+                                query += " AND hotSwappable = '" + htswp + "'";
 
                             }
                             query += ";";
                         }
                         if(htswp != null && rgb == null){
                             query = query.substring(0,query.length()-1) + " WHERE ";
-                            query += "hotSwappable = 'YES'";
+                            query += "hotSwappable = '" + htswp + "'";
                             query += ";";
                         }
                         
