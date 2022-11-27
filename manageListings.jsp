@@ -111,6 +111,146 @@
             //get current username
             String username = (String) session.getAttribute("username");
 
+            String edit = request.getParameter("editPart");
+            if(edit != null && edit.equals("Edit Entry")){
+                String id = request.getParameter("partID");
+                String prefix = id.charAt(0) + "" + id.charAt(1);
+
+                Map<String, String> dict = new HashMap<String, String>();
+                dict.put("SW", "switches");
+                dict.put("PB", "prebuilt");
+                dict.put("PC", "pcb");
+                dict.put("SB", "stabilizers");
+                dict.put("KC", "keycap");
+                dict.put("CS", "kbcase");
+                dict.put("AC", "accessories");
+
+                //update entry in keyboardpart
+                rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart WHERE PartID = '" + id + "'");
+
+                rs.beforeFirst();
+                rs.next();
+
+                String name = request.getParameter("eName");
+                String url = request.getParameter("eURL");
+                String brand = request.getParameter("eBrand");
+                String price = request.getParameter("ePrice");
+
+                rs.updateString(2, url);
+                rs.updateString(3, name);
+                rs.updateString(4, brand);
+                rs.updateString(5, price);
+                rs.updateString(6, username);
+                rs.updateRow();
+
+                switch(dict.get(prefix)){
+                    case "prebuilt": {
+                        String switchName = request.getParameter("eSwitchName");
+                        String hotSwap = request.getParameter("eHotSwappable");
+                        
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.prebuilt WHERE PartID = '" + id + "'");
+                        rs.beforeFirst();
+                        rs.next();
+                        rs.updateString(1, id);
+                        rs.updateString(2, switchName);
+                        rs.updateString(3, hotSwap);
+                        rs.updateRow();
+                        break;
+                    }
+                    case "pcb": {
+                        String containsRGB = request.getParameter("eContainsRGB");
+                        String hotSwap = request.getParameter("eHotSwappable");
+                        String size = request.getParameter("eSize");
+
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.pcb WHERE PartID = '" + id + "'");
+                        rs.beforeFirst();
+                        rs.next();
+                        rs.updateString(1, id);
+                        rs.updateString(2, containsRGB);
+                        rs.updateString(3, hotSwap);
+                        rs.updateString(4,size);
+                        rs.updateRow();
+                        break;
+                    }
+                    case "stabilizers": {
+                        String info = request.getParameter("eInfo");
+
+                        String type1 = request.getParameter("2U");
+                        String type2 = request.getParameter("6.25U");
+                        String type3 = request.getParameter("7U");
+                        String stabType = "";
+                        ArrayList<String> stabList = new ArrayList<String>();
+
+                        if(type1 != null) {stabList.add(type1);}
+                        if(type2 != null) {stabList.add(type2);}
+                        if(type3 != null) {stabList.add(type3);}
+                        if(stabList.isEmpty()){
+                            stabType = "Unknown";
+                        }else{
+                            stabType = String.join(", ", stabList);
+                        }
+
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.stabilizers WHERE PartID = '" + id + "'");
+                        rs.beforeFirst();
+                        rs.next();
+                        rs.updateString(1, id);
+                        rs.updateString(2, stabType);
+                        rs.updateString(3, info);
+                        rs.updateRow();
+                        break;
+                    }
+                    case "keycaps": {
+                        String profile = request.getParameter("eProfile");
+                        String material = request.getParameter("eMaterial");
+
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.keycaps WHERE PartID = '" + id + "'");
+                        rs.beforeFirst();
+                        rs.next();
+                        rs.updateString(1, id);
+                        rs.updateString(2, profile);
+                        rs.updateString(3, material);
+                        rs.updateRow();
+                        break;
+                    }
+                    case "kbcase":{
+                        String size = request.getParameter("eSize");
+
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.kbcase WHERE PartID = '" + id + "'");
+                        rs.beforeFirst();
+                        rs.next();
+                        rs.updateString(1, id);
+                        rs.updateString(2, size);
+                        rs.updateRow();
+                        break;
+                    }
+                    case "accessories": {
+                        String type = request.getParameter("eType");
+
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.accessories WHERE PartID = '" + id + "'");
+                        rs.beforeFirst();
+                        rs.next();
+                        rs.updateString(1, id);
+                        rs.updateString(2, type);
+                        rs.updateRow();
+                        break;
+                    }
+                    case "switches": {
+                        String type = request.getParameter("eType"); 
+                        String stem = request.getParameter("eStem");
+
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.switches WHERE PartID = '" + id + "'");
+                        rs.beforeFirst();
+                        rs.next();
+                        rs.updateString(1, id);
+                        rs.updateString(2, type);
+                        rs.updateString(3, stem);
+                        rs.updateRow();
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
             
             //REMOVE
             String removed = request.getParameter("removeListing");
@@ -128,7 +268,7 @@
                 dict.put("PB", "prebuilt");
                 dict.put("PC", "pcb");
                 dict.put("SB", "stabilizers");
-                dict.put("KC", "keycap");
+                dict.put("KC", "keycaps");
                 dict.put("CS", "kbcase");
                 dict.put("AC", "accessories");
 
@@ -317,7 +457,7 @@
                         String type = request.getParameter("pType"); 
                         String stem = request.getParameter("pStem");
 
-                        rs = stmt.executeQuery("SELECT * FROM mkdb.");
+                        rs = stmt.executeQuery("SELECT * FROM mkdb.switches");
                         rs.moveToInsertRow();
                         rs.updateString(1, id);
                         rs.updateString(2, type);
@@ -366,13 +506,13 @@
         <div style="display: inline-block;text-align:right">
         <tr>
         <td>Name:</td>
-        <td><input type="text" name="pName"></td></br>
+        <td><input type="text" name="pName" required></td></br>
         <td>URL:</td>
-        <td><input type="text" name="pURL"></td></br>
+        <td><input type="text" name="pURL" required></td></br>
         <td>Brand:</td>
-        <td><input type="text" name="pBrand"></td></br>
+        <td><input type="text" name="pBrand" required></td></br>
         <td>Price:</td>
-        <td><input type="number" name="pPrice"></td></br>
+        <td><input type="number" name="pPrice" required></td></br>
         <input type="hidden" name="partType" value="<%= partType %>">
         <%
 
@@ -381,7 +521,7 @@
         case "prebuilt":
             %>
                 <td>Switch Name:</td>
-                <td><input type="text" name="pSwitchName"></td></br>
+                <td><input type="text" name="pSwitchName" required></td></br>
                 <td>HotSwappable:</td>
                 <select name="pHotSwappable">
                     <option value="yes">Yes</option>
@@ -437,7 +577,7 @@
                 <input type="checkbox" name="7U" value="7U">7U</label><br />
 
                 <br></br>
-                <input type="submit" value="Add Entry" name="addPartButton">
+                <input type="submit" class="btn btn-primary" value="Add Entry" name="addPartButton">
                 </div>
                 </form>
             <%
@@ -445,15 +585,15 @@
         case "keycaps":
             %>
             <td>Profile:</td>
-            <td><input type="text" name="pProfile"></td></br>
+            <td><input type="text" name="pProfile" required></td></br>
             <td>Material:</td>
-            <td><select name="Material">
+            <td><select name="pMaterial">
                 <option value="PBT">PBT</option>
                 <option value="ABS">ABS</option>
             </select></td></br>
 
             <br></br>
-            <input type="submit" value="Add Entry" name="addPartButton">
+            <input type="submit" class="btn btn-primary" value="Add Entry" name="addPartButton">
             </div>
             </form>
             <%
@@ -472,7 +612,7 @@
                 </select></br>
 
                 <br></br>
-                <input type="submit" value="Add Entry" name="addPartButton">
+                <input type="submit" class="btn btn-primary" value="Add Entry" name="addPartButton">
                 </div>
                 </form>
             <%
@@ -480,10 +620,10 @@
         case "accessories":
             %>
             <td>Type:</td>
-            <td><input type="text" name="pType"></td></br>
+            <td><input type="text" name="pType" required></td></br>
 
             <br></br>
-                <input type="submit" value="Add Entry" name="addPartButton">
+                <input type="submit" class="btn btn-primary" value="Add Entry" name="addPartButton">
                 </div>
                 </form>
             <%
@@ -497,10 +637,10 @@
                         <option value="Tactile">Tactile</option>
                     </select></br>
                 <td>Stem:</td>
-                <td><input type="text" name="pStem"></td></br>
+                <td><input type="text" name="pStem" required></td></br>
 
                 <br></br>
-                <input type="submit" value="Add Entry" name="addPartButton">
+                <input type="submit" class="btn btn-primary" value="Add Entry" name="addPartButton">
                 </div>
                 </form>
             <%
@@ -561,7 +701,7 @@
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
-                            <input type='submit' class="btn btn-primary" value='Remove Listing' name='removeListing'>
+                            <input type='submit' class="btn btn-danger" value='Remove Listing' name='removeListing'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
@@ -622,7 +762,7 @@
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
-                            <input type='submit' class="btn btn-primary" value='Remove Listing' name='removeListing'>
+                            <input type='submit' class="btn btn-danger" value='Remove Listing' name='removeListing'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
@@ -681,7 +821,7 @@
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
-                            <input type='submit' class="btn btn-primary" value='Remove Listing' name='removeListing'>
+                            <input type='submit' class="btn btn-danger" value='Remove Listing' name='removeListing'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
@@ -741,7 +881,7 @@
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
-                            <input type='submit' class="btn btn-primary" value='Remove Listing' name='removeListing'>
+                            <input type='submit' class="btn btn-danger" value='Remove Listing' name='removeListing'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
@@ -798,7 +938,7 @@
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
-                            <input type='submit' class="btn btn-primary" value='Remove Listing' name='removeListing'>
+                            <input type='submit' class="btn btn-danger" value='Remove Listing' name='removeListing'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
@@ -855,7 +995,7 @@
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
-                            <input type='submit' class="btn btn-primary" value='Remove Listing' name='removeListing'>
+                            <input type='submit' class="btn btn-danger" value='Remove Listing' name='removeListing'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>
@@ -914,7 +1054,7 @@
                         </td>
                         <td>
                             <form action='manageListings.jsp' method='post'>
-                            <input type='submit' class="btn btn-primary" value='Remove Listing' name='removeListing'>
+                            <input type='submit' class="btn btn-danger" value='Remove Listing' name='removeListing'>
                             <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
                             </form>
                         </td>

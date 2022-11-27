@@ -89,9 +89,9 @@
     <h1>Login:</h1>
 
     <td>Username:</td>
-    <td><input type="text" name="iUserName"></td></br>
+    <td><input type="text" name="iUserName" required></td></br>
     <td>Password:</td>
-    <td><input type="password" name="iPassword"></td></br>
+    <td><input type="password" name="iPassword" required></td></br>
 
     <input type="submit" class="btn btn-primary" value="Sign In" name="signIn">
     <input type="submit" class="btn btn-primary" value="Sign Up" name="signUp">

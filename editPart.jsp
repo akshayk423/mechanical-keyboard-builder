@@ -84,6 +84,11 @@
           <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
               <li class="nav-item">
+                <form action="manageListings.jsp" method="post">
+                  <button type="submit" class="signOut" value = "ManageListing" name="ManageListings">Manage Listings</button>
+                </form>
+              </li>
+              <li class="nav-item">
                 <form action="login.jsp" method="post" value = "Sign Out" name="signOut">
                   <button type="submit" class="signOut" value = "Sign Out" name="signOut">Sign Out</button>
                 </form>
@@ -93,9 +98,6 @@
         </div>
       </nav>
     </div>
-    <form action="partPage.jsp">
-        <input type="submit" value="View Part Page">
-      </form>
 
     <div class="move">
     <h1>Manage Listings:</h1>
@@ -112,15 +114,188 @@
 
             String edit = request.getParameter("editPrebuilt");
             if(edit != null && edit.equals("Edit Listing")){
-              out.println(request.getParameter("partID"));
-            }
-                    
-            
-            <form action='editPrebuilt.jsp' method='post'>
-                            <input type='submit' class="btn btn-primary" value='Edit Listing' name='editPrebuilt'>
-                            <input type="hidden" class="btn btn-primary" name="partID" value="<%=rs.getString(1)%>">
-                            </form>
-            
+              String partID = request.getParameter("partID");
+              String prefix = partID.substring(0, 2);
+              
+              HashMap<String, String> dictQuery = new HashMap<String, String>();
+              dictQuery.put("SW", "switches");
+              dictQuery.put("PB", "prebuilt");
+              dictQuery.put("PC", "pcb");
+              dictQuery.put("SB", "stabilizers");
+              dictQuery.put("KC", "keycaps");
+              dictQuery.put("CS", "kbcase");
+              dictQuery.put("AC", "accessories");
+
+              rs = stmt.executeQuery("SELECT * FROM mkdb.keyboardpart NATURAL JOIN mkdb." + dictQuery.get(prefix) + " WHERE PartID = '" + partID + "'");
+              rs.beforeFirst();
+              rs.next();
+
+              HashMap<String, String> dict = new HashMap<String, String>();
+              dict.put("SW", "Editing Switch Entry:");
+              dict.put("PB", "Editing Prebuilt Entry:");
+              dict.put("PC", "Editing PCB Entry:");
+              dict.put("SB", "Editing Stabilizers Entry:");
+              dict.put("KC", "Editing Keycaps Entry:");
+              dict.put("CS", "Editing Case Entry:");
+              dict.put("AC", "Editing Accessory Entry:");
+
+
+        %>
+        <h3><%=dict.get(prefix)%></h3>
+        <form name="addEntry" action="manageListings.jsp" method="post">
+        <div style="display: inline-block;text-align:right">
+        <tr>
+        <td>Name:</td>
+        <td><input type="text" name="eName" value = "<%=rs.getString("name")%>" required></td></br>
+        <td>URL:</td>
+        <td><input type="text" name="eURL" value = "<%=rs.getString("URL")%>" required></td></br>
+        <td>Brand:</td>
+        <td><input type="text" name="eBrand" value = "<%=rs.getString("brand")%>" required></td></br>
+        <td>Price:</td>
+        <td><input type="number" name="ePrice" value = "<%=rs.getString("price")%>"  required></td></br>
+        <%
+
+
+       switch(dict.get(prefix)) {
+        case "Editing Prebuilt Entry:":
+            %>
+                <td>Switch Name:</td>
+                <td><input type="text" name="eSwitchName" value = "<%=rs.getString("switchName")%>" required></td></br>
+                <td>HotSwappable:</td>
+                <select name="eHotSwappable">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select></br>
+                </tr>
+                <br></br>
+                <input type="submit" class="btn btn-primary" value="Edit Entry" name="editPart">
+                <input type="hidden" value="<%=partID%>" name = "partID">
+                </div>
+                </form>
+            <%
+            break;
+        case "Editing PCB Entry:":
+            %>
+                <td>containsRGB:</td>
+                <select name="eContainsRGB">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select></br>
+
+                <td>Hot Swappable:</td>
+                <select name="eHotSwappable">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select></br>
+
+                <td>Size:</td>
+                <select name="eSize">
+                    <option value="40%">40%</option>
+                    <option value="60%">60%</option>
+                    <option value="65%">65%</option>
+                    <option value="75%">75%</option>
+                    <option value="TKL">Tenkeyless</option>
+                    <option value="Full Sized">Full Sized</option>
+                    <option value="Numpad">Numpad</option>
+                </select></br>
+                </tr>
+                <br></br>
+                <input type="submit" class="btn btn-primary" value="Edit Entry" name="editPart">
+                <input type="hidden" value="<%=partID%>" name = "partID">
+                </div>
+                </form>
+            <%
+            break;
+        case "Editing Stabilizers Entry:":
+            %>
+                <select name="eInfo">
+                <option value="plate mount">Plate Mount</option>
+                <option value="screw-in, pcb mount">PCB Mount</option>
+                </select></br>
+
+                <input type="checkbox" name="2U" value="2U" checked>2U</label><br />
+                <input type="checkbox" name="6.25U" value="6.25U">6.25U</label><br />
+                <input type="checkbox" name="7U" value="7U">7U</label><br />
+
+                <br></br>
+                <input type="submit" class="btn btn-primary" value="Edit Entry" name="editPart">
+                <input type="hidden" value="<%=partID%>" name = "partID">
+                </div>
+                </form>
+            <%
+            break;
+        case "Editing Keycaps Entry:":
+            %>
+            <td>Profile:</td>
+            <td><input type="text" name="eProfile" value = "<%=rs.getString("profile")%>" required></td></br>
+            <td>Material:</td>
+            <td><select name="eMaterial">
+                <option value="PBT">PBT</option>
+                <option value="ABS">ABS</option>
+            </select></td></br>
+
+            <br></br>
+            <input type="submit" class="btn btn-primary" value="Edit Entry" name="editPart">
+            <input type="hidden" value="<%=partID%>" name = "partID">
+            </div>
+            </form>
+            <%
+            break;
+        case "Editing Case Entry:":
+            %>
+                <td>Size:</td>
+                <select name="eSize">
+                    <option value="40%">40%</option>
+                    <option value="60%">60%</option>
+                    <option value="65%">65%</option>
+                    <option value="75%">75%</option>
+                    <option value="TKL">Tenkeyless</option>
+                    <option value="Full Sized">Full Sized</option>
+                    <option value="Numpad">Numpad</option>
+                </select></br>
+
+                <br></br>
+                <input type="submit" class="btn btn-primary" value="Edit Entry" name="editPart">
+                <input type="hidden" value="<%=partID%>" name = "partID">
+                </div>
+                </form>
+            <%
+            break;
+        case "Editing Accessory Entry:":
+            %>
+            <td>Type:</td>
+            <td><input type="text" name="eType" value = "<%=rs.getString("type")%>" required></td></br>
+
+            <br></br>
+                <input type="submit" class="btn btn-primary" value="Edit Entry" name="editPart">
+                <input type="hidden" value="<%=partID%>" name = "partID">
+                </div>
+                </form>
+            <%
+        break;
+        case "Editing Switch Entry:":
+            %>
+                <td>Type:</td>
+                    <select name="pType">
+                        <option value="Linear">Linear</option>
+                        <option value="Clicky">Clicky</option>
+                        <option value="Tactile">Tactile</option>
+                    </select></br>
+                <td>Stem:</td>
+                <td><input type="text" name="pStem" value = "<%=rs.getString("stem")%>" required></td></br>
+
+                <br></br>
+                <input type="submit" class="btn btn-primary" value="Edit Entry" name="editPart">
+                <input type="hidden" value="<%=partID%>" name = "partID">
+                </div>
+                </form>
+            <%
+        break;
+        default:
+            break;
+       }
+    }
+              //determine which part fields we need to supply
             
             rs.close();
             stmt.close();
