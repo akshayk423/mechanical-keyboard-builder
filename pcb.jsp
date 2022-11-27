@@ -170,22 +170,22 @@
                         <div id="rgbCheckbox">
                             <text>RGB:&nbsp;&nbsp;&nbsp;&nbsp;</text>
                             <label>
-                                <input class="form-check-input" type="checkbox"value="YES" name="RGB"> YES
+                                <input class="form-check-input" type="checkbox"value="YES" name="yRGB"> YES
                             </label>
 
                             <label>
-                                <input class="form-check-input" type="checkbox"value="NO" name="RGB"> NO
+                                <input class="form-check-input" type="checkbox"value="NO" name="nRGB"> NO
                             </label>
                         </div>
 
                         <div id="htswpCheckbox">
                             <text>Hotswappable:&nbsp;&nbsp;&nbsp;&nbsp;</text>
                             <label>
-                                <input class="form-check-input" type="checkbox"value="YES" name="HTSWP"> YES
+                                <input class="form-check-input" type="checkbox"value="YES" name="yHTSWP"> YES
                             </label>
 
                             <label>
-                                <input class="form-check-input" type="checkbox"value="NO" name="HTSWP"> NO
+                                <input class="form-check-input" type="checkbox"value="NO" name="nHTSWP"> NO
                             </label>
                         </div>
 
@@ -395,9 +395,13 @@
                         String tkl = request.getParameter("TKL");
                         String full = request.getParameter("FS");
                         String num = request.getParameter("NP");
-                        String rgb = request.getParameter("RGB");
-                        String htswp = request.getParameter("HTSWP");
+                        String yrgb = request.getParameter("yRGB");
+                        String yhtswp = request.getParameter("yHTSWP");
+                        String nrgb = request.getParameter("nRGB");
+                        String nhtswp = request.getParameter("nHTSWP");
                         ArrayList<String> filters = new ArrayList<>();
+                        ArrayList<String> rgb = new ArrayList<>();
+                        ArrayList<String> htswp = new ArrayList<>();
 
                         if(size40 != null){filters.add(size40);}
                         if(size60 != null){filters.add(size60);}
@@ -406,7 +410,10 @@
                         if(tkl != null){filters.add(tkl);}
                         if(full != null){filters.add(full);}
                         if(num != null){filters.add(num);}
-                  
+                        if(yrgb != null){rgb.add(yrgb);}
+                        if(nrgb != null){rgb.add(nrgb);}
+                        if(yhtswp != null){htswp.add(yhtswp);}
+                        if(nhtswp != null){htswp.add(nhtswp);}
                         if(filters.size() > 0){
                             query = query.substring(0,query.length()-1) + " WHERE ";
                             Iterator iterator = filters.iterator();
@@ -416,29 +423,60 @@
                             }
                             query += ")";
                             
-                            if(rgb != null){
-                                query += " AND containsRGB = 'YES'";
+                            if(rgb.size() > 0){
+                                Iterator rgbIter = rgb.iterator();
+                                query += " AND (containsRGB = '" + rgbIter.next() + "'";
+                                while(rgbIter.hasNext()){
+                                    query += " OR containsRGB = '" + rgbIter.next() + "'";
+                                }
+
+                                query += ")";
                             }
-                            if(htswp != null){
-                                query += " AND hotSwappable = 'YES'";
+                            if(htswp.size() > 0){
+                                Iterator htswpIter = htswp.iterator();
+                                query += " AND (hotSwappable = '" + htswpIter.next() + "'";
+                                while(htswpIter.hasNext()){
+                                    query += " OR hotSwappable = '" + htswpIter.next() + "'";
+                                }
+
+                                query += ")";
                             }   
                             query += ";";
                         }
 
-                        if(rgb != null){
-                            query = query.substring(0,query.length()-1) + " WHERE";
-                            query += " containsRGB = '" + rgb + "'";
-                            if(htswp != null){
-                                query += " AND hotSwappable = '" + htswp + "'";
-
-                            }
-                            query += ";";
-                        }
-                        if(htswp != null && rgb == null){
+                        if(rgb.size() > 0){
                             query = query.substring(0,query.length()-1) + " WHERE ";
-                            query += "hotSwappable = '" + htswp + "'";
+                            Iterator rgbIter = rgb.iterator();
+                            query += "(containsRGB = '" + rgbIter.next() + "'";
+                            while(rgbIter.hasNext()){
+                                query += " OR containsRGB = '" + rgbIter.next() + "'";
+                            }
+
+                            query += ")";
+                            if(htswp.size() > 0){
+                                Iterator htswpIter = htswp.iterator();
+                                query += " AND (hotSwappable = '" + htswpIter.next() + "'";
+                                while(htswpIter.hasNext()){
+                                    query += " OR hotSwappable = '" + htswpIter.next() + "'";
+                                }
+
+                                query += ")";
+                            }   
                             query += ";";
                         }
+                        if(htswp.size() > 0 && rgb.size() == 0){
+                            query = query.substring(0,query.length()-1) + " WHERE ";
+                            Iterator htswpIter = htswp.iterator();
+                            query += "(hotSwappable = '" + htswpIter.next() + "'";
+                            while(htswpIter.hasNext()){
+                                query += " OR hotSwappable = '" + htswpIter.next() + "'";
+                            }
+
+                            query += ")";
+                            query += ";";
+                        }  
+
+                      
                         
                     }
                 
