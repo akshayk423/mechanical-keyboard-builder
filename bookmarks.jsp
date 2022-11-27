@@ -142,7 +142,7 @@
                             <td><a href='<%=rs.getString(1)%>'>Buy</a></td>
                             <td>
                                 <form action='bookmarks.jsp' method='post'>
-                                  <input type='submit' value='Remove Bookmark' name='removeBookmarkButton'>
+                                  <input type='submit' class="btn btn-danger" value='Remove Bookmark' name='removeBookmarkButton'>
                                   <input type='hidden' value='<%=rs.getString(5)%>' name='partID'>
                                 </form>
                             </td>

@@ -122,10 +122,11 @@
         <%
         String user = (String) session.getAttribute("dbuser");
         String password = (String) session.getAttribute("dbpassword");
+        String username = (String) session.getAttribute("username");
         try {
             java.sql.Connection con; 
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false","root", "password");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mkdb?autoReconnect=true&useSSL=false",user, password);
         %>
         <div>
 
@@ -283,11 +284,10 @@
                 
 
                     String reported = request.getParameter("reportListing");
-                    out.println("reported is " + reported);
                     String reportPartID = "";
                     if (reported != null && reported.equals("Report")) {
                         reportPartID = request.getParameter("reportPartID");
-                        out.println(reportPartID);
+                        //out.println(reportPartID);
                         ResultSet rs1 = stmt.executeQuery("SELECT * FROM mkdb.reportlistings");
 
                         // add every id to a set
@@ -316,6 +316,8 @@
                         rs1.updateString("ReportListID", id);
                         rs1.updateString("PartID", reportPartID);
                         rs1.insertRow();
+
+                        %><h4>Listing was reported</h4><%
                     }
                     
 
