@@ -435,7 +435,7 @@
                             <td>
                                 <form action='partlist.jsp' method='post'>
                                     <input type='submit' class="btn btn-primary" value='Add Part' name='addPart'>
-                                    <input type='hidden' value='<%=rs.getString(1)%>' name='addPartID'>
+                                    <input type='hidden' value='<%=rs.getString("PartID")%>' name='addPartID'>
                                     <input type='hidden' value='<%=partListID%>' name= 'partListID'>
                                 </form>
                             </td>

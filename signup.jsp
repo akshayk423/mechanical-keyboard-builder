@@ -90,7 +90,7 @@
     <td>Username:</td>
     <td><input type="text" name="iUser"></td></br>
     <td>Password:</td>
-    <td><input type="text" name="iPass"></td></br>
+    <td><input type="password" name="iPass"></td></br>
     <input type="submit" class="btn btn-primary" value="Sign Up" name="register">
     </form>
     <form action="login.jsp" method="post">

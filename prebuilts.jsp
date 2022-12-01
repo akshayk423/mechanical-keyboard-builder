@@ -140,44 +140,6 @@
                 <div class="child"> <input id="searchParams" type="text" placeholder="Search.." name="searchParams" onkeyup="myFunction()"></div>
                 <div class="child">
                     <form id="filterOptions" action="prebuilts.jsp" method="post">
-                        <text>Sizes:  </text>
-                        <div id="sizeCheckbox" class="form-check form-check-inline">
-                            
-                            <input class="form-check-input" type="checkbox"value="40%" name="40%">
-                            <label class="form-check-label">40%</label>
-
-                            <input class="form-check-input" type="checkbox"  value="60%" name="60%">
-                            <label class="form-check-label">60%</label>
-
-                            <input class="form-check-input" type="checkbox" value="65%" name="65%">
-                            <label class="form-check-label">65%</label>
-
-                            <input class="form-check-input" type="checkbox"  value="75%" name="75%">
-                            <label class="form-check-label">75%</label>
-
-                            <input class="form-check-input" type="checkbox"  value="TKL" name="TKL">
-                            <label class="form-check-label">TKL</label>
-
-                            <input class="form-check-input" type="checkbox"  value="Full Sized" name="FS">
-                            <label class="form-check-label">Full Sized</label>
-
-                            <input class="form-check-input" type="checkbox"  value="Numpad" name="NP">
-                            <label class="form-check-label">Numpad</label>
-
-                            
-                        </div>
-                        
-                        <div id="rgbCheckbox">
-                            <text>RGB:&nbsp;&nbsp;&nbsp;&nbsp;</text>
-                            <label>
-                                <input class="form-check-input" type="checkbox"value="YES" name="yRGB"> YES
-                            </label>
-
-                            <label>
-                                <input class="form-check-input" type="checkbox"value="NO" name="nRGB"> NO
-                            </label>
-                        </div>
-
                         <div id="htswpCheckbox">
                             <text>Hotswappable:&nbsp;&nbsp;&nbsp;&nbsp;</text>
                             <label>
@@ -187,11 +149,8 @@
                             <label>
                                 <input class="form-check-input" type="checkbox"value="NO" name="nHTSWP"> NO
                             </label>
+                            <button class="btn btn-primary" type="submit" value = "filter" name="filter">Submit</button>
                         </div>
-
-                        
-
-                        <button class="btn btn-primary" type="submit" value = "filter" name="filter">Submit</button>
                     </form>
                     
                 </div>
@@ -203,38 +162,21 @@
             <thead>
                 <tr>
                     <td>
-
                         <a onClick=sortTable(0)>Name</a>
-    
                     </td>
-                        
                     <td>
                         <a onClick=sortTable(1)>Brand</a>
-                    
                     </td>
                     <td> 
                         <a onClick=sortPrices(2)>Price</a>
                     </td>
                     <td>Url</td>
-
                     <td>
                     <a onClick=sortTable(4)>Switches</a>
                     </td>
-
-
-                    <td>
-                        <a onClick=sortTable(5)>RGB</a>
-                    </td>
-
                     <td>
                         <a onClick=sortTable(6)>Hotswappable</a>
                     </td>
-
-                    <td>
-                        <a onClick=sortTable(7)>Size</a>
-                    </td>
-                
-                
                 </tr>
             </thead>    
 
@@ -393,84 +335,22 @@
 
 
                     if(filter != null && filter.equals("filter")){
-                        
-                        String size40 = request.getParameter("40%");
-                        String size60 = request.getParameter("60%");
-                        String size65 = request.getParameter("65%");
-                        String size75 = request.getParameter("75%");
                         String tkl = request.getParameter("TKL");
                         String full = request.getParameter("FS");
                         String num = request.getParameter("NP");
-                        String yrgb = request.getParameter("yRGB");
                         String yhtswp = request.getParameter("yHTSWP");
-                        String nrgb = request.getParameter("nRGB");
                         String nhtswp = request.getParameter("nHTSWP");
                         ArrayList<String> filters = new ArrayList<>();
-                        ArrayList<String> rgb = new ArrayList<>();
                         ArrayList<String> htswp = new ArrayList<>();
-
-                        if(size40 != null){filters.add(size40);}
-                        if(size60 != null){filters.add(size60);}
-                        if(size65 != null){filters.add(size65);}
-                        if(size75 != null){filters.add(size75);}
+                        
                         if(tkl != null){filters.add(tkl);}
                         if(full != null){filters.add(full);}
                         if(num != null){filters.add(num);}
-                        if(yrgb != null){rgb.add(yrgb);}
-                        if(nrgb != null){rgb.add(nrgb);}
                         if(yhtswp != null){htswp.add(yhtswp);}
                         if(nhtswp != null){htswp.add(nhtswp);}
-                        if(filters.size() > 0){
-                            query = query.substring(0,query.length()-1) + " WHERE ";
-                            Iterator iterator = filters.iterator();
-                            query += "(size = '" + iterator.next() + "'";
-                            while(iterator.hasNext()){
-                                query += " OR size = '" + iterator.next() + "'";
-                            }
-                            query += ")";
-                            
-                            if(rgb.size() > 0){
-                                Iterator rgbIter = rgb.iterator();
-                                query += " AND (containsRGB = '" + rgbIter.next() + "'";
-                                while(rgbIter.hasNext()){
-                                    query += " OR containsRGB = '" + rgbIter.next() + "'";
-                                }
 
-                                query += ")";
-                            }
-                            if(htswp.size() > 0){
-                                Iterator htswpIter = htswp.iterator();
-                                query += " AND (hotSwappable = '" + htswpIter.next() + "'";
-                                while(htswpIter.hasNext()){
-                                    query += " OR hotSwappable = '" + htswpIter.next() + "'";
-                                }
 
-                                query += ")";
-                            }   
-                            query += ";";
-                        }
-
-                        if(rgb.size() > 0){
-                            query = query.substring(0,query.length()-1) + " WHERE ";
-                            Iterator rgbIter = rgb.iterator();
-                            query += "(containsRGB = '" + rgbIter.next() + "'";
-                            while(rgbIter.hasNext()){
-                                query += " OR containsRGB = '" + rgbIter.next() + "'";
-                            }
-
-                            query += ")";
-                            if(htswp.size() > 0){
-                                Iterator htswpIter = htswp.iterator();
-                                query += " AND (hotSwappable = '" + htswpIter.next() + "'";
-                                while(htswpIter.hasNext()){
-                                    query += " OR hotSwappable = '" + htswpIter.next() + "'";
-                                }
-
-                                query += ")";
-                            }   
-                            query += ";";
-                        }
-                        if(htswp.size() > 0 && rgb.size() == 0){
+                        if(htswp.size() > 0){
                             query = query.substring(0,query.length()-1) + " WHERE ";
                             Iterator htswpIter = htswp.iterator();
                             query += "(hotSwappable = '" + htswpIter.next() + "'";
@@ -541,9 +421,7 @@
                             <td width="10%"><%=price%></td>
                             <td width="10%"><a href="<%=rs.getString("URL")%>">Purchase</a></td>
                             <td width="10%"><%=rs.getString("switchName")%></td>
-                            <td width="10%"><%=rs.getString("containsRGB")%></td>
                             <td width="10%"><%=rs.getString("hotSwappable")%></td>
-                            <td width="10%"><%=rs.getString("size")%></td>
                             <td>
                                 <form action='partlist.jsp' method='post'>
                                     <input type='submit' class="btn btn-primary" value='Add Part' name='addPart'>
