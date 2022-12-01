@@ -204,7 +204,10 @@
                                             rs1.beforeFirst();
                                             if (!rs1.next()) {
                                     %>
-                                                <a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Prebuilt</a>
+                                                <form action='prebuilts.jsp' method='post'>
+                                                    <input type='submit' class="btn btn-primary" value='Add Prebuilt' name='addCase'>
+                                                    <input type='hidden' value='<%=partListID%>' name="partListID">
+                                                </form>
                                         <%
                                             } else {
                                                 rs1.beforeFirst();
@@ -261,7 +264,10 @@
                                             rs2.beforeFirst();
                                             if (!rs2.next()) {
                                     %>
-                                                <a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add PCB</a>
+                                                <form action='pcb.jsp' method='post'>
+                                                    <input type='submit' class="btn btn-primary" value='Add PCB' name='addCase'>
+                                                    <input type='hidden' value='<%=partListID%>' name="partListID">
+                                                </form>
                                         <%
                                             } else {
                                                 rs2.beforeFirst();
@@ -314,7 +320,6 @@
                                     <%
                                             }
                                     %>
-                                
                         <br></br>
                         <h3>Accessories</h3>
 
@@ -323,7 +328,10 @@
                                             rs3.beforeFirst();
                                             if (!rs3.next()) {
                                     %>
-                                                <a href="/CS157A-team4/partPages/accessories.jsp" type="button" class="btn btn-primary">Add Accessories</a>
+                                                <form action='accessories.jsp' method='post'>
+                                                    <input type='submit' class="btn btn-primary" value='Add Accessories' name='addCase'>
+                                                    <input type='hidden' value='<%=partListID%>' name="partListID">
+                                                </form>
                                         <%
                                             } else {
                                                 rs3.beforeFirst();
@@ -371,7 +379,10 @@
                                             rs4.beforeFirst();
                                             if (!rs4.next()) {
                                     %>
-                                                <a href="/CS157A-team4/partPages/switches.jsp" type="button" class="btn btn-primary">Add Switches</a>
+                                                <form action='switches.jsp' method='post'>
+                                                    <input type='submit' class="btn btn-primary" value='Add Switches' name='addCase'>
+                                                    <input type='hidden' value='<%=partListID%>' name="partListID">
+                                                </form>
                                         <%
                                             } else {
                                                 rs4.beforeFirst();
@@ -486,7 +497,10 @@
                                             rs6.beforeFirst();
                                             if (!rs6.next()) {
                                     %>
-                                                <a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Stabilizer</a>
+                                                <form action='stabs.jsp' method='post'>
+                                                    <input type='submit' class="btn btn-primary" value='Add Stabilizers' name='addCase'>
+                                                    <input type='hidden' value='<%=partListID%>' name="partListID">
+                                                </form>
                                         <%
                                             } else {
                                                 rs6.beforeFirst();
@@ -543,7 +557,10 @@
                                             rs7.beforeFirst();
                                             if (!rs7.next()) {
                                     %>
-                                                <a href="/prebuilts.jsp" type="button" class="btn btn-primary">Add Prebuilt</a>
+                                                <form action='keycaps.jsp' method='post'>
+                                                    <input type='submit' class="btn btn-primary" value='Add Keycaps' name='addCase'>
+                                                    <input type='hidden' value='<%=partListID%>' name="partListID">
+                                                </form>
                                         <%
                                             } else {
                                                 rs7.beforeFirst();
