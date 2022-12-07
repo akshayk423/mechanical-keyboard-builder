@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.27, for macos11 (x86_64)
 --
 -- Host: 127.0.0.1    Database: mkdb
 -- ------------------------------------------------------
@@ -62,7 +62,7 @@ CREATE TABLE `bookmarks` (
 
 LOCK TABLES `bookmarks` WRITE;
 /*!40000 ALTER TABLE `bookmarks` DISABLE KEYS */;
-INSERT INTO `bookmarks` VALUES ('BL0001','akhal','SW0007'),('BL0002','bluu','CS0003'),('BL0003','cherrylover','KC0003'),('BL0004','dontcallme','AC0010'),('BL0005','kbfan','AC0010'),('BL0006','kbfan','SB0010'),('BL0007','kbfan','PB0005'),('BL0008','menace','PB0006'),('BL0009','spand','SB0002'),('BL0010','sqleury','SB0008');
+INSERT INTO `bookmarks` VALUES ('BL0001','akhal','SW0007'),('BL0003','cherrylover','KC0003'),('BL0004','dontcallme','AC0010'),('BL0005','kbfan','AC0010'),('BL0006','kbfan','SB0010'),('BL0007','kbfan','PB0005'),('BL0008','menace','PB0006'),('BL0009','spand','SB0002'),('BL0010','sqleury','SB0008');
 /*!40000 ALTER TABLE `bookmarks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +104,7 @@ CREATE TABLE `keyboardpart` (
   `name` longtext NOT NULL,
   `brand` varchar(512) NOT NULL,
   `price` double NOT NULL,
-  `username` varchar(128) NOT NULL,
+  `seller` varchar(128) NOT NULL,
   PRIMARY KEY (`PartID`),
   UNIQUE KEY `PartID_UNIQUE` (`PartID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -200,7 +200,7 @@ CREATE TABLE `partlist` (
 
 LOCK TABLES `partlist` WRITE;
 /*!40000 ALTER TABLE `partlist` DISABLE KEYS */;
-INSERT INTO `partlist` VALUES ('PL0001',150,'akhal','PB0001','PC0001','AC0008','SW0001','','SB0001','KC0001'),('PL0002',29,'bluu','PB0010','PC0002','','SW0002','','SB0002','KC0002'),('PL0003',200,'cherrylover','PB0007','PC0003','AC0006','SW0003','','SB0003',''),('PL0004',399,'dontcallme','PB0004','PC0005','AC0005','SW0004','CS0004','','KC0004'),('PL0005',500,'exapple','PB0003','','AC0004','SW0005','CS0005','','KC0004'),('PL0006',89,'kbfan','PB0006','PC0006','AC0003','SW0006','CS0006','','KC0006'),('PL0007',40,'kbfan','','PC0006','','SW0007','CS0007','SB0007','KC0005'),('PL0008',4000,'menace','PB0003','PC0008','','SW0008','','SB0008','KC0008'),('PL0009',600,'spand','PB0001','PC0004','AC0009','SW0009','CS0002','SB0009','KC0002'),('PL0010',50,'sqleury','PB0010','PC0001','AC0010','SW0010','','SB0010','KC0010');
+INSERT INTO `partlist` VALUES ('PL0001',150,'akhal','PB0001','PC0001','AC0008','SW0001','','SB0001','KC0001'),('PL0002',29,'bluu','PB0010','PC0002','','SW0002','','SB0002','KC0002'),('PL0003',200,'cherrylover','PB0007','PC0003','AC0006','SW0003','','SB0003',''),('PL0004',399,'dontcallme','PB0004','PC0005','AC0005','SW0004','CS0004','','KC0004'),('PL0005',500,'exapple','PB0003','','AC0004','SW0005','CS0005','','KC0004'),('PL0006',89,'kbfan','PB0006','PC0006','AC0003','SW0006','CS0006','','KC0006'),('PL0007',40,'kbfan','','PC0006','','SW0007','CS0007','SB0007','KC0005'),('PL0008',4000,'menace','PB0003','PC0008','','SW0008','','SB0008','KC0008'),('PL0009',600,'spand','PB0001','PC0004','AC0009','SW0009','CS0002','SB0009','KC0002'),('PL0010',50,'sqleury','PB0010','PC0001','AC0010','SW0010','','SB0010','KC0010'),('PL9697',0,'bluu',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `partlist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -370,4 +370,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-27 15:14:55
+-- Dump completed on 2022-12-07 10:44:19
