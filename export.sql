@@ -48,11 +48,9 @@ DROP TABLE IF EXISTS `bookmarks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bookmarks` (
-  `bookmarkID` char(6) NOT NULL,
   `username` varchar(128) NOT NULL,
   `PartID` char(6) NOT NULL,
-  PRIMARY KEY (`bookmarkID`),
-  UNIQUE KEY `bookmarklistID_UNIQUE` (`bookmarkID`)
+  PRIMARY KEY (`username`,`PartID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -62,7 +60,7 @@ CREATE TABLE `bookmarks` (
 
 LOCK TABLES `bookmarks` WRITE;
 /*!40000 ALTER TABLE `bookmarks` DISABLE KEYS */;
-INSERT INTO `bookmarks` VALUES ('BL0001','akhal','SW0007'),('BL0003','cherrylover','KC0003'),('BL0004','dontcallme','AC0010'),('BL0005','kbfan','AC0010'),('BL0006','kbfan','SB0010'),('BL0007','kbfan','PB0005'),('BL0008','menace','PB0006'),('BL0009','spand','SB0002'),('BL0010','sqleury','SB0008');
+INSERT INTO `bookmarks` VALUES ('akhal','SW0007'),('cherrylover','KC0003'),('dontcallme','AC0010'),('kbfan','AC0010'),('kbfan','PB0005'),('kbfan','SB0010'),('menace','PB0006'),('spand','SB0002'),('sqleury','SB0008');
 /*!40000 ALTER TABLE `bookmarks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -367,4 +365,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-07 17:06:58
+-- Dump completed on 2022-12-07 17:13:00
