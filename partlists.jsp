@@ -113,7 +113,6 @@
                 <thead>
                     <tr>
                         <th>Part List</th>
-                        <th>Total Price</th>
                         <th>Prebuilt</th>
                         <th>PCB</th>
                         <th>Accessories</th>
@@ -180,7 +179,6 @@
                                 //add entry
                                 rs.moveToInsertRow();
                                 rs.updateString("PartListID", id);
-                                rs.updateDouble("totalPrice", 0.0);
                                 rs.updateString("username", username);
                                 rs.insertRow();
 
@@ -199,14 +197,13 @@
                                             <input class="btn btn-primary" type='hidden' value='<%=pListId%>' name="partListID">
                                         </form>
                                     </td>
-                                    <td><%out.println(rs.getString(2));%></td>
+                                    <td><%out.println(rs.getString(3));%></td>
                                     <td><%out.println(rs.getString(4));%></td>
                                     <td><%out.println(rs.getString(5));%></td>
                                     <td><%out.println(rs.getString(6));%></td>
                                     <td><%out.println(rs.getString(7));%></td>
                                     <td><%out.println(rs.getString(8));%></td>
                                     <td><%out.println(rs.getString(9));%></td>
-                                    <td><%out.println(rs.getString(10));%></td>
                                     <td>
                                         <form action='partlists.jsp' method='post'>
                                             <input class="btn btn-primary" type='submit' value='Remove Part List' name='removePartList'>
