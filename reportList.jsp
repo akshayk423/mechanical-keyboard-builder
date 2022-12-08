@@ -70,7 +70,7 @@
     <div>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-          <a class="navbar-brand" href="/CS157A-team4/home.jsp">
+          <a class="navbar-brand">
               <img alt src="logo.png" width="50" height="50">
               Mechanical Keyboard Builder
           </a>

@@ -141,6 +141,7 @@
                 out.println("SQLException caught: " + e.getMessage()); 
             }
   %>
+  <a href="login.jsp">User Login</a>
   </div>
   </body>
 </html>

@@ -161,6 +161,7 @@
                 out.println("SQLException caught: " + e.getMessage()); 
             }
   %>
+  <a href="modlogin.jsp">Moderator Login</a>
   </div>
   </body>
 
