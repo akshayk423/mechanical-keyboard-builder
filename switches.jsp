@@ -325,7 +325,7 @@
                     String sort = request.getParameter("sort");
                     String partListID = "";
                     String addCase = request.getParameter("addCase");
-                    if(addCase != null && addCase.equals("Add Case")){
+                    if(addCase != null && addCase.equals("Add Switches")){
                         partListID = request.getParameter("partListID");
                     }
                     //out.println(partListID);

@@ -155,7 +155,6 @@
                         // update row
                         rs.updateString(dict.get(prefix), partId);
                         rs.updateRow();
-                        // response.sendRedirect("partlist.jsp");
                     }
 
                     String remove = request.getParameter("Delete");
@@ -308,11 +307,11 @@
                                                 <td><%out.println(prebuilt_hotswappable);%></td>
                                                 <td><%out.println(prebuilt_size);%></td>
                                                 <td>
-                                                <form action='partlist.jsp' method='post'>
-                                                    <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
-                                                    <input type='hidden' value="<%=pcb_id%>" name='partID'>
-                                                    <input type='hidden' value="<%=partListID%>" name="partListID">
-                                                </form>
+                                                    <form action='partlist.jsp' method='post'>
+                                                        <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
+                                                        <input type='hidden' value="<%=pcb_id%>" name='partID'>
+                                                        <input type='hidden' value="<%=partListID%>" name="partListID">
+                                                    </form>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -365,7 +364,13 @@
                                                     </td>
                                                     <td><%out.println(prebuilt_seller);%></td>
                                                     <td><%out.println(prebuilt_type);%></td>
-                                                    <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                                    <td>
+                                                        <form action='partlist.jsp' method='post'>
+                                                            <input type='submit' class="btn btn-danger" value='Delete' name='Delete'>
+                                                            <input type='hidden' value="<%=accessories_id%>" name='partID'>
+                                                            <input type='hidden' value="<%=partListID%>" name="partListID">
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>

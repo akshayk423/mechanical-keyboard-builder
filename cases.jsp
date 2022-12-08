@@ -333,7 +333,6 @@
                     if(addCase != null && addCase.equals("Add Case")){
                         partListID = request.getParameter("partListID");
                     }
-                    //out.println(partListID);
 
                     String bookmark = request.getParameter("bookmark");
                     String addBookmarkID = "";
