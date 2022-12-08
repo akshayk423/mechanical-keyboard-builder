@@ -200,7 +200,7 @@ CREATE TABLE `partlist` (
 
 LOCK TABLES `partlist` WRITE;
 /*!40000 ALTER TABLE `partlist` DISABLE KEYS */;
-INSERT INTO `partlist` VALUES ('PL0001',150,'akhal','PB0001','PC0001','AC0008','SW0001','','SB0001','KC0001'),('PL0002',29,'bluu','PB0010','PC0002','','SW0002','','SB0002','KC0002'),('PL0003',200,'cherrylover','PB0007','PC0003','AC0006','SW0003','','SB0003',''),('PL0004',399,'dontcallme','PB0004','PC0005','AC0005','SW0004','CS0004','','KC0004'),('PL0005',500,'exapple','PB0003','','AC0004','SW0005','CS0005','','KC0004'),('PL0006',89,'kbfan','PB0006','PC0006','AC0003','SW0006','CS0006','','KC0006'),('PL0007',40,'kbfan','','PC0006','','SW0007','CS0007','SB0007','KC0005'),('PL0008',4000,'menace','PB0003','PC0008','','SW0008','','SB0008','KC0008'),('PL0009',600,'spand','PB0001','PC0004','AC0009','SW0009','CS0002','SB0009','KC0002'),('PL0010',50,'sqleury','PB0010','PC0001','AC0010','SW0010','','SB0010','KC0010'),('PL9697',0,'bluu',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `partlist` VALUES ('PL0001',150,'akhal','PB0001','PC0001','AC0008','SW0001','','SB0001','KC0001'),('PL0002',29,'bluu',NULL,'PC0002','','SW0002','','SB0002','KC0002'),('PL0003',200,'cherrylover','PB0007','PC0003','AC0006','SW0003','','SB0003',''),('PL0004',399,'dontcallme','PB0004','PC0005','AC0005','SW0004','CS0004','','KC0004'),('PL0005',500,'exapple','PB0003','','AC0004','SW0005','CS0005','','KC0004'),('PL0006',89,'kbfan','PB0006','PC0006','AC0003','SW0006','CS0006','','KC0006'),('PL0007',40,'kbfan','','PC0006','','SW0007','CS0007','SB0007','KC0005'),('PL0008',4000,'menace','PB0003','PC0008','','SW0008','','SB0008','KC0008'),('PL0009',600,'spand','PB0001','PC0004','AC0009','SW0009','CS0002','SB0009','KC0002'),('PL0010',50,'sqleury','PB0010','PC0001','AC0010','SW0010','','SB0010','KC0010'),('PL9697',0,'bluu',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `partlist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,8 +242,6 @@ CREATE TABLE `prebuilt` (
   `PartID` char(6) NOT NULL,
   `switchName` varchar(128) NOT NULL,
   `hotSwappable` char(3) NOT NULL,
-  `size` varchar(45) NOT NULL,
-  `containsRGB` char(3) NOT NULL,
   PRIMARY KEY (`PartID`),
   UNIQUE KEY `PartID_UNIQUE` (`PartID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -255,7 +253,7 @@ CREATE TABLE `prebuilt` (
 
 LOCK TABLES `prebuilt` WRITE;
 /*!40000 ALTER TABLE `prebuilt` DISABLE KEYS */;
-INSERT INTO `prebuilt` VALUES ('PB0001','varies','NO','60%','YES'),('PB0002','varies','NO','TKL','NO'),('PB0003','Gateron Blue','YES','60%','YES'),('PB0004','Kailh Blue','NO','60%','YES'),('PB0005','varies (topre)','NO','65%','NO'),('PB0006','varies','NO','TKL','NO'),('PB0007','Kailh Brown','NO','Full Sized','YES'),('PB0008','varies','YES','60%','YES'),('PB0009','varies','YES','TKL','NO'),('PB0010','varies','YES','75%','YES');
+INSERT INTO `prebuilt` VALUES ('PB0001','varies','NO'),('PB0002','varies','NO'),('PB0003','Gateron Blue','YES'),('PB0004','Kailh Blue','NO'),('PB0005','varies (topre)','NO'),('PB0006','varies','NO'),('PB0007','Kailh Brown','NO'),('PB0008','varies','YES'),('PB0009','varies','YES'),('PB0010','varies','YES');
 /*!40000 ALTER TABLE `prebuilt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -370,4 +368,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-07 10:44:19
+-- Dump completed on 2022-12-07 16:41:29

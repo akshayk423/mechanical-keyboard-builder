@@ -140,7 +140,7 @@
                 <div class="child"> <input id="searchParams" type="text" placeholder="Search.." name="searchParams" onkeyup="myFunction()"></div>
                 <div class="child">
                     <form id="filterOptions" action="stabs.jsp" method="post">
-                        <text>Sizes:  </text>
+                        <text>Stabilizer Type:  </text>
                         <div id="sizeCheckbox" class="form-check form-check-inline">
                             
                             <input class="form-check-input" type="checkbox" value="1U" name="size1u">
@@ -218,11 +218,11 @@
                     </td>
                     <td>Url</td>
                     <td>
-                        <a onClick=sortTable(4)>Size</a>
+                        <a onClick=sortTable(4)>Stab type</a>
                     </td>
 
                     <td>
-                        <a onClick=sortTable(5)>Type</a>
+                        <a onClick=sortTable(5)>Info</a>
                     </td>
                 
                 </tr>
