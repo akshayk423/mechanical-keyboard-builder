@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.27, for macos11 (x86_64)
 --
 -- Host: 127.0.0.1    Database: mkdb
 -- ------------------------------------------------------
@@ -48,11 +48,9 @@ DROP TABLE IF EXISTS `bookmarks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bookmarks` (
-  `bookmarkID` char(6) NOT NULL,
   `username` varchar(128) NOT NULL,
   `PartID` char(6) NOT NULL,
-  PRIMARY KEY (`bookmarkID`),
-  UNIQUE KEY `bookmarklistID_UNIQUE` (`bookmarkID`)
+  PRIMARY KEY (`username`,`PartID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -62,7 +60,7 @@ CREATE TABLE `bookmarks` (
 
 LOCK TABLES `bookmarks` WRITE;
 /*!40000 ALTER TABLE `bookmarks` DISABLE KEYS */;
-INSERT INTO `bookmarks` VALUES ('BL0001','akhal','SW0007'),('BL0002','bluu','CS0003'),('BL0003','cherrylover','KC0003'),('BL0004','dontcallme','AC0010'),('BL0005','kbfan','AC0010'),('BL0006','kbfan','SB0010'),('BL0007','kbfan','PB0005'),('BL0008','menace','PB0006'),('BL0009','spand','SB0002'),('BL0010','sqleury','SB0008');
+INSERT INTO `bookmarks` VALUES ('akhal','SW0007'),('cherrylover','KC0003'),('dontcallme','AC0010'),('kbfan','AC0010'),('kbfan','PB0005'),('kbfan','SB0010'),('menace','PB0006'),('spand','SB0002'),('sqleury','SB0008');
 /*!40000 ALTER TABLE `bookmarks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +102,7 @@ CREATE TABLE `keyboardpart` (
   `name` longtext NOT NULL,
   `brand` varchar(512) NOT NULL,
   `price` double NOT NULL,
-  `username` varchar(128) NOT NULL,
+  `seller` varchar(128) NOT NULL,
   PRIMARY KEY (`PartID`),
   UNIQUE KEY `PartID_UNIQUE` (`PartID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -180,7 +178,6 @@ DROP TABLE IF EXISTS `partlist`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `partlist` (
   `PartListID` char(10) NOT NULL,
-  `totalPrice` double NOT NULL,
   `username` varchar(128) NOT NULL,
   `prebuilt_id` char(6) DEFAULT NULL,
   `pcb_id` char(6) DEFAULT NULL,
@@ -200,7 +197,7 @@ CREATE TABLE `partlist` (
 
 LOCK TABLES `partlist` WRITE;
 /*!40000 ALTER TABLE `partlist` DISABLE KEYS */;
-INSERT INTO `partlist` VALUES ('PL0001',150,'akhal','PB0001','PC0001','AC0008','SW0001','','SB0001','KC0001'),('PL0002',29,'bluu','PB0010','PC0002','','SW0002','','SB0002','KC0002'),('PL0003',200,'cherrylover','PB0007','PC0003','AC0006','SW0003','','SB0003',''),('PL0004',399,'dontcallme','PB0004','PC0005','AC0005','SW0004','CS0004','','KC0004'),('PL0005',500,'exapple','PB0003','','AC0004','SW0005','CS0005','','KC0004'),('PL0006',89,'kbfan','PB0006','PC0006','AC0003','SW0006','CS0006','','KC0006'),('PL0007',40,'kbfan','','PC0006','','SW0007','CS0007','SB0007','KC0005'),('PL0008',4000,'menace','PB0003','PC0008','','SW0008','','SB0008','KC0008'),('PL0009',600,'spand','PB0001','PC0004','AC0009','SW0009','CS0002','SB0009','KC0002'),('PL0010',50,'sqleury','PB0010','PC0001','AC0010','SW0010','','SB0010','KC0010');
+INSERT INTO `partlist` VALUES ('PL0001','akhal','PB0001','PC0001','AC0008','SW0001','','SB0001','KC0001'),('PL0002','bluu',NULL,'PC0002',NULL,'SW0002','','SB0002','KC0002'),('PL0003','cherrylover','PB0007','PC0003','AC0006','SW0003','','SB0003',''),('PL0004','dontcallme','PB0004','PC0005','AC0005','SW0004','CS0004','','KC0004'),('PL0005','exapple','PB0003','','AC0004','SW0005','CS0005','','KC0004'),('PL0006','kbfan','PB0006','PC0006','AC0003','SW0006','CS0006','','KC0006'),('PL0007','kbfan','','PC0006','','SW0007','CS0007','SB0007','KC0005'),('PL0008','menace','PB0003','PC0008','','SW0008','','SB0008','KC0008'),('PL0009','spand','PB0001','PC0004','AC0009','SW0009','CS0002','SB0009','KC0002'),('PL0010','sqleury','PB0010','PC0001','AC0010','SW0010','','SB0010','KC0010'),('PL0149','bluu',NULL,NULL,NULL,NULL,NULL,NULL,NULL),('PL7139','bob',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `partlist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,8 +239,6 @@ CREATE TABLE `prebuilt` (
   `PartID` char(6) NOT NULL,
   `switchName` varchar(128) NOT NULL,
   `hotSwappable` char(3) NOT NULL,
-  `size` varchar(45) NOT NULL,
-  `containsRGB` char(3) NOT NULL,
   PRIMARY KEY (`PartID`),
   UNIQUE KEY `PartID_UNIQUE` (`PartID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -255,7 +250,7 @@ CREATE TABLE `prebuilt` (
 
 LOCK TABLES `prebuilt` WRITE;
 /*!40000 ALTER TABLE `prebuilt` DISABLE KEYS */;
-INSERT INTO `prebuilt` VALUES ('PB0001','varies','NO','60%','YES'),('PB0002','varies','NO','TKL','NO'),('PB0003','Gateron Blue','YES','60%','YES'),('PB0004','Kailh Blue','NO','60%','YES'),('PB0005','varies (topre)','NO','65%','NO'),('PB0006','varies','NO','TKL','NO'),('PB0007','Kailh Brown','NO','Full Sized','YES'),('PB0008','varies','YES','60%','YES'),('PB0009','varies','YES','TKL','NO'),('PB0010','varies','YES','75%','YES');
+INSERT INTO `prebuilt` VALUES ('PB0001','varies','NO'),('PB0002','varies','NO'),('PB0003','Gateron Blue','YES'),('PB0004','Kailh Blue','NO'),('PB0005','varies (topre)','NO'),('PB0006','varies','NO'),('PB0007','Kailh Brown','NO'),('PB0008','varies','YES'),('PB0009','varies','YES'),('PB0010','varies','YES');
 /*!40000 ALTER TABLE `prebuilt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +275,7 @@ CREATE TABLE `reportlistings` (
 
 LOCK TABLES `reportlistings` WRITE;
 /*!40000 ALTER TABLE `reportlistings` DISABLE KEYS */;
-INSERT INTO `reportlistings` VALUES ('RL0001','PC0003'),('RL0002','CS0003'),('RL0003','AC0007'),('RL0004','PB0001'),('RL0005','KC0006'),('RL0006','PC0006'),('RL0007','SW0008'),('RL0008','SW0009'),('RL0009','SW0010'),('RL0010','KC0007'),('RL0104','CS0010'),('RL0682','CS0010'),('RL1292','CS0010'),('RL1593','CS0010'),('RL1807','CS0010'),('RL1903','CS0010'),('RL2146','CS0010'),('RL2338','CS0010'),('RL2433','CS0002'),('RL2446','CS0010'),('RL2453','CS0009'),('RL4388','CS0010'),('RL4569','CS0010'),('RL5295','CS0009'),('RL5508','CS0010'),('RL5763','CS0010'),('RL6439','CS0010'),('RL6974','CS0001'),('RL7756','CS0010'),('RL7980','CS0002'),('RL7984','CS0010'),('RL8129','CS0010'),('RL8384','CS0010'),('RL8652','CS0009');
+INSERT INTO `reportlistings` VALUES ('RL0001','PC0003'),('RL0002','CS0003'),('RL0003','AC0007'),('RL0004','PB0001'),('RL0005','KC0006'),('RL0006','PC0006'),('RL0007','SW0008'),('RL0008','SW0009'),('RL0009','SW0010'),('RL0010','KC0007'),('RL0104','CS0010'),('RL0159','AC0001'),('RL0242','PC0001'),('RL0299','PC0001'),('RL0488','SW0001'),('RL0682','CS0010'),('RL1168','PC0001'),('RL1292','CS0010'),('RL1431','PC0001'),('RL1443','KC0001'),('RL1593','CS0010'),('RL1807','CS0010'),('RL1903','CS0010'),('RL2006','SB0001'),('RL2042','CS0001'),('RL2146','CS0010'),('RL2338','CS0010'),('RL2354','PC0001'),('RL2433','CS0002'),('RL2446','CS0010'),('RL2453','CS0009'),('RL2506','PC0001'),('RL2512','PC0001'),('RL2844','SW0001'),('RL2904','SW0001'),('RL3051','PC0001'),('RL3265','KC0001'),('RL3358','PC0001'),('RL3812','SW0001'),('RL4388','CS0010'),('RL4524','PC0001'),('RL4569','CS0010'),('RL4919','SW0001'),('RL4966','CS0001'),('RL5295','CS0009'),('RL5459','SW0001'),('RL5508','CS0010'),('RL5763','CS0010'),('RL6282','PC0001'),('RL6439','CS0010'),('RL6637','PC0001'),('RL6974','CS0001'),('RL7261','PC0001'),('RL7756','CS0010'),('RL7980','CS0002'),('RL7984','CS0010'),('RL8060','SW0001'),('RL8129','CS0010'),('RL8309','SW0001'),('RL8333','PB0001'),('RL8384','CS0010'),('RL8521','CS0001'),('RL8585','CS0001'),('RL8652','CS0009'),('RL9476','SW0001');
 /*!40000 ALTER TABLE `reportlistings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -357,7 +352,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('akhal','originalpass'),('bluu','pass'),('cherrylover','asdeb4'),('dontcallme','dfkj'),('exapple','asdfasdf'),('kbfan','evbein'),('kbhater','awsef123'),('menace','qwop'),('spand','pass123'),('sqleury','sevsav');
+INSERT INTO `users` VALUES ('akhal','originalpass'),('bluu','pass'),('bob','password'),('cherrylover','asdeb4'),('dontcallme','dfkj'),('exapple','asdfasdf'),('kbfan','evbein'),('kbhater','awsef123'),('menace','qwop'),('spand','pass123'),('sqleury','sevsav');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -370,4 +365,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-27 15:14:55
+-- Dump completed on 2022-12-08 19:15:38

@@ -70,7 +70,7 @@
     <div>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-          <a class="navbar-brand" href="/CS157A-team4/home.jsp">
+          <a class="navbar-brand">
               <img alt src="logo.png" width="50" height="50">
               Mechanical Keyboard Builder
           </a>
@@ -128,7 +128,7 @@
                 // dict.put("PB", "prebuilt");
                 // dict.put("PC", "pcb");
                 // dict.put("SB", "stabilizers");
-                // dict.put("KC", "keycap");
+                // dict.put("KC", "keycaps");
                 // dict.put("CS", "kbcase");
                 // dict.put("AC", "accessories");
 
@@ -145,7 +145,7 @@
                 dict.put("PB", "prebuilt");
                 dict.put("PC", "pcb");
                 dict.put("SB", "stabilizers");
-                dict.put("KC", "keycap");
+                dict.put("KC", "keycaps");
                 dict.put("CS", "kbcase");
                 dict.put("AC", "accessories");
 
@@ -156,7 +156,6 @@
                   if(id.equals(rs.getString("PartID"))){
                     rs.deleteRow();
                     couldNotFind = false;
-                    break;
                   }
                 }
                 if(couldNotFind){
@@ -171,7 +170,6 @@
                   if(id.equals(rs.getString("PartID"))){
                     rs.deleteRow();
                     couldNotFind = false;
-                    break;
                   }
                 }
                 if(couldNotFind){

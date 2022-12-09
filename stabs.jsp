@@ -140,7 +140,7 @@
                 <div class="child"> <input id="searchParams" type="text" placeholder="Search.." name="searchParams" onkeyup="myFunction()"></div>
                 <div class="child">
                     <form id="filterOptions" action="stabs.jsp" method="post">
-                        <text>Sizes:  </text>
+                        <text>Stabilizer Type:  </text>
                         <div id="sizeCheckbox" class="form-check form-check-inline">
                             
                             <input class="form-check-input" type="checkbox" value="1U" name="size1u">
@@ -218,11 +218,11 @@
                     </td>
                     <td>Url</td>
                     <td>
-                        <a onClick=sortTable(4)>Size</a>
+                        <a onClick=sortTable(4)>Stab type</a>
                     </td>
 
                     <td>
-                        <a onClick=sortTable(5)>Type</a>
+                        <a onClick=sortTable(5)>Info</a>
                     </td>
                 
                 </tr>
@@ -366,7 +366,7 @@
                     String sort = request.getParameter("sort");
                     String partListID = "";
                     String addCase = request.getParameter("addCase");
-                    if(addCase != null && addCase.equals("Add Case")){
+                    if(addCase != null && addCase.equals("Add Stabilizers")){
                         partListID = request.getParameter("partListID");
                     }
                     //out.println(partListID);
@@ -374,12 +374,34 @@
                     String bookmark = request.getParameter("bookmark");
                     String addBookmarkID = "";
                     if (bookmark != null && bookmark.equals("Bookmark")) {
+                        partListID = request.getParameter("partListID");
+
                         addBookmarkID = request.getParameter("addBookmarkID");
-                        String sql = "INSERT INTO bookmarks VALUES ('" + username + "', '" + addBookmarkID + "')";
-                        PreparedStatement ps = null;
-                        ps = con.prepareStatement(sql);
-                        int i = ps.executeUpdate();
+                        ResultSet rs = stmt.executeQuery("SELECT * FROM keyboardpart WHERE partID = '" + addBookmarkID + "'");
+                        rs.beforeFirst();
+                        rs.next();
+                        String bookName = rs.getString("name");
+                        if(bookName.length() > 40){ bookName = bookName.substring(0,40) + "...";}
+
+                        rs = stmt.executeQuery("SELECT * FROM bookmarks WHERE username = '" + username + "'");
+                        rs.beforeFirst();
+                        boolean found = false;
+                        while(rs.next()){
+                            if(addBookmarkID.equals(rs.getString("PartID"))){
+                                %><h4><%=bookName%> already bookmarked</h4><%
+                                found = true;
+                                break;
+                            }
+                        }
+                        if(!found){
+                            String sql = "INSERT INTO bookmarks VALUES ('" + username + "', '" + addBookmarkID + "')";
+                            PreparedStatement ps = null;
+                            ps = con.prepareStatement(sql);
+                            int i = ps.executeUpdate();
+                            %><h4><%=bookName%> was bookmarked</h4><%
+                        }
                     }
+                    // out.println("Part List ID: " + partListID);
 
 
                     if(filter != null && filter.equals("filter")){
@@ -443,6 +465,7 @@
                     String reported = request.getParameter("reportListing");
                     String reportPartID = "";
                     if (reported != null && reported.equals("Report")) {
+                        partListID = request.getParameter("partListID");
                         reportPartID = request.getParameter("reportPartID");
                         //out.println(reportPartID);
                         ResultSet rs1 = stmt.executeQuery("SELECT * FROM mkdb.reportlistings");
@@ -505,15 +528,17 @@
                             </td>
 
                             <td width="2%">
-                                <form action="cases.jsp" method="post">
+                                <form action="stabs.jsp" method="post">
                                     <input type="submit" class="btn btn-dark" value="Bookmark" name="bookmark">
-                                    <input type='hidden' value='<%=rs.getString(1)%>' name="addBookmarkID">
+                                    <input type='hidden' value='<%=rs.getString("PartID")%>' name="addBookmarkID">
+                                    <input type='hidden' value='<%=partListID%>' name= 'partListID'>
                                 </form>
                             </td>
                             <td width="2%">
-                                <form action="cases.jsp" method="post">
+                                <form action="stabs.jsp" method="post">
                                     <input type="submit" class="btn btn-danger" value="Report" name="reportListing">
-                                    <input type="hidden" value='<%=rs.getString(1)%>' name="reportPartID">
+                                    <input type="hidden" value='<%=rs.getString("PartID")%>' name="reportPartID">
+                                    <input type='hidden' value='<%=partListID%>' name= 'partListID'>
                                 </form>
                             </td>
 
